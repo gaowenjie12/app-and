@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    tools:context=".business.exhibitionhall.DynamicDetailsActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/text_3"
+                android:textSize="19dp"
+                tools:text="为何马云仅有7%的股份就控制了阿里,孙正义是最大股东却说了不算" />
+
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/text_b6"
+                android:textSize="13dp"
+                tools:text="发布时间：2019-07-07" />
+
+
+            <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitXY"
+                fresco:placeholderImage="@mipmap/icon_default"
+                fresco:placeholderImageScaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:lineSpacingExtra="7dp"
+                android:textColor="@color/text_3"
+                android:textSize="15dp"
+                tools:text="孙正义旗下的软银是阿里巴巴的股东，马云也仅仅拥有阿里巴巴7%左右的股份，蔡崇信持股比例3.6%，软银曾经拥有超过了35%的股份，经过几次套现之后，软银拥有29.6%的股份，依然是最大的股东。然而作为阿里巴巴董事会成员的孙正义却从来没有发言权，这又是为何呢？
+许多人就说孙正义早在2004年就应该成为世界首富了。不过如今4年过去了，孙正义还没有成为世界首富，反而是软银负债累累，不得不数次抛掉阿里巴巴的股份来拯救公司。
+其实孙正义在阿里巴巴还没有达到巅峰的时候，就卖掉了阿里巴巴的大多股票，阿里巴巴上市不久后创造了全球最大的上市融资案例，之后阿里巴巴市值一路上涨，成为了全球市值前十的公司。但是凭借这个回报率已经足够了。在他带领软银投资了阿里巴巴之后，后面这些年好像没有神马太大的投资亮点。
+                        " />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </ScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

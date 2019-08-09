@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/simple_item_background_selector"
+    android:orientation="horizontal">
+
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/product_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="15dp"
+        android:scaleType="fitXY"
+        fresco:placeholderImage="@mipmap/icon_default"
+        fresco:placeholderImageScaleType="fitCenter"
+        fresco:roundedCornerRadius="5dp" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/iv_shoucang"
+        android:layout_toRightOf="@+id/product_image"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_3"
+            android:textSize="17dp"
+            tools:text="北京字节跳动科技有限公司" />
+
+
+        <TextView
+            android:id="@+id/tv_zhiwei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/text_6"
+            android:textSize="@dimen/text_one_five"
+            tools:text="主营业务：数码、平板销售数码、平板销售..." />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_shoucang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/shoucang_pre" />
+
+    <View
+        style="@style/line_style"
+        android:layout_below="@+id/product_image"
+        android:layout_toRightOf="@+id/product_image" />
+
+</RelativeLayout>

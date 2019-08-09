@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/user_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_3"
+                android:textSize="18sp"
+                tools:text="大黄蜂" />
+
+            <TextView
+                android:id="@+id/user_gongsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:textColor="@color/text_3"
+                android:textSize="15sp"
+                tools:text="阿里山楼宇清洁服务有限公司" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="签到"
+            android:textColor="@color/text_3" />
+
+        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/user_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitXY"
+            fresco:placeholderImage="@color/pv_wait_color"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:roundAsCircle="true" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_qiye_guanli"
+        style="@style/me_layout_style"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/me_text_style"
+            android:text="企业管理" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right_arrow" />
+
+    </RelativeLayout>
+
+    <View style="@style/line_style" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_wodesoucang"
+        style="@style/me_layout_style">
+
+        <TextView
+            style="@style/me_text_style"
+            android:text="我的收藏" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right_arrow" />
+
+    </RelativeLayout>
+
+    <View style="@style/line_style" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_kajuanbao"
+        style="@style/me_layout_style">
+
+        <TextView
+            style="@style/me_text_style"
+            android:text="卡卷包" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right_arrow" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_shezhi"
+        style="@style/me_layout_style"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/me_text_style"
+            android:text="设置" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right_arrow" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_dianhua"
+        style="@style/me_layout_style"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/me_text_style"
+            android:text="联系客服" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right_arrow" />
+
+    </RelativeLayout>
+
+    <View style="@style/line_style" />
+
+    <RelativeLayout
+        android:id="@+id/rl_zhongxin"
+        style="@style/me_layout_style">
+
+        <TextView
+            style="@style/me_text_style"
+            android:text="帮助中心" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right_arrow" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

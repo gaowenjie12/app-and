@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/simple_item_background_selector"
+    android:orientation="horizontal">
+
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/product_image"
+        android:layout_width="110dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:scaleType="fitXY"
+        fresco:roundedCornerRadius="5dp"
+        fresco:placeholderImage="@mipmap/icon_default"
+        fresco:placeholderImageScaleType="fitCenter" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/iv_shoucang"
+        android:layout_toRightOf="@+id/product_image"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/text_3"
+            android:textSize="15dp"
+            tools:text="【北京站】合伙人股权分配" />
+
+        <TextView
+            android:id="@+id/tv_jianjie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="13dp"
+            tools:text="到场嘉宾：杨东、玉红、刘辉..." />
+
+
+    </LinearLayout>
+
+    <View
+        style="@style/line_style"
+        android:layout_below="@+id/product_image" />
+
+</RelativeLayout>

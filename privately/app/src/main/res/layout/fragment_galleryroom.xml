@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/search_layout" />
+
+
+    <com.zsoe.businesssharing.commonview.PtrClassicRefreshLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_bg"
+            android:scrollbars="none">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.zsoe.businesssharing.commonview.banner.BannerView
+                    android:id="@+id/banner_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </com.zsoe.businesssharing.commonview.banner.BannerView>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:paddingTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/hangye_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+
+                    <LinearLayout
+                        android:id="@+id/more_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/more_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/hangye_recyclerView"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="right"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="更多行业"
+                            android:textColor="@color/text_b6"
+                            android:textSize="14dp" />
+
+                        <ImageView
+                            android:id="@+id/xiajiantou"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/xiajiantou" />
+
+
+                    </LinearLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/left1"
+                            android:layout_width="3dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:background="@color/text_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/left1"
+                            android:text="行业大咖"
+                            android:textColor="@color/text_3"
+                            android:textSize="@dimen/text_one_five" />
+
+
+                        <TextView
+                            android:id="@+id/tv_daka_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="12dp"
+                            android:text="更多"
+                            android:textColor="@color/AC9472"
+                            android:textSize="@dimen/text_one_five" />
+
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <include
+                            android:id="@+id/daka1"
+                            layout="@layout/item_daka_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/daka2"
+                            layout="@layout/item_daka_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/daka3"
+                            layout="@layout/item_daka_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/daka4"
+                            layout="@layout/item_daka_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/left2"
+                            android:layout_width="3dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:background="@color/text_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/left2"
+                            android:text="行业大梁"
+                            android:textColor="@color/text_3"
+                            android:textSize="@dimen/text_one_five" />
+
+
+                        <TextView
+                            android:id="@+id/tv_daliang_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="12dp"
+                            android:text="更多"
+                            android:textColor="@color/AC9472"
+                            android:textSize="@dimen/text_one_five" />
+
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <include
+                            android:id="@+id/daliang1"
+                            layout="@layout/item_daliang_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/daliang_mar"
+                            android:layout_marginTop="@dimen/daliang_mar"
+                            android:layout_marginBottom="12dp"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/daliang2"
+                            layout="@layout/item_daliang_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/daliang_mar"
+                            android:layout_marginTop="@dimen/daliang_mar"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/daliang3"
+                            layout="@layout/item_daliang_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/daliang_mar"
+                            android:layout_marginTop="@dimen/daliang_mar"
+                            android:layout_weight="1" />
+
+                        <include
+                            android:id="@+id/daliang4"
+                            layout="@layout/item_daliang_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/daliang_mar"
+                            android:layout_marginTop="@dimen/daliang_mar"
+                            android:layout_marginRight="@dimen/daliang_mar"
+                            android:layout_weight="1" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:layout_width="3dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/text_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="行业交流会"
+                            android:textColor="@color/text_3"
+                            android:textSize="@dimen/text_one_five" />
+
+                    </RelativeLayout>
+
+                    <include
+                        android:id="@+id/jiaoliu1"
+                        layout="@layout/item_jiaoliu_layout" />
+
+                    <include
+                        android:id="@+id/jiaoliu2"
+                        layout="@layout/item_jiaoliu_layout" />
+
+                    <include
+                        android:id="@+id/jiaoliu3"
+                        layout="@layout/item_jiaoliu_layout" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.zsoe.businesssharing.commonview.PtrClassicRefreshLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

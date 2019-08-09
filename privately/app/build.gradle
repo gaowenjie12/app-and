@@ -1,0 +1,209 @@
+apply plugin: 'com.android.application'
+
+
+def getDate() {
+    return new Date().format("yyyy.MM.dd", TimeZone.getTimeZone("GMT+8"))
+}
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+
+    defaultConfig {
+        applicationId "com.zsoe.businesssharing"
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+    }
+
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+
+    //配置keystore签名
+    signingConfigs {
+        release {
+            storeFile file('../release.jks')
+            storePassword '11111111'
+            keyAlias 'zsoe'
+            keyPassword '11111111'
+            v1SigningEnabled true       //对JAR签名
+            v2SigningEnabled true       //对APK签名
+        }
+
+        debug {
+            storeFile file('../debug.jks')//key的路径，注意不能与release版本相同
+            keyAlias 'zsoe'              //别名
+            keyPassword '00000000'        //key密码
+            storePassword '00000000'    // store的密码，注意是否与key的密码相同
+            v1SigningEnabled true       //对JAR签名
+            v2SigningEnabled true       //对APK签名
+        }
+    }
+
+
+//    applicationVariants.all { variant ->
+//
+//        variant.outputs.all {
+//
+//            def newName
+//            newName = "hotel" + "_" + productFlavors[0].name + "_" + buildType.name + "_v" +
+//                    variant.versionName + "_" + getDate()
+//            def fileName = "${newName}.apk"
+//
+//            outputFileName = fileName
+//
+//        }
+//    }
+
+
+    // 移除lint检查的error
+    lintOptions {
+        //lint 遇到 error 时继续 构建
+        abortOnError false
+        //build release 版本 时 开启lint 检测
+        checkReleaseBuilds false
+        // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+        disable 'MissingTranslation'
+    }
+
+    dexOptions {
+        maxProcessCount 8
+        dexInProcess = false
+        javaMaxHeapSize "4g"
+    }
+
+
+    buildTypes {
+
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 是否进行混淆
+            minifyEnabled false
+//            //压缩
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            signingConfig signingConfigs.release
+            buildConfigField "String", "ENDPOINT", project.release_Domain
+
+        }
+
+
+        debug {
+            minifyEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
+            zipAlignEnabled false
+
+            buildConfigField "String", "ENDPOINT", project.debug_Domain
+            signingConfig signingConfigs.debug
+
+        }
+    }
+
+//    productFlavors {//多渠道打包
+//        qq {
+//            manifestPlaceholders = [
+//                    //渠道名
+//                    UMENG_CHANNEL_VALUE: name
+//
+//            ]
+//        }
+//        bb {
+//
+//            manifestPlaceholders = [
+//                    //渠道名
+//                    UMENG_CHANNEL_VALUE: name
+//
+//            ]
+//
+//        }
+//    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+
+
+    /**
+     * 很通用型的库声明成api
+     * 其余的最好放在对应的com下或者app下
+     * 尽量声明implementation
+     * 不要为了方便直接吧implementation 改为api
+     */
+    implementation('androidx.legacy:legacy-support-v4:1.0.0') {
+        force = true
+    }
+
+
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+
+    //查看高清大图
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
+    //图片压缩库
+    implementation 'id.zelory:compressor:1.0.4'
+
+    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
+    implementation 'com.squareup.retrofit2:converter-gson:+'
+    implementation 'in.srain.cube:ultra-ptr:1.0.11'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    //图片加载
+    implementation 'com.facebook.fresco:fresco:2.0.0'
+
+    //权限处理
+    implementation('com.yanzhenjie:permission:2.0.0-rc12') {
+        exclude group: 'com.android.support'
+    }
+
+    //二维码
+    implementation 'com.google.zxing:core:3.3.3'
+    //状态栏
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta09'
+
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'androidx.multidex:multidex:2.0.0'
+
+    //工具库
+    implementation 'com.blankj:utilcode:1.24.7'
+    //时间处理
+    implementation 'joda-time:joda-time:2.10.3'
+    //底部导航
+    implementation 'com.aurelhubert:ahbottomnavigation:1.3.3'
+    //顶部导航
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    //XPopup
+    implementation 'com.lxj:xpopup:1.8.7'
+
+    implementation 'com.github.LinweiJ:ViewPagerIndicator:0.1.0'
+
+    implementation 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
+
+//    implementation 'com.github.aakira:expandable-layout:1.6.0@aar'
+}

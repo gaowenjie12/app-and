@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    tools:context=".business.exhibitionhall.MasterDetailActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+                    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/user_image"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/right_arrow"
+                        android:scaleType="fitXY"
+                        fresco:placeholderImage="@color/pv_wait_color"
+                        fresco:placeholderImageScaleType="fitCenter"
+                        fresco:roundAsCircle="true" />
+
+                    <TextView
+                        android:id="@+id/tv_master_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/text_3"
+                        android:textSize="17dp"
+                        tools:text="孙正义" />
+
+                    <TextView
+                        android:id="@+id/tv_master_zhiwei"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        tools:text="国际知名投资人" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="简介"
+                    android:textColor="@color/text_3"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_jieshao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="15dp"
+                    tools:text="孙正义（そんまさよし）其本贯为一支孙氏（朝鲜语）。1957年生于日本，国际知名投资人。软件银行集团董事长兼总裁。
+1978年，孙正义毕业于美国加州大学伯克利分校。1981年创建软银集团，短短33年成了一个信息技术帝国。美国《商业周刊》杂志把孙正义称为电子时代大帝（Cyber Mogul）。2014年9月16日，随着阿里巴巴登陆美股市场，孙正义的财富净值涨至166亿美元，跻身日本首富。
+2017年12月1日，孙正义刊登2017年度全球50大最具影响力人物榜单。 [1]  2018年4月，获《时代周刊》2018年全球最具影响力人物荣誉。2019年3月，孙正义以216亿美元财富排名2019年福布斯全球亿万富豪榜第43位。
+                        " />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

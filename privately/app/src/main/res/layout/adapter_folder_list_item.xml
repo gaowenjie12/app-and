@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/iv_cover"
+        fresco:placeholderImage="@color/pv_wait_color"
+        fresco:placeholderImageScaleType="fitCenter"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        fresco:viewAspectRatio="1"
+        android:layout_margin="6dp"
+        />
+
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_cover"-->
+        <!--android:layout_width="68dp"-->
+        <!--android:layout_height="68dp"-->
+        <!--android:layout_margin="8dp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@mipmap/default_image" />-->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_folder_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/all_images"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_image_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="共0张"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_folder_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="12dp"
+        android:src="@mipmap/checkbox_checked" />
+
+</LinearLayout>

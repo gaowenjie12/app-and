@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00fafafa"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/pop_no"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/item_pop_shap"
+        android:gravity="center"
+        android:text="关闭"
+        android:textColor="#2e6fe5"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pop_no"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/item_pop_shap"
+        android:orientation="vertical"
+        android:padding="1px">
+
+        <TextView
+            android:id="@+id/pop_mu"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="从手机相册选择"
+            android:textColor="#2e6fe5"
+            android:textSize="18sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line" />
+
+
+        <TextView
+            android:id="@+id/pop_xi"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="拍照"
+            android:textColor="#2e6fe5"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/search_layout" />
+
+
+    <com.zsoe.businesssharing.commonview.PtrClassicRefreshLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <com.zsoe.businesssharing.commonview.banner.BannerView
+                    android:id="@+id/banner_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"></com.zsoe.businesssharing.commonview.banner.BannerView>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="头条快讯："
+                        android:textColor="@color/AC9472"
+                        android:textSize="@dimen/text_one_four"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_xinwen_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:padding="15dp"
+                        android:text="更多"
+                        android:textColor="@color/AC9472"
+                        android:textSize="@dimen/text_one_two" />
+
+
+                    <com.zsoe.businesssharing.commonview.UpDownViewSwitcher
+                        android:id="@+id/home_view_switcher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/tv_xinwen_more"
+                        android:layout_toRightOf="@+id/tout"
+                        app:animator_duration="400"
+                        app:animator_translate_distance="40dp"
+                        app:switch_duration="3000"
+                        app:up_to_down="false" />
+
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/kunc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/home_kucun"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="库存采购"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_three" />
+
+                    <TextView
+                        android:id="@+id/jianzhi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:drawableTop="@mipmap/home_chanpin"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="价值产品"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_three" />
+
+                    <TextView
+                        android:id="@+id/zhaoshang"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:drawableTop="@mipmap/home_jiameng"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="招商加盟"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_three" />
+
+                    <TextView
+                        android:id="@+id/daikuan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:drawableTop="@mipmap/honge_daikuan"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="贷款融资"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_three" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/left1"
+                            android:layout_width="3dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:background="@color/text_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/left1"
+                            android:text="推广活动"
+                            android:textColor="@color/text_3"
+                            android:textSize="@dimen/text_one_five" />
+
+
+                        <TextView
+                            android:id="@+id/tv_tuiguang_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="12dp"
+                            android:text="更多"
+                            android:textColor="@color/AC9472"
+                            android:textSize="@dimen/text_one_four" />
+
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_tuiguang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/left2"
+                            android:layout_width="3dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:background="@color/text_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/left2"
+                            android:text="@string/tuiguang"
+                            android:textColor="@color/text_3"
+                            android:textSize="@dimen/text_one_five" />
+
+
+                        <TextView
+                            android:id="@+id/tv_caigou_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="12dp"
+                            android:text="更多"
+                            android:textColor="@color/AC9472"
+                            android:textSize="@dimen/text_one_four" />
+
+
+                    </RelativeLayout>
+
+                    <com.zsoe.businesssharing.commonview.MyRecycleView
+                        android:id="@+id/rv_caigou"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </com.zsoe.businesssharing.commonview.MyRecycleView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/left3"
+                            android:layout_width="3dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:background="@color/text_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/left3"
+                            android:text="价值产品"
+                            android:textColor="@color/text_3"
+                            android:textSize="@dimen/text_one_five" />
+
+
+                        <TextView
+                            android:id="@+id/tv_jiazhi_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="12dp"
+                            android:text="更多"
+                            android:textColor="@color/AC9472"
+                            android:textSize="@dimen/text_one_four" />
+
+
+                    </RelativeLayout>
+
+                    <com.zsoe.businesssharing.commonview.MyRecycleView
+                        android:id="@+id/rv_jiazhi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </com.zsoe.businesssharing.commonview.MyRecycleView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/left4"
+                            android:layout_width="3dp"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="12dp"
+                            android:background="@color/text_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/left4"
+                            android:text="招商加盟"
+                            android:textColor="@color/text_3"
+                            android:textSize="@dimen/text_one_five" />
+
+
+                        <TextView
+                            android:id="@+id/tv_zhaoshang_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="12dp"
+                            android:text="更多"
+                            android:textColor="@color/AC9472"
+                            android:textSize="@dimen/text_one_four" />
+
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_zhaoshang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.zsoe.businesssharing.commonview.PtrClassicRefreshLayout>
+
+</LinearLayout>

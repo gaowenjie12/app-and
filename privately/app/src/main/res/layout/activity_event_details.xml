@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    tools:context=".business.exhibitionhall.DynamicDetailsActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_nine"
+                    tools:text="为何马云仅有7%的股份就控制了阿里,孙正义是最大股东却说了不算" />
+
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/text_b6"
+                    android:textSize="@dimen/text_one_three"
+                    tools:text="发布时间：2019-07-07" />
+
+
+                <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/iv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="fitXY"
+                    fresco:placeholderImage="@mipmap/icon_default"
+                    fresco:placeholderImageScaleType="fitCenter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="7dp"
+                    android:text="到场嘉宾："
+                    android:textColor="@color/AC9472"
+                    android:textSize="@dimen/text_one_five" />
+
+                <TextView
+                    android:id="@+id/tv_name_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_three"
+                    tools:text="杨东、玉红、刘辉、沈大海、徐继哲、吴波等" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="7dp"
+                    android:text="活动时间："
+                    android:textColor="@color/AC9472"
+                    android:textSize="@dimen/text_one_five" />
+
+                <TextView
+                    android:id="@+id/tv_event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_three"
+                    tools:text="2019-07-07  16:00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="7dp"
+                    android:text="活动地点："
+                    android:textColor="@color/AC9472"
+                    android:textSize="@dimen/text_one_five" />
+
+                <TextView
+                    android:id="@+id/tv_event_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_three"
+                    tools:text="北京市丰台区丰台体育馆中心" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动详情"
+                    android:textSize="@dimen/text_one_six" />
+
+
+                <com.zsoe.businesssharing.commonview.ExpandableTextView
+                    android:id="@+id/tv_huodong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:DrawableAndTextGravity="right"
+                    app:contentTextColor="@color/colorPrimaryDark"
+                    app:expandCollapseTextColor="@color/colorAccent"
+                    app:expandText="更多"
+                    app:maxCollapsedLines="6" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动成果"
+                    android:textSize="@dimen/text_one_six" />
+
+                <com.zsoe.businesssharing.commonview.ExpandableTextView
+                    android:id="@+id/tv_chenguo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:DrawableAndTextGravity="right"
+                    app:contentTextColor="@color/text_3"
+                    app:expandCollapseTextColor="@color/AC9472"
+                    app:expandText="更多"
+                    app:maxCollapsedLines="6" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>
