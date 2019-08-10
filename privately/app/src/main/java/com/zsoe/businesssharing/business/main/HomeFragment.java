@@ -17,8 +17,13 @@ import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.CompanyProfilesActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.EventDetailsActivity;
+import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
+import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
+import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
+import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.commonview.UpDownViewSwitcher;
 import com.zsoe.businesssharing.commonview.banner.BannerView;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
@@ -33,7 +38,7 @@ import rx.functions.Action1;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     public static HomeFragment newInstance(String title) {
         HomeFragment f = new HomeFragment();
@@ -54,7 +59,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private BannerView banner_view;
-    private TextView kunc, jianzhi, zhaoshang, daikuan, tv_tuiguang_more, tv_caigou_more, tv_jiazhi_more, tv_zhaoshang_more;
+    private TextView kunc, jianzhi, zhaoshang, daikuan, tv_tuiguang_more, tv_caigou_more, tv_jiazhi_more, tv_zhaoshang_more, tv_xinwen_more;
     private RecyclerView rv_tuiguang, rv_caigou, rv_jiazhi, rv_zhaoshang;
     private UpDownViewSwitcher home_view_switcher;
 
@@ -66,6 +71,7 @@ public class HomeFragment extends BaseFragment {
         home_view_switcher = view.findViewById(R.id.home_view_switcher);
 
         kunc = view.findViewById(R.id.kunc);
+        jianzhi = view.findViewById(R.id.jianzhi);
         zhaoshang = view.findViewById(R.id.zhaoshang);
         daikuan = view.findViewById(R.id.daikuan);
         tv_tuiguang_more = view.findViewById(R.id.tv_tuiguang_more);
@@ -77,6 +83,7 @@ public class HomeFragment extends BaseFragment {
         rv_caigou = view.findViewById(R.id.rv_caigou);
         rv_jiazhi = view.findViewById(R.id.rv_jiazhi);
         rv_zhaoshang = view.findViewById(R.id.rv_zhaoshang);
+        tv_xinwen_more = view.findViewById(R.id.tv_xinwen_more);
 
 
         initPtrFrameLayout(new Action1<String>() {
@@ -90,6 +97,16 @@ public class HomeFragment extends BaseFragment {
         //左右滑动时刷新控件禁止掉
         mPtrFrame.disableWhenHorizontalMove(true);
 
+        kunc.setOnClickListener(this);
+        jianzhi.setOnClickListener(this);
+        zhaoshang.setOnClickListener(this);
+        daikuan.setOnClickListener(this);
+        tv_tuiguang_more.setOnClickListener(this);
+        tv_caigou_more.setOnClickListener(this);
+        tv_jiazhi_more.setOnClickListener(this);
+        tv_zhaoshang_more.setOnClickListener(this);
+        tv_xinwen_more.setOnClickListener(this);
+
         setDate();
     }
 
@@ -100,6 +117,7 @@ public class HomeFragment extends BaseFragment {
         stringList.add("自上而下与自下而上形成合力");
         stringList.add("马骏：人民币汇率\"破7\"与\"8·11\"汇改有五点不同");
         stringList.add("香港局势座谈会  爱国爱港是香港社会主流");
+
         home_view_switcher.setSwitcheNextViewListener(new UpDownViewSwitcher.SwitchNextViewListener() {
             @Override
             public void switchTONextView(View nextView, int index) {
@@ -262,5 +280,42 @@ public class HomeFragment extends BaseFragment {
         rv_zhaoshang.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         rv_zhaoshang.setAdapter(zhaoshangAdapter);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.kunc:
+                break;
+
+            case R.id.jianzhi:
+                startActivity(new Intent(mContext, ProductListActivity.class));
+
+                break;
+
+            case R.id.zhaoshang:
+                startActivity(new Intent(mContext, JoinInvestmentActivity.class));
+
+                break;
+            case R.id.daikuan:
+                startActivity(new Intent(mContext, FinancingLoansActivity.class));
+
+                break;
+            case R.id.tv_tuiguang_more:
+                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+                break;
+            case R.id.tv_caigou_more:
+                break;
+            case R.id.tv_jiazhi_more:
+                startActivity(new Intent(mContext, ProductListActivity.class));
+                break;
+            case R.id.tv_zhaoshang_more:
+                startActivity(new Intent(mContext, JoinInvestmentActivity.class));
+
+                break;
+            case R.id.tv_xinwen_more:
+                startActivity(new Intent(mContext, LatestNewsActivity.class));
+                break;
+        }
     }
 }

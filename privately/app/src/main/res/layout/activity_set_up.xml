@@ -12,32 +12,9 @@
 
 
     <RelativeLayout
-
-        android:id="@+id/rl_jibenxinxi"
+        android:id="@+id/rl_zhanghaoguanli"
         style="@style/me_layout_style"
         android:layout_marginTop="10dp">
-
-        <TextView
-            style="@style/me_text_style"
-            android:text="基本信息" />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_arrow" />
-
-    </RelativeLayout>
-
-    <View style="@style/line_style" />
-
-    <RelativeLayout
-
-        android:id="@+id/rl_zhanghaoguanli"
-        style="@style/me_layout_style">
 
         <TextView
             style="@style/me_text_style"

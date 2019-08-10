@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".business.home.JoinInvestmentDetailActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_bg"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:id="@+id/fl_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <cn.jzvd.JzvdStd
+                    android:id="@+id/jz_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </FrameLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_eight"
+                    tools:text="智慧家居专家——
+一站式智能照明整体解决方案" />
+
+                <TextView
+                    android:id="@+id/tv_company_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:textColor="@color/text_b6"
+                    android:textSize="@dimen/text_one_three"
+                    tools:text="北京智能科技有限公司" />
+
+                <com.zsoe.businesssharing.commonview.ExpandableTextView
+                    android:id="@+id/tv_jieshao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:DrawableAndTextGravity="right"
+                    app:contentTextColor="@color/text_3"
+                    app:contentTextSize="8dp"
+                    app:expandCollapseTextColor="@color/AC9472"
+                    app:expandText="详情"
+                    app:maxCollapsedLines="6" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="企业简介"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_six" />
+
+
+                    <TextView
+                        android:id="@+id/tv_tuiguang_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:padding="12dp"
+                        android:text="查看企业"
+                        android:textColor="@color/AC9472"
+                        android:textSize="@dimen/text_one_four" />
+
+
+                </RelativeLayout>
+
+
+                <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/product_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitXY"
+                    fresco:placeholderImage="@mipmap/icon_default"
+                    fresco:placeholderImageScaleType="fitCenter"
+                    fresco:roundedCornerRadius="5dp" />
+
+                <com.zsoe.businesssharing.commonview.ExpandableTextView
+                    android:id="@+id/tv_qiye_jieshao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:DrawableAndTextGravity="right"
+                    app:contentTextColor="@color/text_3"
+                    app:contentTextSize="8dp"
+                    app:expandCollapseTextColor="@color/AC9472"
+                    app:expandText="详情"
+                    app:maxCollapsedLines="6" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="政策说明"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_six" />
+
+
+                <com.zsoe.businesssharing.commonview.ExpandableTextView
+                    android:id="@+id/tv_zhengce"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:DrawableAndTextGravity="right"
+                    app:contentTextColor="@color/text_3"
+                    app:contentTextSize="8dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:expandCollapseTextColor="@color/AC9472"
+                    app:expandText="详情"
+                    app:maxCollapsedLines="6" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

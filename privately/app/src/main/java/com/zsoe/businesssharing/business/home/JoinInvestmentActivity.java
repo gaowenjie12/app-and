@@ -1,4 +1,4 @@
-package com.zsoe.businesssharing.business.exhibitionhall;
+package com.zsoe.businesssharing.business.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,16 +21,17 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-public class ProductListActivity extends BaseActivity {
+public class JoinInvestmentActivity extends BaseActivity {
 
-    private RecyclerView mRvProductList;
+    private RecyclerView mRvJoinList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_list);
+        setContentView(R.layout.activity_join_investment);
         initView();
-        initTitleText("产品列表");
+
+        initTitleText("招商加盟列表");
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
@@ -42,8 +43,7 @@ public class ProductListActivity extends BaseActivity {
     }
 
     private void initView() {
-        mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
-
+        mRvJoinList = (RecyclerView) findViewById(R.id.rv_join_list);
 
         List<BannerItemBean> bannerItemBeans = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class ProductListActivity extends BaseActivity {
         bannerItemBeans.addAll(bannerItemBeans);
 
 
-        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_product_list_layout, bannerItemBeans) {
+        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_tuiguang_list_layout, bannerItemBeans) {
             @Override
             protected void convert(BaseViewHolder holder, final BannerItemBean item) {
                 super.convert(holder, item);
@@ -83,21 +83,25 @@ public class ProductListActivity extends BaseActivity {
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
                 FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
 
-                holder.setText(R.id.tv_name, "北京字节跳动科技有限公司");
-                holder.setText(R.id.tv_zhiwei, "主营业务：数码、平板销售数码、平板销售...");
+                holder.setText(R.id.tv_name, "为何马云仅有7%的股份就控制了阿里,孙正义是最大股东却说了不算");
+                holder.setText(R.id.tv_zhiwei, "发布时间：2019-07-07");
+                holder.setText(R.id.tv_p_c, "1268人看过");
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, ProductDetailActivity.class));
+                        startActivity(new Intent(mContext, JoinInvestmentDetailActivity.class));
+
                     }
                 });
 
             }
         };
-        mRvProductList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
-        mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
-        mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
-        mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
+
+
+        mRvJoinList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
+        mRvJoinList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
+        mRvJoinList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
+        mRvJoinList.setAdapter(noticeBeanOnionRecycleAdapter);
     }
 }

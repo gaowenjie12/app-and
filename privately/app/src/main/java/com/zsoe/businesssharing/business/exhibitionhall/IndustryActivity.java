@@ -173,7 +173,7 @@ public class IndustryActivity extends BaseActivity implements View.OnClickListen
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, CompanyProfilesActivity.class));
+                        startActivity(new Intent(mContext, ProductDetailActivity.class));
                     }
                 });
 

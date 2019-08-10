@@ -86,6 +86,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/simple_item_background_selector"
                         android:drawableTop="@mipmap/home_kucun"
                         android:drawablePadding="10dp"
                         android:gravity="center"
@@ -99,6 +100,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/simple_item_background_selector"
 
                         android:drawableTop="@mipmap/home_chanpin"
                         android:drawablePadding="10dp"
@@ -113,6 +115,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/simple_item_background_selector"
 
                         android:drawableTop="@mipmap/home_jiameng"
                         android:drawablePadding="10dp"
@@ -127,6 +130,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/simple_item_background_selector"
 
                         android:drawableTop="@mipmap/honge_daikuan"
                         android:drawablePadding="10dp"

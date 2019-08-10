@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,189 +9,568 @@
 
     <include layout="@layout/comm_title_bar" />
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@color/white"
-        android:padding="10dp">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/user_image"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_3"
-                android:textSize="18sp"
-                tools:text="大黄蜂" />
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="15dp">
 
-            <TextView
-                android:id="@+id/user_gongsi"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/user_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_eight"
+                        tools:text="大黄蜂" />
+
+                    <TextView
+                        android:id="@+id/user_gongsi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawablePadding="5dp"
+                        android:textColor="@color/text_b6"
+                        android:textSize="@dimen/text_one_three"
+                        tools:text="阿里山楼宇清洁服务有限公司" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_daliang_storke"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="4dp"
+                    android:text="签到"
+                    android:textColor="@color/AC9472"
+                    android:textSize="@dimen/text_one_five" />
+
+                <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/user_image"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:scaleType="fitXY"
+                    fresco:placeholderImage="@color/pv_wait_color"
+                    fresco:placeholderImageScaleType="fitCenter"
+                    fresco:roundAsCircle="true" />
+
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:drawablePadding="5dp"
-                android:textColor="@color/text_3"
-                android:textSize="15sp"
-                tools:text="阿里山楼宇清洁服务有限公司" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="签到"
-            android:textColor="@color/text_3" />
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_jianzhi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/user_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitXY"
-            fresco:placeholderImage="@color/pv_wait_color"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:roundAsCircle="true" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/e" />
 
 
-    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="价值产品"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
 
-    <RelativeLayout
-        android:id="@+id/rl_qiye_guanli"
-        style="@style/me_layout_style"
-        android:layout_marginTop="10dp">
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
 
-        <TextView
-            style="@style/me_text_style"
-            android:text="企业管理" />
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_jiameng"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-
-        <ImageView
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_arrow" />
-
-    </RelativeLayout>
-
-    <View style="@style/line_style" />
-
-
-    <RelativeLayout
-        android:id="@+id/rl_wodesoucang"
-        style="@style/me_layout_style">
-
-        <TextView
-            style="@style/me_text_style"
-            android:text="我的收藏" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/d" />
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_arrow" />
-
-    </RelativeLayout>
-
-    <View style="@style/line_style" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="招商加盟"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/rl_kajuanbao"
-        style="@style/me_layout_style">
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_kunc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-        <TextView
-            style="@style/me_text_style"
-            android:text="卡卷包" />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_arrow" />
-
-    </RelativeLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/kucunweihuo" />
 
 
-    <RelativeLayout
-        android:id="@+id/rl_shezhi"
-        style="@style/me_layout_style"
-        android:layout_marginTop="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="库存尾货"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
 
-        <TextView
-            style="@style/me_text_style"
-            android:text="设置" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_daikuan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_arrow" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rl_dianhua"
-        style="@style/me_layout_style"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            style="@style/me_text_style"
-            android:text="联系客服" />
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_arrow" />
-
-    </RelativeLayout>
-
-    <View style="@style/line_style" />
-
-    <RelativeLayout
-        android:id="@+id/rl_zhongxin"
-        style="@style/me_layout_style">
-
-        <TextView
-            style="@style/me_text_style"
-            android:text="帮助中心" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/b" />
 
 
-        <ImageView
-            android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="贷款融资"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
 
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_arrow" />
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_zixun"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-    </RelativeLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/c" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="行业资讯"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_caigou"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/a" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="采购"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_renzheng"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/gongsirenzheng" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="公司认证"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_xinxiang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/xinxiang" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="信箱"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_tuiguang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/tuiguang" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="推广"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_liuyanban"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/liuyanban" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="留言板"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_wode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/wode" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="我的"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_shoucang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/shoucang_m" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="收藏"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_kajuan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/kabao" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="我的卡包"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_shezhi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/shezhi" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="设置"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_kefu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/lianxikefu" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="联系客服"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:id="@+id/ll_bangzhu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/bangzhu" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="帮助中心"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+                </com.zsoe.businesssharing.commonview.SquareLinearLayout>
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="invisible" />
+
+
+                <com.zsoe.businesssharing.commonview.SquareLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/simple_item_background_selector"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="invisible" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

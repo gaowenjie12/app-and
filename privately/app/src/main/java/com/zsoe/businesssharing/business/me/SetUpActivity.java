@@ -1,6 +1,5 @@
 package com.zsoe.businesssharing.business.me;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,6 @@ import com.zsoe.businesssharing.base.BaseActivity;
 
 public class SetUpActivity extends BaseActivity implements View.OnClickListener {
 
-    private RelativeLayout mRlJibenxinxi;
     private RelativeLayout mRlZhanghaoguanli;
     private RelativeLayout mRlQingchuhuanc;
     private RelativeLayout mRlGuanyuwomen;
@@ -30,8 +28,6 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
-        mRlJibenxinxi = (RelativeLayout) findViewById(R.id.rl_jibenxinxi);
-        mRlJibenxinxi.setOnClickListener(this);
         mRlZhanghaoguanli = (RelativeLayout) findViewById(R.id.rl_zhanghaoguanli);
         mRlZhanghaoguanli.setOnClickListener(this);
         mRlQingchuhuanc = (RelativeLayout) findViewById(R.id.rl_qingchuhuanc);
@@ -48,9 +44,6 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             default:
-                break;
-            case R.id.rl_jibenxinxi:
-                startActivity(new Intent(mContext, BasicInformationActivity.class));
                 break;
             case R.id.rl_zhanghaoguanli:
                 break;

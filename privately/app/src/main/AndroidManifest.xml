@@ -54,14 +54,51 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-        <activity android:name=".business.exhibitionhall.IndustryActivity"></activity>
-        <activity android:name=".business.exhibitionhall.CompanyProfilesActivity" />
-        <activity android:name=".business.exhibitionhall.EventDetailsActivity" />
-        <activity android:name=".business.exhibitionhall.CommunicationMeetingForeshowActivity" />
-        <activity android:name=".business.exhibitionhall.DynamicDetailsActivity" />
-        <activity android:name=".business.exhibitionhall.LatestNewsActivity" />
-        <activity android:name=".business.exhibitionhall.CompaniesListActivity" />
-        <activity android:name=".business.exhibitionhall.ProductListActivity" /> <!-- 人物介绍 -->
+        <!--贷款融资-融资详情-->
+        <activity
+            android:name=".business.home.FinancingLoansDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--贷款融资-->
+        <activity
+            android:name=".business.home.FinancingLoansActivity"
+            android:screenOrientation="portrait" /> <!-- 产品介绍 -->
+        <activity
+            android:name=".business.exhibitionhall.ProductDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 加盟详情 -->
+        <activity
+            android:name=".business.home.JoinInvestmentDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 招商加盟 -->
+        <activity
+            android:name=".business.home.JoinInvestmentActivity"
+            android:screenOrientation="portrait" /> <!-- 行业 -->
+        <activity
+            android:name=".business.exhibitionhall.IndustryActivity"
+            android:screenOrientation="portrait" /> <!-- 企业介绍 -->
+        <activity
+            android:name=".business.exhibitionhall.CompanyProfilesActivity"
+            android:screenOrientation="portrait" /> <!-- 活动详情 -->
+        <activity
+            android:name=".business.exhibitionhall.EventDetailsActivity"
+            android:screenOrientation="portrait" /> <!-- 交流报告 -->
+        <activity
+            android:name=".business.exhibitionhall.CommunicationMeetingForeshowActivity"
+            android:screenOrientation="portrait" /> <!-- 动态详情 -->
+        <activity
+            android:name=".business.exhibitionhall.DynamicDetailsActivity"
+            android:screenOrientation="portrait" /> <!-- 近期动态 -->
+        <activity
+            android:name=".business.exhibitionhall.LatestNewsActivity"
+            android:screenOrientation="portrait" /> <!-- 企业列表 -->
+        <activity
+            android:name=".business.exhibitionhall.CompaniesListActivity"
+            android:screenOrientation="portrait" /> <!-- 产品列表 -->
+        <activity
+            android:name=".business.exhibitionhall.ProductListActivity"
+            android:screenOrientation="portrait" /> <!-- 人物介绍 -->
         <activity
             android:name=".business.exhibitionhall.MasterDetailActivity"
             android:screenOrientation="portrait" /> <!-- 行业大咖 -->

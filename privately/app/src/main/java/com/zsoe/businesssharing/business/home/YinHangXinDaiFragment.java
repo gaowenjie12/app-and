@@ -1,16 +1,17 @@
-package com.zsoe.businesssharing.business.exhibitionhall;
+package com.zsoe.businesssharing.business.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.bean.BannerItemBean;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
@@ -21,16 +22,39 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-public class ProductListActivity extends BaseActivity {
+/**
+ * 银行信贷
+ */
+
+public class YinHangXinDaiFragment extends BaseFragment {
+
+    private static final String TAG = "HomeFragment";
+
+    public static YinHangXinDaiFragment newInstance(String title) {
+        YinHangXinDaiFragment f = new YinHangXinDaiFragment();
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        f.setArguments(args);
+        return f;
+    }
+
+    @Override
+    protected void lazyLoadData() {
+        super.lazyLoadData();
+    }
+
+    @Override
+    protected int createViewByLayoutId() {
+        return R.layout.fragment_yinhangxindai;
+    }
 
     private RecyclerView mRvProductList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_list);
-        initView();
-        initTitleText("产品列表");
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mRvProductList = view.findViewById(R.id.rv_product_list);
+
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
@@ -39,11 +63,6 @@ public class ProductListActivity extends BaseActivity {
 
             }
         });
-    }
-
-    private void initView() {
-        mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
-
 
         List<BannerItemBean> bannerItemBeans = new ArrayList<>();
 
@@ -75,7 +94,7 @@ public class ProductListActivity extends BaseActivity {
         bannerItemBeans.addAll(bannerItemBeans);
 
 
-        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_product_list_layout, bannerItemBeans) {
+        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_bank_list_layout, bannerItemBeans) {
             @Override
             protected void convert(BaseViewHolder holder, final BannerItemBean item) {
                 super.convert(holder, item);
@@ -86,18 +105,12 @@ public class ProductListActivity extends BaseActivity {
                 holder.setText(R.id.tv_name, "北京字节跳动科技有限公司");
                 holder.setText(R.id.tv_zhiwei, "主营业务：数码、平板销售数码、平板销售...");
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(mContext, ProductDetailActivity.class));
-                    }
-                });
-
             }
         };
         mRvProductList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
         mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
         mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
+
     }
 }
