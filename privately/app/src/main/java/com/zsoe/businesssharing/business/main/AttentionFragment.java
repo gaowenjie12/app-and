@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class AttentionFragment extends BaseFragment {
 
-    private static final String TAG = "HomeFragment";
     private CommonTabLayout mTabLayout_6;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 

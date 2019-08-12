@@ -96,9 +96,6 @@ public class MailFragment extends BaseFragment {
         bannerItemBean4.setImg("http://i1.hdslb.com/bfs/archive/20b81aa9dcffd6db03dc14296ff3b84874f0c529.png");
         bannerItemBeans.add(bannerItemBean4);
 
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
 
 
         OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_mail_layout, bannerItemBeans) {

@@ -54,12 +54,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-
+        <activity android:name=".business.home.ProcurementAndInventoryDetailActivity"></activity>
+        <activity android:name=".business.exhibitionhall.IndustryClassificationActivity" /> <!-- 采购&库存 -->
+        <activity
+            android:name=".business.home.ProcurementAndInventoryActivity"
+            android:screenOrientation="portrait" /> <!-- 搜索 -->
         <activity
             android:name=".business.home.SearchActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 消息提醒 -->
+            android:screenOrientation="portrait" /> <!-- 消息提醒 -->
         <activity
             android:name=".business.me.MessageRemindActivity"
             android:screenOrientation="portrait" /> <!-- 产品管理 -->

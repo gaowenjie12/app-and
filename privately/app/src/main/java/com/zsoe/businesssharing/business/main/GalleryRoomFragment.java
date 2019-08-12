@@ -23,6 +23,7 @@ import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.bean.BannerItemBean;
 import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ExpandAdapter;
+import com.zsoe.businesssharing.business.exhibitionhall.IndustryClassificationActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.MasterDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.MasterListActivity;
@@ -298,7 +299,7 @@ public class GalleryRoomFragment extends BaseFragment {
                 relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        startActivity(new Intent(mContext, IndustryClassificationActivity.class));
                     }
                 });
             } else if (i == 1) {

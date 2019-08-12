@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".business.home.ProcurementAndInventoryDetailActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="产品关键词"
+                android:textColor="@color/text_b6" />
+
+            <TextView
+                android:id="@+id/tv_chakan_chanpin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="10dp"
+                android:text="查看产品"
+                android:textColor="@color/AC9472" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_chanpin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_two_zero"
+            tools:text="水杯" />
+
+        <View
+            style="@style/line_style"
+            android:layout_marginTop="15dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="产品关键词"
+                android:textColor="@color/text_b6" />
+
+            <TextView
+                android:id="@+id/tv_chakan_qiye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="10dp"
+                android:text="查看产品"
+                android:textColor="@color/AC9472" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_gongsi_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_two_zero"
+            tools:text="阿尔法科技公司" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_seven"
+            tools:text="青岛市黄岛区气象局预报员张星说，这是因为今年第9号台风“利奇马”已经从强台风级减弱为热带风暴级，它的台风结构已经被严重破坏，台风中心范围很大。众所周知，台风中心的气压非常平均，一般风雨很小，或者无风无雨，因此大家可能没有感觉到“利奇马”中心登陆，它就已经过去了" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

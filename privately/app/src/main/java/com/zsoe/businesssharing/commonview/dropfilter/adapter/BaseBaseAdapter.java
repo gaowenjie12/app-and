@@ -15,7 +15,7 @@ import java.util.List;
  */
 public abstract class BaseBaseAdapter<T> extends BaseAdapter {
 
-    public List<T> list;
+    public List<T> list = new ArrayList<>();
 
     protected Context context;
 
@@ -37,8 +37,8 @@ public abstract class BaseBaseAdapter<T> extends BaseAdapter {
             list = new ArrayList<T>(0);
         }
 
-        this.list = list;
-
+        this.list.clear();
+        this.list.addAll(list);
         notifyDataSetChanged();
     }
 

@@ -129,6 +129,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.ll_kunc:
+                startActivity(new Intent(mContext, ProcurementManagementActivity.class));
+
                 break;
             case R.id.ll_daikuan:
                 startActivity(new Intent(mContext, FinancingLoansActivity.class));
@@ -154,6 +156,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.ll_liuyanban:
+                startActivity(new Intent(mContext, MessageRemindActivity.class));
+
                 break;
             case R.id.ll_wode:
                 startActivity(new Intent(mContext, BasicInformationActivity.class));

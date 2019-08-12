@@ -23,9 +23,11 @@ import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingFore
 import com.zsoe.businesssharing.business.exhibitionhall.CompanyProfilesActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.EventDetailsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
+import com.zsoe.businesssharing.business.exhibitionhall.ProductDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
+import com.zsoe.businesssharing.business.home.ProcurementAndInventoryActivity;
 import com.zsoe.businesssharing.business.home.SearchActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
 import com.zsoe.businesssharing.commonview.ClearEditText;
@@ -253,6 +255,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        startActivity(new Intent(mContext, ProductDetailActivity.class));
 
                     }
                 });
@@ -306,6 +309,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.kunc:
+
+                startActivity(new Intent(mContext, ProcurementAndInventoryActivity.class));
+
                 break;
 
             case R.id.jianzhi:
