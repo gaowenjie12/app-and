@@ -54,11 +54,29 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-        <!--贷款融资-融资详情-->
+
+        <activity
+            android:name=".business.home.SearchActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 消息提醒 -->
+        <activity
+            android:name=".business.me.MessageRemindActivity"
+            android:screenOrientation="portrait" /> <!-- 产品管理 -->
+        <activity
+            android:name=".business.me.ProductManagementActivity"
+            android:screenOrientation="portrait" /> <!-- 采购/库存管理 -->
+        <activity
+            android:name=".business.me.ProcurementManagementActivity"
+            android:screenOrientation="portrait" /> <!-- 收藏列表 -->
+        <activity
+            android:name=".business.me.CollectionListActivity"
+            android:screenOrientation="portrait" /> <!-- 贷款融资-融资详情 -->
         <activity
             android:name=".business.home.FinancingLoansDetailActivity"
-            android:screenOrientation="portrait"></activity>
-        <!--贷款融资-->
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 贷款融资 -->
         <activity
             android:name=".business.home.FinancingLoansActivity"
             android:screenOrientation="portrait" /> <!-- 产品介绍 -->
@@ -77,7 +95,9 @@
             android:screenOrientation="portrait" /> <!-- 行业 -->
         <activity
             android:name=".business.exhibitionhall.IndustryActivity"
-            android:screenOrientation="portrait" /> <!-- 企业介绍 -->
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 企业介绍 -->
         <activity
             android:name=".business.exhibitionhall.CompanyProfilesActivity"
             android:screenOrientation="portrait" /> <!-- 活动详情 -->

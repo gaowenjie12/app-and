@@ -16,16 +16,17 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/tv_order_type"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:drawablePadding="5dp"
-            android:text="产品推荐"
+            tools:text="产品推荐"
             android:textColor="@color/text_3"
             android:textSize="17dp" />
 
         <TextView
+            android:id="@+id/tv_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -41,7 +42,7 @@
             android:layout_marginTop="10dp">
 
             <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/user_image"
+                android:id="@+id/image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
@@ -53,17 +54,18 @@
                 fresco:roundAsCircle="true" />
 
             <TextView
+                android:id="@+id/tv_company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/user_image"
+                android:layout_toRightOf="@+id/image"
                 android:textColor="@color/text_3"
                 android:textSize="@dimen/text_one_five"
                 tools:text="阿里巴巴集团" />
 
 
             <TextView
-                android:id="@+id/tv_order_detail"
+                android:id="@+id/tv_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

@@ -233,6 +233,22 @@ public abstract class BaseFragment<P extends Presenter> extends Fragment impleme
         }
     }
 
+    protected void setTitleRightSecondIcon(int resid, final Action1<View> clickAction) {
+        ImageView  rightImageView = (ImageView) findViewById(R.id.title_rigth_second);
+        if (rightImageView != null) {
+            rightImageView.setVisibility(View.VISIBLE);
+            rightImageView.setImageResource(resid);
+            if (clickAction != null) {
+                rightImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickAction.call(v);
+                    }
+                });
+            }
+        }
+    }
+
     protected ImageView getTitleRightImg() {
         ImageView view = (ImageView) findViewById(R.id.title_title_img);
         view.setVisibility(View.VISIBLE);

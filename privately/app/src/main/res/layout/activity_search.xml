@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".business.home.SearchActivity">
+
+    <include layout="@layout/search_layout" />
+
+    <View style="@style/line_style" />
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/tl_6"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="7dp"
+        android:background="@color/white"
+        tl:tl_iconVisible="false"
+        tl:tl_indicator_color="@color/AC9472"
+        tl:tl_indicator_corner_radius="1.5dp"
+        tl:tl_indicator_height="3dp"
+        tl:tl_indicator_width="17dp"
+        tl:tl_textSelectColor="@color/AC9472"
+        tl:tl_textUnselectColor="@color/text_b6"
+        tl:tl_textsize="@dimen/text_one_four" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/left2"
+            android:text="历史搜索"
+            android:textColor="@color/text_b6"
+            android:textSize="@dimen/text_one_five" />
+
+
+        <ImageView
+            android:id="@+id/iv_shanchu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="12dp"
+            android:src="@mipmap/shanchu"
+            android:text="查看全部" />
+
+
+    </RelativeLayout>
+
+    <com.zsoe.businesssharing.commonview.MultiLineRadioGroup
+        android:id="@+id/history_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        app:child_layout="@layout/child_work_note"
+        app:child_margin_horizontal="6dip"
+        app:child_margin_vertical="12dp"
+        app:gravity="1"
+        app:single_choice="true" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/left2"
+        android:text="热门搜索"
+
+        android:textColor="@color/text_b6"
+        android:textSize="@dimen/text_one_five" />
+
+
+    <com.zsoe.businesssharing.commonview.MultiLineRadioGroup
+        android:id="@+id/hot_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:child_layout="@layout/child_work_note"
+        app:child_margin_horizontal="6dip"
+        app:child_margin_vertical="12dp"
+        app:gravity="1"
+        app:single_choice="true" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

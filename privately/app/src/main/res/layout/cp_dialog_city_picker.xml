@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/comm_title_bar"/>
+
     <include layout="@layout/cp_search_view" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cp_city_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,14 +20,14 @@
 
         <TextView
             android:id="@+id/cp_overlay"
-            android:layout_width="?attr/cpOverlayWidth"
-            android:layout_height="?attr/cpOverlayHeight"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:visibility="gone"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:textSize="?attr/cpOverlayTextSize"
-            android:textColor="?attr/cpOverlayTextColor"
-            android:background="?attr/cpOverlayBackground"/>
+            android:textSize="30dp"
+            android:textColor="@color/AC9472"
+            android:background="@drawable/cp_overlay_bg"/>
 
         <!--右侧字母导航-->
         <com.zsoe.businesssharing.commonview.citypicker.view.SideIndexBar

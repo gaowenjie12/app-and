@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -65,15 +64,13 @@ public class SideIndexBar extends View {
         mIndexItems = new ArrayList<>();
         mIndexItems.addAll(Arrays.asList(DEFAULT_INDEX_ITEMS));
 
-        TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(R.attr.cpIndexBarTextSize, typedValue, true);
-        mTextSize = context.getResources().getDimensionPixelSize(typedValue.resourceId);
 
-        context.getTheme().resolveAttribute(R.attr.cpIndexBarNormalTextColor, typedValue, true);
-        mTextColor = context.getResources().getColor(typedValue.resourceId);
+        mTextSize = context.getResources().getDimensionPixelSize(R.dimen.cp_index_bar_text_size);
 
-        context.getTheme().resolveAttribute(R.attr.cpIndexBarSelectedTextColor, typedValue, true);
-        mTextTouchedColor = context.getResources().getColor(typedValue.resourceId);
+
+        mTextColor = context.getResources().getColor(R.color.text_3);
+
+        mTextTouchedColor = context.getResources().getColor(R.color.AC9472);
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setTextSize(mTextSize);

@@ -1,12 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <include layout="@layout/comm_title_bar" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="消息" />
+        android:background="@color/white"
+        android:orientation="vertical">
 
-</RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="通知"
+            android:textColor="@color/text_b6"
+            android:textSize="@dimen/text_one_five" />
+
+        <RelativeLayout
+            android:id="@+id/rl_xiaoxitixing"
+            style="@style/me_layout_style"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/me_text_style"
+                android:drawableLeft="@mipmap/tongzhi_xiaoxi"
+                android:drawablePadding="5dp"
+                android:text="消息提醒" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_white_blue_storke"
+                android:paddingLeft="13dp"
+                android:paddingTop="2dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="2dp"
+                android:text="查看"
+                android:textColor="@color/AC9472"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <View style="@style/line_style" />
+
+        <RelativeLayout
+            android:id="@+id/rl_xitonggonggao"
+            style="@style/me_layout_style">
+
+            <TextView
+                style="@style/me_text_style"
+                android:drawableLeft="@mipmap/tongzhi_xitonggonggao"
+                android:drawablePadding="5dp"
+                android:text="系统公告" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_white_blue_storke"
+                android:paddingLeft="13dp"
+                android:paddingTop="2dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="2dp"
+                android:text="查看"
+                android:textColor="@color/AC9472"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <View style="@style/line_style" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_hangyezixun"
+            style="@style/me_layout_style">
+
+            <TextView
+                style="@style/me_text_style"
+                android:drawableLeft="@mipmap/tongzhi_hangyezixun"
+                android:drawablePadding="5dp"
+                android:text="行业资讯" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_white_blue_storke"
+                android:paddingLeft="13dp"
+                android:paddingTop="2dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="2dp"
+                android:text="查看"
+                android:textColor="@color/AC9472"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <View style="@style/line_style" />
+
+        <RelativeLayout
+            android:id="@+id/rl_lingdaohuixin"
+            style="@style/me_layout_style">
+
+            <TextView
+                style="@style/me_text_style"
+                android:drawableLeft="@mipmap/tongzhi_lingdaohuixin"
+                android:drawablePadding="5dp"
+                android:text="领导回信" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_white_blue_storke"
+                android:paddingLeft="13dp"
+                android:paddingTop="2dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="2dp"
+                android:text="查看"
+                android:textColor="@color/AC9472"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <View style="@style/line_style" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:text="通知"
+            android:textColor="@color/text_b6"
+            android:textSize="@dimen/text_one_five" />
+
+        <RelativeLayout
+            android:id="@+id/rl_liaotianliebiao"
+            style="@style/me_layout_style">
+
+            <TextView
+                style="@style/me_text_style"
+                android:drawableLeft="@mipmap/hudong_liaotianliebiao"
+                android:drawablePadding="5dp"
+                android:text="聊天列表" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_white_blue_storke"
+                android:paddingLeft="13dp"
+                android:paddingTop="2dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="2dp"
+                android:text="查看"
+                android:textColor="@color/AC9472"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <View style="@style/line_style" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

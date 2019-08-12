@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/iv_image"
+        android:textColor="@color/text_3"
+        android:textSize="16dp"
+        tools:text="为何马云仅有7%的股份就控制了阿里,孙正义是最大股东却说了不算" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:padding="10dp"
+        android:textColor="@color/text_b6"
+        android:textSize="15dp"
+        tools:text="发布时间：2019-07-07" />
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_time"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:text="删除"
+        android:textColor="@color/red_point"
+        android:textSize="15dp" />
+
+    <View
+        style="@style/line_style"
+        android:layout_below="@+id/tv_delete"
+        android:layout_marginTop="5dp" />
+</RelativeLayout>

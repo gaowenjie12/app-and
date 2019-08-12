@@ -4,6 +4,7 @@
     android:layout_height="45dp"
     android:background="@color/white"
     android:focusable="true"
+    android:id="@+id/rl_search"
     android:focusableInTouchMode="true"
     android:orientation="horizontal">
 
@@ -13,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:layout_toLeftOf="@+id/tv_cancel"
+        android:layout_toLeftOf="@+id/tv_sousuo"
         android:background="@drawable/shap_search"
         android:drawableLeft="@mipmap/sousuo"
         android:drawablePadding="5dp"
@@ -22,5 +23,20 @@
         android:paddingRight="10dp"
         android:textColor="@color/text_3"
         android:textSize="15dp" />
+
+
+    <TextView
+        android:id="@+id/tv_sousuo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="搜索"
+        android:visibility="gone"
+        android:textColor="@color/AC9472"
+        android:textSize="@dimen/text_one_five" />
 
 </RelativeLayout>

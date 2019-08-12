@@ -11,8 +11,16 @@ import androidx.annotation.Nullable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
+import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
+import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
+import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.me.BasicInformationActivity;
 import com.zsoe.businesssharing.business.me.CardVolumeListActivity;
+import com.zsoe.businesssharing.business.me.CollectionListActivity;
+import com.zsoe.businesssharing.business.me.MessageRemindActivity;
+import com.zsoe.businesssharing.business.me.ProcurementManagementActivity;
+import com.zsoe.businesssharing.business.me.ProductManagementActivity;
 import com.zsoe.businesssharing.business.me.SetUpActivity;
 import com.zsoe.businesssharing.commonview.SquareLinearLayout;
 import com.zsoe.businesssharing.utils.FrecoFactory;
@@ -111,27 +119,39 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.ll_jianzhi:
+                startActivity(new Intent(mContext, ProductManagementActivity.class));
+
                 break;
 
             case R.id.ll_jiameng:
+                startActivity(new Intent(mContext, JoinInvestmentActivity.class));
+
                 break;
 
             case R.id.ll_kunc:
                 break;
             case R.id.ll_daikuan:
-
+                startActivity(new Intent(mContext, FinancingLoansActivity.class));
                 break;
             case R.id.ll_zixun:
+                startActivity(new Intent(mContext, LatestNewsActivity.class));
+
                 break;
 
             case R.id.ll_caigou:
+                startActivity(new Intent(mContext, ProcurementManagementActivity.class));
+
                 break;
             case R.id.ll_renzheng:
                 break;
 
             case R.id.ll_xinxiang:
+                startActivity(new Intent(mContext, MessageRemindActivity.class));
+
                 break;
             case R.id.ll_tuiguang:
+                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+
                 break;
             case R.id.ll_liuyanban:
                 break;
@@ -140,6 +160,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.ll_shoucang:
+                startActivity(new Intent(mContext, CollectionListActivity.class));
+
                 break;
             case R.id.ll_kajuan:
                 startActivity(new Intent(mContext, CardVolumeListActivity.class));

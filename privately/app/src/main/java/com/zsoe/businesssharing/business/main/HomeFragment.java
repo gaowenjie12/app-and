@@ -2,7 +2,9 @@ package com.zsoe.businesssharing.business.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +26,16 @@ import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
+import com.zsoe.businesssharing.business.home.SearchActivity;
+import com.zsoe.businesssharing.business.me.MessageRemindActivity;
+import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.UpDownViewSwitcher;
 import com.zsoe.businesssharing.commonview.banner.BannerView;
+import com.zsoe.businesssharing.commonview.citypicker.CityPicker;
+import com.zsoe.businesssharing.commonview.citypicker.adapter.OnPickListener;
+import com.zsoe.businesssharing.commonview.citypicker.model.City;
+import com.zsoe.businesssharing.commonview.citypicker.model.LocateState;
+import com.zsoe.businesssharing.commonview.citypicker.model.LocatedCity;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
@@ -59,9 +69,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private BannerView banner_view;
-    private TextView kunc, jianzhi, zhaoshang, daikuan, tv_tuiguang_more, tv_caigou_more, tv_jiazhi_more, tv_zhaoshang_more, tv_xinwen_more;
+    private TextView kunc, jianzhi, zhaoshang, daikuan, tv_tuiguang_more,
+            tv_caigou_more, tv_jiazhi_more, tv_zhaoshang_more, tv_xinwen_more, tv_diqu;
     private RecyclerView rv_tuiguang, rv_caigou, rv_jiazhi, rv_zhaoshang;
     private UpDownViewSwitcher home_view_switcher;
+    private ClearEditText search_input;
+    private ImageView iv_xiaoxi;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -84,7 +97,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rv_jiazhi = view.findViewById(R.id.rv_jiazhi);
         rv_zhaoshang = view.findViewById(R.id.rv_zhaoshang);
         tv_xinwen_more = view.findViewById(R.id.tv_xinwen_more);
-
+        tv_diqu = view.findViewById(R.id.tv_diqu);
+        iv_xiaoxi = view.findViewById(R.id.iv_xiaoxi);
+        search_input = view.findViewById(R.id.search_input);
+        search_input.setEnabled(true);
+        search_input.setFocusable(false);
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
@@ -106,6 +123,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         tv_jiazhi_more.setOnClickListener(this);
         tv_zhaoshang_more.setOnClickListener(this);
         tv_xinwen_more.setOnClickListener(this);
+        tv_diqu.setOnClickListener(this);
+        iv_xiaoxi.setOnClickListener(this);
+        search_input.setOnClickListener(this);
 
         setDate();
     }
@@ -315,6 +335,46 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.tv_xinwen_more:
                 startActivity(new Intent(mContext, LatestNewsActivity.class));
+                break;
+
+            case R.id.tv_diqu:
+
+                CityPicker.from(getActivity())
+                        .enableAnimation(true)
+//                        .setAnimationStyle(R.style.CustomAnim)
+                        .setLocatedCity(null)
+                        .setHotCities(null)
+                        .setOnPickListener(new OnPickListener() {
+                            @Override
+                            public void onPick(int position, City data) {
+                                tv_diqu.setText(data.getName());
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onLocate() {
+                                //开始定位，这里模拟一下定位
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        CityPicker.from(getActivity()).locateComplete(new LocatedCity("深圳", "广东", "101280601"), LocateState.SUCCESS);
+                                    }
+                                }, 3000);
+                            }
+                        })
+                        .show();
+                break;
+
+            case R.id.iv_xiaoxi:
+                startActivity(new Intent(mContext, MessageRemindActivity.class));
+                break;
+
+            case R.id.search_input:
+                startActivity(new Intent(mContext, SearchActivity.class));
                 break;
         }
     }

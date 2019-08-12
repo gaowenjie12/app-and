@@ -14,9 +14,9 @@
 
     <ImageView
         android:id="@+id/cp_no_result_icon"
-        android:layout_width="?attr/cpEmptyIconWidth"
-        android:layout_height="?attr/cpEmptyIconHeight"
-        android:src="?attr/cpEmptyIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@mipmap/cp_icon_empty"
         android:scaleType="fitCenter"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="?attr/cpEmptyText"
-        android:textSize="?attr/cpEmptyTextSize"
-        android:textColor="?attr/cpEmptyTextColor"/>
+        android:text="@string/cp_no_result"
+        android:textSize="14dp"
+        android:textColor="@color/text_b6"/>
 </LinearLayout>

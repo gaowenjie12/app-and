@@ -2,7 +2,6 @@ package com.zsoe.businesssharing.commonview.citypicker.adapter;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +46,7 @@ public class GridListAdapter extends RecyclerView.Adapter<GridListAdapter.GridVi
         //设置item宽高
         DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
         int screenWidth = dm.widthPixels;
-        TypedValue typedValue = new TypedValue();
-        mContext.getTheme().resolveAttribute(R.attr.cpGridItemSpace, typedValue, true);
-        int space = mContext.getResources().getDimensionPixelSize(typedValue.resourceId);
+        int space = mContext.getResources().getDimensionPixelSize(R.dimen.cp_grid_item_space);
         int padding = mContext.getResources().getDimensionPixelSize(R.dimen.cp_default_padding);
         int indexBarWidth = mContext.getResources().getDimensionPixelSize(R.dimen.cp_index_bar_width);
         int itemWidth = (screenWidth - padding - space * (SPAN_COUNT - 1) - indexBarWidth) / SPAN_COUNT;
