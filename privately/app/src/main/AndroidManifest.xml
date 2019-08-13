@@ -54,8 +54,25 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-        <activity android:name=".business.home.ProcurementAndInventoryDetailActivity"></activity>
-        <activity android:name=".business.exhibitionhall.IndustryClassificationActivity" /> <!-- 采购&库存 -->
+
+        <!--认证公司-->
+        <activity
+            android:name=".business.me.CertificationCompanyActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!--我的签到-->
+        <activity
+            android:name=".business.me.MySignActivity"
+            android:screenOrientation="portrait" />
+
+        <!--采购需求/库存情况-->
+        <activity
+            android:name=".business.home.ProcurementAndInventoryDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--全部行业-->
+        <activity
+            android:name=".business.exhibitionhall.IndustryClassificationActivity"
+            android:screenOrientation="portrait" /> <!-- 采购&库存 -->
         <activity
             android:name=".business.home.ProcurementAndInventoryActivity"
             android:screenOrientation="portrait" /> <!-- 搜索 -->

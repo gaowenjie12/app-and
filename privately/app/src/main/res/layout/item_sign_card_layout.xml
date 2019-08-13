@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="排名卷"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_seven" />
+
+
+        <TextView
+            android:id="@+id/tv_tiaojian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="使用条件"
+            android:textColor="@color/text_b6"
+            android:textSize="@dimen/text_one_three" />
+
+
+        <TextView
+            android:id="@+id/tv_shiyong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_white_blue_storke"
+            android:paddingLeft="13dp"
+            android:paddingTop="3dp"
+            android:paddingRight="13dp"
+            android:paddingBottom="3dp"
+            android:text="立即使用"
+            android:textColor="@color/AC9472"
+            android:textSize="13dp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

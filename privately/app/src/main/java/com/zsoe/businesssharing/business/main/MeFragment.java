@@ -17,8 +17,10 @@ import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.me.BasicInformationActivity;
 import com.zsoe.businesssharing.business.me.CardVolumeListActivity;
+import com.zsoe.businesssharing.business.me.CertificationCompanyActivity;
 import com.zsoe.businesssharing.business.me.CollectionListActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
+import com.zsoe.businesssharing.business.me.MySignActivity;
 import com.zsoe.businesssharing.business.me.ProcurementManagementActivity;
 import com.zsoe.businesssharing.business.me.ProductManagementActivity;
 import com.zsoe.businesssharing.business.me.SetUpActivity;
@@ -116,6 +118,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_sign:
+                startActivity(new Intent(mContext, MySignActivity.class));
+
                 break;
 
             case R.id.ll_jianzhi:
@@ -145,6 +149,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.ll_renzheng:
+
+                startActivity(new Intent(mContext, CertificationCompanyActivity.class));
+
                 break;
 
             case R.id.ll_xinxiang:

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".business.me.CertificationCompanyActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="企业全称："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <EditText
+                    android:id="@+id/et_quancheng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:hint="请输入企业全称"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="主营类目："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <EditText
+                    android:id="@+id/et_leimu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请输入主营类目"
+                    android:minHeight="100dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="身份证号："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <EditText
+                    android:id="@+id/et_shenfenzheng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请输入身份证号"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="法人姓名："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <EditText
+                    android:id="@+id/et_faren"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请输入法人姓名"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="手机号码："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请输入手机号码"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="企业邮箱："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <EditText
+                    android:id="@+id/et_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请输入企业邮箱"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="营业执照照片："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <RelativeLayout
+                    android:layout_width="103dp"
+                    android:layout_height="110dp">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_yingye_img"
+                        android:layout_width="94dp"
+                        android:layout_height="94dp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:id="@+id/yingye_delete_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="5dp"
+                        android:src="@mipmap/close" />
+
+                </RelativeLayout>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="结婚证等照片："
+                    android:textColor="@color/text_3"
+                    android:textSize="@dimen/text_one_five" />
+
+
+                <RelativeLayout
+                    android:layout_width="103dp"
+                    android:layout_height="110dp">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_jiehun_img"
+                        android:layout_width="94dp"
+                        android:layout_height="94dp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+
+                        android:id="@+id/jiehun_delete_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="5dp"
+                        android:src="@mipmap/close" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View style="@style/line_style" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

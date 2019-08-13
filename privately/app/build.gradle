@@ -216,4 +216,7 @@ dependencies {
     implementation 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
     //饺子播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
+
+    implementation project(':library')
+
 }
