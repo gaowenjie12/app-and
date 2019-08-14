@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    tools:context=".business.me.EnterpriseLocationActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="省市："
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_five" />
+
+        <TextView
+            android:id="@+id/tv_shengshiqu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:text="@string/qiye_dizhi"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_five" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View style="@style/line_style" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="详情："
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_five" />
+
+        <EditText
+            android:id="@+id/tv_juti"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入企业详细地址"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_five" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

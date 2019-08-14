@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/main_bg"
+    android:orientation="vertical"
     tools:context=".business.me.BasicInformationActivity">
 
     <include layout="@layout/comm_title_bar" />
@@ -128,7 +128,7 @@
 
                 <TextView
                     style="@style/me_text_style"
-                    android:text="年龄" />
+                    android:text="出生日期" />
 
 
                 <TextView
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/right_arrow4"
-                    android:text="请选择年龄" />
+                    android:text="请选择出生日期" />
 
                 <ImageView
                     android:id="@+id/right_arrow4"

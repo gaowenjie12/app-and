@@ -244,7 +244,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
                         android:padding="5dp"
-                        android:src="@mipmap/close" />
+                        android:src="@mipmap/img_delete"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -281,14 +282,14 @@
                         android:scaleType="centerCrop" />
 
                     <ImageView
-
                         android:id="@+id/jiehun_delete_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
                         android:padding="5dp"
-                        android:src="@mipmap/close" />
+                        android:src="@mipmap/img_delete"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 

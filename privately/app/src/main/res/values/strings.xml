@@ -67,6 +67,7 @@
     <string name="unbind_alias_error_alias_invalid">取消绑定别名失败，别名无效</string>
     <string name="unbind_alias_error_sn_invalid">取消绑定别名失败，sn无效</string>
     <string name="add_tag">添加标签</string>
+    <string name="qiye_dizhi">请选择企业所在地</string>
     <string name="add_tag_unknown_exception">设置标签失败，未知异常</string>
     <string name="add_tag_success">接口调用成功</string>
     <string name="add_tag_error_count">接口调用失败, tag数量过大, 最大不能超过200个</string>
