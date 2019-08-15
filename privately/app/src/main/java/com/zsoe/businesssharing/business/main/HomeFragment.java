@@ -331,6 +331,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
                 break;
             case R.id.tv_caigou_more:
+                startActivity(new Intent(mContext, ProcurementAndInventoryActivity.class));
+
                 break;
             case R.id.tv_jiazhi_more:
                 startActivity(new Intent(mContext, ProductListActivity.class));

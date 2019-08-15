@@ -218,5 +218,7 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
 
     implementation project(':library')
+    implementation project(':easeui')
+
 
 }

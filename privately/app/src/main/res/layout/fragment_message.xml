@@ -29,10 +29,27 @@
             android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/left_tv"
                 style="@style/me_text_style"
                 android:drawableLeft="@mipmap/tongzhi_xiaoxi"
                 android:drawablePadding="5dp"
                 android:text="消息提醒" />
+
+            <TextView
+                android:id="@+id/tv_xiaoxi_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/left_tv"
+                android:background="@drawable/btn_redpoint_storke"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="1dp"
+                android:text="122"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_one_two" />
 
 
             <TextView
@@ -44,7 +61,6 @@
                 android:paddingLeft="13dp"
                 android:paddingTop="3dp"
                 android:paddingRight="13dp"
-
                 android:paddingBottom="3dp"
                 android:text="查看"
                 android:textColor="@color/AC9472"
@@ -118,10 +134,28 @@
             style="@style/me_layout_style">
 
             <TextView
+                android:id="@+id/left_tv2"
                 style="@style/me_text_style"
                 android:drawableLeft="@mipmap/tongzhi_lingdaohuixin"
                 android:drawablePadding="5dp"
                 android:text="领导回信" />
+
+
+            <TextView
+                android:id="@+id/tv_lingdao_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/left_tv2"
+                android:background="@drawable/btn_redpoint_storke"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="1dp"
+                android:text="122"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_one_two" />
 
 
             <TextView
@@ -164,10 +198,28 @@
             style="@style/me_layout_style">
 
             <TextView
+                android:id="@+id/left_tv3"
                 style="@style/me_text_style"
                 android:drawableLeft="@mipmap/hudong_liaotianliebiao"
                 android:drawablePadding="5dp"
                 android:text="聊天列表" />
+
+
+            <TextView
+                android:id="@+id/tv_huanxin_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/left_tv3"
+                android:background="@drawable/btn_redpoint_storke"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="1dp"
+                android:text="122"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_one_two" />
 
 
             <TextView

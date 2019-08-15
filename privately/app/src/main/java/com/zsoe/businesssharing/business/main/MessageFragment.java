@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,15 +44,16 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
 
 
     private RelativeLayout rl_xiaoxitixing, rl_xitonggonggao, rl_hangyezixun, rl_lingdaohuixin, rl_liaotianliebiao;
+    private TextView tv_xiaoxi_count, tv_lingdao_count, tv_huanxin_count;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 
-        setTitleText(true,"消息");
+        setTitleText(true, "消息");
 
-        setTitleLeftIcon(false,0);
+        setTitleLeftIcon(false, 0);
 
         setTitleRigthIcon(true, R.mipmap.tianjia, new View.OnClickListener() {
             @Override
@@ -72,6 +74,10 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         rl_hangyezixun = view.findViewById(R.id.rl_hangyezixun);
         rl_lingdaohuixin = view.findViewById(R.id.rl_lingdaohuixin);
         rl_liaotianliebiao = view.findViewById(R.id.rl_liaotianliebiao);
+
+        tv_xiaoxi_count = view.findViewById(R.id.tv_xiaoxi_count);
+        tv_lingdao_count = view.findViewById(R.id.tv_lingdao_count);
+        tv_huanxin_count = view.findViewById(R.id.tv_huanxin_count);
 
 
         rl_xiaoxitixing.setOnClickListener(this);

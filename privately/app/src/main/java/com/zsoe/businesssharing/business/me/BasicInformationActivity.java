@@ -1,10 +1,14 @@
 package com.zsoe.businesssharing.business.me;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +19,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yanzhenjie.permission.Permission;
+import com.yuyh.library.imgsel.ISNav;
+import com.yuyh.library.imgsel.common.ImageLoader;
+import com.yuyh.library.imgsel.config.ISCameraConfig;
+import com.yuyh.library.imgsel.config.ISListConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.bean.JsonBean;
@@ -28,6 +36,7 @@ import com.zsoe.businesssharing.commonview.wheelview.listener.OnTimeSelectListen
 import com.zsoe.businesssharing.commonview.wheelview.view.OptionsPickerView;
 import com.zsoe.businesssharing.commonview.wheelview.view.TimePickerView;
 import com.zsoe.businesssharing.utils.DateUtil;
+import com.zsoe.businesssharing.utils.GlideUtils;
 import com.zsoe.businesssharing.utils.StrUtils;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
 
@@ -82,6 +91,10 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
     private TextView mTvHangye;
     private RelativeLayout mRlHangye;
 
+
+    private static final int REQUEST_LIST_CODE = 0;
+    private static final int REQUEST_CAMERA_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +105,14 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
         initData();
         xingBieList.add("男");
         xingBieList.add("女");
+
+
+        ISNav.getInstance().init(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, String path, ImageView imageView) {
+                GlideUtils.loadImage(context, path, imageView);
+            }
+        });
     }
 
     private void initView() {
@@ -141,7 +162,7 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
                             @Override
                             public void onPermissionSuccess() {
                                 //拍照
-//                                takePicture(getActivity(), Config.REQUEST_CODE_TOKEPHOTO);
+                                Camera();
                             }
                         }, false, Permission.Group.CAMERA);
 
@@ -149,14 +170,8 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
 
                     @Override
                     public void gallery() {
-
                         //选择图片
-//                        ImagePicker.getInstance().setShowCamera(false);
-//                        DApplication.getInstance().changePickerModeAndClear(false, 1);
-//                        ImagePicker.getInstance().setCrop(true);
-//                        Intent intent = new Intent(mContext, ImageGridActivity.class);
-//                        startActivityForResult(intent, Config.IMAGE_PICKER);
-
+                        toPic();
                     }
                 }).setDimView((ViewGroup) getWindow().getDecorView()).apply().showAtLocation(v, Gravity.BOTTOM, 0, 0);
 
@@ -411,4 +426,57 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
                 .build();
     }
 
+
+    private void toPic() {
+        ISListConfig config = new ISListConfig.Builder()
+                // 是否多选
+                .multiSelect(false)
+                .btnText("确定")
+                // 确定按钮背景色
+                //.btnBgColor(Color.parseColor(""))
+                // 确定按钮文字颜色
+                .btnTextColor(R.color.white)
+                // 使用沉浸式状态栏
+//                .statusBarColor(R.color.black)
+                // 返回图标ResId
+//                .backResId(R.mipmap.back_arrow)
+                .title("图片")
+                .titleColor(Color.WHITE)
+//                .titleBgColor(R.color.black)
+                .allImagesText("全部图片")
+                .needCrop(true)
+                .cropSize(1, 1, 200, 200)
+                // 第一个是否显示相机
+                .needCamera(false)
+                // 最大选择图片数量
+                .maxNum(1)
+                .build();
+
+        ISNav.getInstance().toListActivity(this, config, REQUEST_LIST_CODE);
+
+    }
+
+
+    public void Camera() {
+        ISCameraConfig config = new ISCameraConfig.Builder()
+                .needCrop(true)
+                .cropSize(1, 1, 200, 200)
+                .build();
+
+        ISNav.getInstance().toCameraActivity(this, config, REQUEST_CAMERA_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_LIST_CODE && resultCode == RESULT_OK && data != null) {
+            List<String> pathList = data.getStringArrayListExtra("result");
+            // 测试Fresco
+            mUserImage.setImageURI(Uri.parse("file://" + pathList.get(0)));
+        } else if (requestCode == REQUEST_CAMERA_CODE && resultCode == RESULT_OK && data != null) {
+            String path = data.getStringExtra("result");
+            mUserImage.setImageURI(Uri.parse("file://" + path));
+        }
+    }
 }
