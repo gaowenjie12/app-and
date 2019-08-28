@@ -136,7 +136,7 @@ public class GalleryRoomFragment extends BaseFragment {
         bannerItemBean4.setUrl_title("猴云");
         bannerItemBeans.add(bannerItemBean4);
 
-        banner_view.setDate(bannerItemBeans);
+//        banner_view.setDate(bannerItemBeans);
 
         setDate(bannerItemBeans);
 

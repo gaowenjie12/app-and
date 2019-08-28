@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zsoe.businesssharing">
+
     <!-- iBeancon功能所需权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 个推3.0电子围栏功能所需权限 -->
@@ -54,6 +55,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
+
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <!--企业所在地-->
         <activity
             android:name=".business.me.EnterpriseLocationActivity"
@@ -155,10 +160,10 @@
             android:name=".business.login.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business.main.MainActivity"
+            android:name=".business.SplashActivity"
+            android:theme="@style/AppThemeSplash"
             android:screenOrientation="portrait">
 
-            <!-- android:theme="@style/AppThemeSplash" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -169,11 +174,11 @@
             android:name=".business.welcome.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/themeWelcome" /> <!-- 主页 -->
-        <!-- <activity -->
-        <!-- android:name=".business.main.MainActivity" -->
-        <!-- android:exported="true" -->
-        <!-- android:launchMode="singleTask" -->
-        <!-- android:screenOrientation="portrait" /> &lt;!&ndash; 登录页 &ndash;&gt; -->
+        <activity
+            android:name=".business.main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /> <!-- 登录页 -->
         <activity
             android:name=".business.login.LoginActivity"
             android:screenOrientation="portrait" />

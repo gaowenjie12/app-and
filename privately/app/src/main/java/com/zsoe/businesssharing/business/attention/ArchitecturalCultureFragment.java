@@ -92,7 +92,7 @@ public class ArchitecturalCultureFragment extends BaseFragment {
         bannerItemBeans.add(bannerItemBean4);
 
 
-        bannerView.setDate(bannerItemBeans);
+//        bannerView.setDate(bannerItemBeans);
 
         tv_content.setText("智能家居是在互联网影响之下物联化的体现。\n" +
                 "智能家居通过物联网技术将家中的各种设备连接到一起，提供家电控制、照明控制、电话远程控制、室内外遥控、防盗报警、环境监测、暖通控制、红外转发以及可编程定时控制等多种功能和手段。\n" +

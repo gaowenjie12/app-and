@@ -23,8 +23,8 @@ public abstract class NetCallBack<View, T> extends CacheAble<View, RootResponse<
         DialogManager.getInstance().dismissNetLoadingView();
         LogUtil.e(tRootResponse.toString());
 
-        switch (tRootResponse.getErrCode()) {
-            case 0:
+        switch (tRootResponse.getCode()) {
+            case 1:
                 callBackResponse(v, tRootResponse);
                 callBack(v, tRootResponse.getData());
 
@@ -37,7 +37,7 @@ public abstract class NetCallBack<View, T> extends CacheAble<View, RootResponse<
                 //登录失效，被踢出
                 DApplication.getInstance().exit();
                 DApplication.getInstance().startLogin();
-                Toast.makeText(DApplication.getInstance(), tRootResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DApplication.getInstance(), tRootResponse.getMsg(), Toast.LENGTH_SHORT).show();
 
                 break;
             default:
@@ -49,7 +49,7 @@ public abstract class NetCallBack<View, T> extends CacheAble<View, RootResponse<
                         onCache.call(v, o);
                     }
                 }
-                Toast.makeText(DApplication.getInstance(), tRootResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DApplication.getInstance(), tRootResponse.getMsg(), Toast.LENGTH_SHORT).show();
                 callBackServerError(v, tRootResponse);
                 break;
         }

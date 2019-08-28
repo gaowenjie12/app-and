@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.bean.SlideBean;
 import com.zsoe.businesssharing.commonview.wcviewpager.ObjectAtPositionPagerAdapter;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
@@ -15,10 +15,10 @@ import java.util.List;
 
 
 public class BannerAdapter extends ObjectAtPositionPagerAdapter {
-    private List<BannerItemBean> adList;
+    private List<SlideBean> adList;
     private Context context;
 
-    public BannerAdapter(Context mContext, List<BannerItemBean> adList) {
+    public BannerAdapter(Context mContext, List<SlideBean> adList) {
         super();
         this.adList = adList;
         context = mContext;
@@ -37,7 +37,7 @@ public class BannerAdapter extends ObjectAtPositionPagerAdapter {
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_banner, null);
         SimpleDraweeView simpleDraweeView = view.findViewById(R.id.banner_image);
-        FrecoFactory.getInstance().disPlay(simpleDraweeView, adList.get(position).getImg());
+        FrecoFactory.getInstance().disPlay(simpleDraweeView, adList.get(position).getSlide());
 
         container.addView(view);
 

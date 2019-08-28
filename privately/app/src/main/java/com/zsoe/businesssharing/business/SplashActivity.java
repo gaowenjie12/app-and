@@ -7,10 +7,10 @@ import android.os.CountDownTimer;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
-import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.base.FancyUtils;
+import com.zsoe.businesssharing.business.login.LoginActivity;
 import com.zsoe.businesssharing.business.main.MainActivity;
 import com.zsoe.businesssharing.utils.DialogManager;
-import com.zsoe.businesssharing.utils.PreferencesUtils;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
 
 public class SplashActivity extends BaseActivity {
@@ -65,8 +65,11 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void onFinish() {//计时完毕时触发
 
-            startActivity(new Intent(mContext, MainActivity.class));
+            //如果加载过引导页，调整到首页
+            startMainPage();
 
+//            startActivity(new Intent(mContext, MainActivity.class));
+//
 //            boolean wel = PreferencesUtils.getInstance().isWel();
 //            if (wel) {
 //                //如果加载过引导页，调整到首页
@@ -86,12 +89,11 @@ public class SplashActivity extends BaseActivity {
 
     private void startMainPage() {
         //判断用户状态，选择跳转的activity
-        if (PreferencesUtils.getInstance().isLogin() && DApplication.getInstance().getUserId() != 0) {
-
-
+        if (null != FancyUtils.getLoginUser()) {
+            startActivity(new Intent(mContext, MainActivity.class));
         } else {
-//            startActivity(new Intent(SplashActivity.this, LoginOrRegisterActivity.class));
-//            finish();
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            finish();
         }
     }
 }

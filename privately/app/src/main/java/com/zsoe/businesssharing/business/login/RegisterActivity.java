@@ -2,7 +2,9 @@ package com.zsoe.businesssharing.business.login;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -11,13 +13,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.DrawableTextView;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.KeyboardWatcher;
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener {
+
+@RequiresPresenter(RegisterPresenter.class)
+public class RegisterActivity extends BaseActivity<RegisterPresenter> implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener {
 
 
     private int screenHeight = 0;//屏幕高度
@@ -70,12 +77,49 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.btn_register:
 
+                String s = mEtMobile.getText().toString();
+                if (TextUtils.isEmpty(s)) {
+                    ToastUtils.showShort("请填写手机号");
+                    return;
+                }
+
+                String s3 = mEtCode.getText().toString();
+                if (TextUtils.isEmpty(s3)) {
+                    ToastUtils.showShort("请填写验证码");
+                    return;
+                }
+
+                String pass = mEtPassword.getText().toString();
+                if (TextUtils.isEmpty(pass)) {
+                    ToastUtils.showShort("请填写密码");
+                    return;
+                }
+
+
+                DialogManager.getInstance().showNetLoadingView(mContext);
+                getPresenter().register(s, "s3", pass);
+
                 break;
             case R.id.tv_getcode:
 
+                String s4 = mEtMobile.getText().toString();
+                if (TextUtils.isEmpty(s4)) {
+                    ToastUtils.showShort("请填写手机号");
+                    return;
+                }
+
+
+                DialogManager.getInstance().showNetLoadingView(mContext);
+                getPresenter().getSms(s4, "register");
                 break;
         }
 
+    }
+
+    public void toLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 

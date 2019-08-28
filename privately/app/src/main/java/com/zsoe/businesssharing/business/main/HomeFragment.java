@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +17,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.ExtenactivityBean;
+import com.zsoe.businesssharing.bean.HeadNews;
+import com.zsoe.businesssharing.bean.HomeBean;
+import com.zsoe.businesssharing.bean.JoinmerchantBean;
+import com.zsoe.businesssharing.bean.ProductBean;
+import com.zsoe.businesssharing.bean.SlideBean;
+import com.zsoe.businesssharing.bean.StockpurchaseBean;
 import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.CompanyProfilesActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.EventDetailsActivity;
@@ -26,6 +32,7 @@ import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
+import com.zsoe.businesssharing.business.home.HomePresenter;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.home.ProcurementAndInventoryActivity;
 import com.zsoe.businesssharing.business.home.SearchActivity;
@@ -39,9 +46,9 @@ import com.zsoe.businesssharing.commonview.citypicker.model.City;
 import com.zsoe.businesssharing.commonview.citypicker.model.LocateState;
 import com.zsoe.businesssharing.commonview.citypicker.model.LocatedCity;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.functions.Action1;
@@ -50,7 +57,8 @@ import rx.functions.Action1;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements View.OnClickListener {
+@RequiresPresenter(HomePresenter.class)
+public class HomeFragment extends BaseFragment<HomePresenter> implements View.OnClickListener {
 
     public static HomeFragment newInstance(String title) {
         HomeFragment f = new HomeFragment();
@@ -109,7 +117,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void call(String s) {
                 //刷新
-
+                getPresenter().home();
             }
         });
 
@@ -129,27 +137,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         iv_xiaoxi.setOnClickListener(this);
         search_input.setOnClickListener(this);
 
-        setDate();
+        DialogManager.getInstance().showNetLoadingView(getContext());
+        getPresenter().home();
     }
 
-    public void setDate() {
-
-        final List<String> stringList = new ArrayList<>();
-        stringList.add("七次国事访问，习近平受到这些“特殊”礼遇");
-        stringList.add("自上而下与自下而上形成合力");
-        stringList.add("马骏：人民币汇率\"破7\"与\"8·11\"汇改有五点不同");
-        stringList.add("香港局势座谈会  爱国爱港是香港社会主流");
+    public void setDate(HomeBean homeBean) {
+        mPtrFrame.refreshComplete();
+        List<HeadNews> headnews = homeBean.getHeadnews();
 
         home_view_switcher.setSwitcheNextViewListener(new UpDownViewSwitcher.SwitchNextViewListener() {
             @Override
             public void switchTONextView(View nextView, int index) {
                 if (nextView == null) return;
-                final String tag1 = stringList.get(index % stringList.size());
-                ((TextView) nextView.findViewById(R.id.switch_title)).setText(tag1);
+                final HeadNews tag1 = headnews.get(index % headnews.size());
+                ((TextView) nextView.findViewById(R.id.switch_title)).setText(tag1.getTitle());
                 nextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(v.getContext().getApplicationContext(), tag1, Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
@@ -157,43 +162,22 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         home_view_switcher.setContentLayout(R.layout.item_home_buttelin_switch_view);
 
 
-        List<BannerItemBean> bannerItemBeans = new ArrayList<>();
+        List<SlideBean> slide = homeBean.getSlide();
+        banner_view.setDate(slide);
 
-        BannerItemBean bannerItemBean = new BannerItemBean();
-        bannerItemBean.setUrl_title("简介");
-        bannerItemBean.setImg("http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
-        bannerItemBeans.add(bannerItemBean);
 
-        BannerItemBean bannerItemBean2 = new BannerItemBean();
-        bannerItemBean2.setUrl_title("简介");
+        List<ExtenactivityBean> extenactivity = homeBean.getExtenactivity();
 
-        bannerItemBean2.setImg("http://hbimg.b0.upaiyun.com/9be8e0054e2ed5e02fa91c6c66267f9d51859e951b83e-qMhDYE_fw658");
-        bannerItemBeans.add(bannerItemBean2);
-
-        BannerItemBean bannerItemBean3 = new BannerItemBean();
-        bannerItemBean3.setUrl_title("简介");
-
-        bannerItemBean3.setImg("http://img694.ph.126.net/2CR9OPpnSjmHa_7BzGVE9Q==/2868511487659481204.jpg");
-        bannerItemBeans.add(bannerItemBean3);
-
-        BannerItemBean bannerItemBean4 = new BannerItemBean();
-        bannerItemBean4.setUrl_title("简介");
-
-        bannerItemBean4.setImg("http://i1.hdslb.com/bfs/archive/20b81aa9dcffd6db03dc14296ff3b84874f0c529.png");
-        bannerItemBeans.add(bannerItemBean4);
-
-        banner_view.setDate(bannerItemBeans);
-
-        OnionRecycleAdapter hangyeAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_tuiguang_list_layout, bannerItemBeans) {
+        OnionRecycleAdapter hangyeAdapter = new OnionRecycleAdapter<ExtenactivityBean>(R.layout.item_tuiguang_list_layout, extenactivity) {
             @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
+            protected void convert(BaseViewHolder holder, final ExtenactivityBean item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
-                holder.setText(R.id.tv_name, "南繁，筑牢粮食安全的创新底座 聚力建设幸福美好新甘肃");
-                holder.setText(R.id.tv_zhiwei, "7月4日 16:00 朝阳区");
-                holder.setText(R.id.tv_p_c, "1268人看过");
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
+                holder.setText(R.id.tv_name, item.getTitle());
+                holder.setText(R.id.tv_zhiwei, item.getActivitydate());
+                holder.setText(R.id.tv_p_c, item.getReadnum() + "人看过");
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -213,14 +197,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rv_tuiguang.setAdapter(hangyeAdapter);
 
 
-        OnionRecycleAdapter chanpinAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_caigou_layout, bannerItemBeans) {
+        List<StockpurchaseBean> stockpurchase = homeBean.getStockpurchase();
+        OnionRecycleAdapter chanpinAdapter = new OnionRecycleAdapter<StockpurchaseBean>(R.layout.item_caigou_layout, stockpurchase) {
             @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
+            protected void convert(BaseViewHolder holder, final StockpurchaseBean item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
-                holder.setText(R.id.tv_name, item.getUrl_title());
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
+                holder.setText(R.id.tv_name, item.getTitle());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -243,14 +228,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rv_caigou.setAdapter(chanpinAdapter);
 
 
-        OnionRecycleAdapter jiazhiAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_jiazhi_layout, bannerItemBeans) {
+        List<ProductBean> product = homeBean.getProduct();
+
+        OnionRecycleAdapter jiazhiAdapter = new OnionRecycleAdapter<ProductBean>(R.layout.item_jiazhi_layout, product) {
             @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
+            protected void convert(BaseViewHolder holder, final ProductBean item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
-                holder.setText(R.id.tv_name, item.getUrl_title());
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
+                holder.setText(R.id.tv_name, item.getTitle());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -273,16 +260,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rv_jiazhi.setAdapter(jiazhiAdapter);
 
 
-        OnionRecycleAdapter zhaoshangAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_tuiguang_list_layout, bannerItemBeans) {
+        List<JoinmerchantBean> joinmerchant = homeBean.getJoinmerchant();
+
+        OnionRecycleAdapter zhaoshangAdapter = new OnionRecycleAdapter<JoinmerchantBean>(R.layout.item_tuiguang_list_layout, joinmerchant) {
             @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
+            protected void convert(BaseViewHolder holder, final JoinmerchantBean item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
-                holder.setText(R.id.tv_name, "南繁，筑牢粮食安全的创新底座 聚力建设幸福美好新甘肃");
-                holder.setText(R.id.tv_zhiwei, "7月4日 16:00 朝阳区");
-                holder.setText(R.id.tv_p_c, "1268人看过");
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
+                holder.setText(R.id.tv_name, item.getTitle());
+                holder.setText(R.id.tv_zhiwei, item.getActivitydate());
+                holder.setText(R.id.tv_p_c, item.getReadnum() + "人看过");
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

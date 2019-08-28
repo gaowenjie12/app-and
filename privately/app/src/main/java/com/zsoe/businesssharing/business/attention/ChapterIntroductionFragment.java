@@ -100,7 +100,7 @@ public class ChapterIntroductionFragment extends BaseFragment {
         bannerItemBeans.add(bannerItemBean4);
 
 
-        bannerView.setDate(bannerItemBeans);
+//        bannerView.setDate(bannerItemBeans);
 
         OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_fenhui_layout, bannerItemBeans) {
             @Override

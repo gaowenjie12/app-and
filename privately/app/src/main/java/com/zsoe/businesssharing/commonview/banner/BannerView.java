@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.lwj.widget.viewpagerindicator.ViewPagerIndicator;
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.bean.SlideBean;
 
 import java.util.List;
 
@@ -81,7 +81,7 @@ public class BannerView extends RelativeLayout {
         });
     }
 
-    public void setDate(List<BannerItemBean> bannerItemBeans) {
+    public void setDate(List<SlideBean> bannerItemBeans) {
 
         BannerAdapter adapter = new BannerAdapter(mContext, bannerItemBeans);
         vp_shuffling.setAdapter(adapter);

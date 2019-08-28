@@ -99,7 +99,7 @@ public class TheEventFragment extends BaseFragment {
 
         BannerView bannerView = new BannerView(mContext);
 
-        bannerView.setDate(bannerItemBeans);
+//        bannerView.setDate(bannerItemBeans);
 
         bannerItemBeans.addAll(bannerItemBeans);
         bannerItemBeans.addAll(bannerItemBeans);

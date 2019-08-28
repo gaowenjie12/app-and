@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
@@ -16,9 +17,15 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.FancyUtils;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.business.main.MainActivity;
+import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.DrawableTextView;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.KeyboardWatcher;
 
 
@@ -26,7 +33,8 @@ import com.zsoe.businesssharing.utils.KeyboardWatcher;
  * Created by WZH on 2017/3/25.
  */
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener {
+@RequiresPresenter(LoginPresenter.class)
+public class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener {
     private DrawableTextView logo;
     private EditText et_mobile;
     private EditText et_password;
@@ -38,6 +46,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private float scale = 0.8f; //logo缩放比例
     private View body;
     private KeyboardWatcher keyboardWatcher;
+    /**
+     * 登录
+     */
+    private Button mBtnLogin;
+    /**
+     *
+     */
+    private ClearEditText mEtMobile;
+    /**
+     *
+     */
+    private ClearEditText mEtPassword;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +82,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         findViewById(R.id.close).setOnClickListener(this);
         findViewById(R.id.regist).setOnClickListener(this);
+        mBtnLogin = (Button) findViewById(R.id.btn_login);
+        mBtnLogin.setOnClickListener(this);
+        mEtMobile = (ClearEditText) findViewById(R.id.et_mobile);
+        mEtPassword = (ClearEditText) findViewById(R.id.et_password);
+
+        mEtMobile.setText(FancyUtils.getUserPhone());
     }
 
     private void initListener() {
@@ -145,7 +171,37 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.regist:
                 startActivity(new Intent(mContext, RegisterActivity.class));
                 break;
+            case R.id.btn_login:
+
+                account = mEtMobile.getText().toString();
+                if (TextUtils.isEmpty(account)) {
+                    ToastUtils.showShort("请填写手机号");
+                    return;
+                }
+
+
+                String pass = mEtPassword.getText().toString();
+                if (TextUtils.isEmpty(pass)) {
+                    ToastUtils.showShort("请填写密码");
+                    return;
+                }
+
+                DialogManager.getInstance().showNetLoadingView(this);
+                getPresenter().login(account, pass);
+
+                break;
         }
+    }
+
+
+    String account;
+
+    public void loginSuccess(LoginUser loginUser) {
+
+        startActivity(new Intent(mContext, MainActivity.class));
+        finish();
+        FancyUtils.setLoginUser(loginUser);
+        FancyUtils.setUserPhone(account);
     }
 
 

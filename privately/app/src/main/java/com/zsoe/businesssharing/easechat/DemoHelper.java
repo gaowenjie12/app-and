@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hyphenate.EMCallBack;
-import com.hyphenate.EMConferenceListener;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.EMError;
@@ -23,10 +21,6 @@ import com.hyphenate.EMMultiDeviceListener;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
-import com.hyphenate.chat.EMConferenceAttribute;
-import com.hyphenate.chat.EMConferenceManager;
-import com.hyphenate.chat.EMConferenceMember;
-import com.hyphenate.chat.EMConferenceStream;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.ChatType;
@@ -34,7 +28,6 @@ import com.hyphenate.chat.EMMessage.Status;
 import com.hyphenate.chat.EMMessage.Type;
 import com.hyphenate.chat.EMMucSharedFile;
 import com.hyphenate.chat.EMOptions;
-import com.hyphenate.chat.EMStreamStatistics;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseEmojiconInfoProvider;
@@ -49,7 +42,6 @@ import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.model.EaseNotifier.EaseNotificationInfoProvider;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.exceptions.HyphenateException;
-import com.hyphenate.push.EMPushConfig;
 import com.hyphenate.util.EMLog;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.bean.RobotUser;
@@ -183,7 +175,7 @@ public class DemoHelper {
             //initialize profile manager
 //            getUserProfileManager().init(context);
             //set Call options
-            setCallOptions();
+//            setCallOptions();
 
             setGlobalListeners();
             broadcastManager = LocalBroadcastManager.getInstance(appContext);
@@ -204,36 +196,36 @@ public class DemoHelper {
         options.setRequireDeliveryAck(false);
 
         // 设置是否使用 fcm，有些华为设备本身带有 google 服务，
-        options.setUseFCM(demoModel.isUseFCM());
+//        options.setUseFCM(demoModel.isUseFCM());
 
         /**
          * NOTE:你需要设置自己申请的账号来使用三方推送功能，详见集成文档
          */
-        EMPushConfig.Builder builder = new EMPushConfig.Builder(context);
-        builder.enableVivoPush() // 需要在AndroidManifest.xml中配置appId和appKey
-                .enableMeiZuPush("118654", "eaf530ff717f479cab93714d45972ff6")
-                .enableMiPush("2882303761517426801", "5381742660801")
-                .enableOppoPush("65872dc4c26a446a8f29014f758c8272",
-                        "9385ae4308d64b36bf82bc4d73c4369d")
-                .enableHWPush() // 需要在AndroidManifest.xml中配置appId
-                .enableFCM("921300338324");
-        options.setPushConfig(builder.build());
+//        EMPushConfig.Builder builder = new EMPushConfig.Builder(context);
+//        builder.enableVivoPush() // 需要在AndroidManifest.xml中配置appId和appKey
+//                .enableMeiZuPush("118654", "eaf530ff717f479cab93714d45972ff6")
+//                .enableMiPush("2882303761517426801", "5381742660801")
+//                .enableOppoPush("65872dc4c26a446a8f29014f758c8272",
+//                        "9385ae4308d64b36bf82bc4d73c4369d")
+//                .enableHWPush() // 需要在AndroidManifest.xml中配置appId
+//                .enableFCM("921300338324");
+//        options.setPushConfig(builder.build());
 
         //set custom servers, commonly used in private deployment
-        if (demoModel.isCustomServerEnable() && demoModel.getRestServer() != null && demoModel.getIMServer() != null) {
-            options.setRestServer(demoModel.getRestServer());
-            options.setIMServer(demoModel.getIMServer());
-            if (demoModel.getIMServer().contains(":")) {
-                options.setIMServer(demoModel.getIMServer().split(":")[0]);
-                options.setImPort(Integer.valueOf(demoModel.getIMServer().split(":")[1]));
-            }
-        }
+//        if (demoModel.isCustomServerEnable() && demoModel.getRestServer() != null && demoModel.getIMServer() != null) {
+//            options.setRestServer(demoModel.getRestServer());
+//            options.setIMServer(demoModel.getIMServer());
+//            if (demoModel.getIMServer().contains(":")) {
+//                options.setIMServer(demoModel.getIMServer().split(":")[0]);
+//                options.setImPort(Integer.valueOf(demoModel.getIMServer().split(":")[1]));
+//            }
+//        }
+//
+//        if (demoModel.isCustomAppkeyEnabled() && demoModel.getCutomAppkey() != null && !demoModel.getCutomAppkey().isEmpty()) {
+//            options.setAppKey(demoModel.getCutomAppkey());
+//        }
 
-        if (demoModel.isCustomAppkeyEnabled() && demoModel.getCutomAppkey() != null && !demoModel.getCutomAppkey().isEmpty()) {
-            options.setAppKey(demoModel.getCutomAppkey());
-        }
-
-        options.allowChatroomOwnerLeave(getModel().isChatroomOwnerLeaveAllowed());
+//        options.allowChatroomOwnerLeave(getModel().isChatroomOwnerLeaveAllowed());
         options.setDeleteMessagesAsExitGroup(getModel().isDeleteMessagesAsExitGroup());
         options.setAutoAcceptGroupInvitation(getModel().isAutoAcceptGroupInvitation());
         // Whether the message attachment is automatically uploaded to the Hyphenate server,
@@ -243,65 +235,65 @@ public class DemoHelper {
         return options;
     }
 
-    private void setCallOptions() {
-        HeadsetReceiver headsetReceiver = new HeadsetReceiver();
-        IntentFilter headsetFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        appContext.registerReceiver(headsetReceiver, headsetFilter);
-
-        // min video kbps
-        int minBitRate = PreferenceManager.getInstance().getCallMinVideoKbps();
-        if (minBitRate != -1) {
-            EMClient.getInstance().callManager().getCallOptions().setMinVideoKbps(minBitRate);
-        }
-
-        // max video kbps
-        int maxBitRate = PreferenceManager.getInstance().getCallMaxVideoKbps();
-        if (maxBitRate != -1) {
-            EMClient.getInstance().callManager().getCallOptions().setMaxVideoKbps(maxBitRate);
-        }
-
-        // max frame rate
-        int maxFrameRate = PreferenceManager.getInstance().getCallMaxFrameRate();
-        if (maxFrameRate != -1) {
-            EMClient.getInstance().callManager().getCallOptions().setMaxVideoFrameRate(maxFrameRate);
-        }
-
-        // audio sample rate
-        int audioSampleRate = PreferenceManager.getInstance().getCallAudioSampleRate();
-        if (audioSampleRate != -1) {
-            EMClient.getInstance().callManager().getCallOptions().setAudioSampleRate(audioSampleRate);
-        }
-
-        /**
-         * This function is only meaningful when your app need recording
-         * If not, remove it.
-         * This function need be called before the video stream started, so we set it in onCreate function.
-         * This method will set the preferred video record encoding codec.
-         * Using default encoding format, recorded file may not be played by mobile player.
-         */
-        //EMClient.getInstance().callManager().getVideoCallHelper().setPreferMovFormatEnable(true);
-
-        // resolution
-        String resolution = PreferenceManager.getInstance().getCallBackCameraResolution();
-        if (resolution.equals("")) {
-            resolution = PreferenceManager.getInstance().getCallFrontCameraResolution();
-        }
-        String[] wh = resolution.split("x");
-        if (wh.length == 2) {
-            try {
-                EMClient.getInstance().callManager().getCallOptions().setVideoResolution(new Integer(wh[0]).intValue(), new Integer(wh[1]).intValue());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        // enabled fixed sample rate
-        boolean enableFixSampleRate = PreferenceManager.getInstance().isCallFixedVideoResolution();
-        EMClient.getInstance().callManager().getCallOptions().enableFixedVideoResolution(enableFixSampleRate);
-
-        // Offline call push
-        EMClient.getInstance().callManager().getCallOptions().setIsSendPushIfOffline(getModel().isPushCall());
-    }
+//    private void setCallOptions() {
+//        HeadsetReceiver headsetReceiver = new HeadsetReceiver();
+//        IntentFilter headsetFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+//        appContext.registerReceiver(headsetReceiver, headsetFilter);
+//
+//        // min video kbps
+//        int minBitRate = PreferenceManager.getInstance().getCallMinVideoKbps();
+//        if (minBitRate != -1) {
+//            EMClient.getInstance().callManager().getCallOptions().setMinVideoKbps(minBitRate);
+//        }
+//
+//        // max video kbps
+//        int maxBitRate = PreferenceManager.getInstance().getCallMaxVideoKbps();
+//        if (maxBitRate != -1) {
+//            EMClient.getInstance().callManager().getCallOptions().setMaxVideoKbps(maxBitRate);
+//        }
+//
+//        // max frame rate
+//        int maxFrameRate = PreferenceManager.getInstance().getCallMaxFrameRate();
+//        if (maxFrameRate != -1) {
+//            EMClient.getInstance().callManager().getCallOptions().setMaxVideoFrameRate(maxFrameRate);
+//        }
+//
+//        // audio sample rate
+//        int audioSampleRate = PreferenceManager.getInstance().getCallAudioSampleRate();
+//        if (audioSampleRate != -1) {
+//            EMClient.getInstance().callManager().getCallOptions().setAudioSampleRate(audioSampleRate);
+//        }
+//
+//        /**
+//         * This function is only meaningful when your app need recording
+//         * If not, remove it.
+//         * This function need be called before the video stream started, so we set it in onCreate function.
+//         * This method will set the preferred video record encoding codec.
+//         * Using default encoding format, recorded file may not be played by mobile player.
+//         */
+//        //EMClient.getInstance().callManager().getVideoCallHelper().setPreferMovFormatEnable(true);
+//
+//        // resolution
+//        String resolution = PreferenceManager.getInstance().getCallBackCameraResolution();
+//        if (resolution.equals("")) {
+//            resolution = PreferenceManager.getInstance().getCallFrontCameraResolution();
+//        }
+//        String[] wh = resolution.split("x");
+//        if (wh.length == 2) {
+//            try {
+//                EMClient.getInstance().callManager().getCallOptions().setVideoResolution(new Integer(wh[0]).intValue(), new Integer(wh[1]).intValue());
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        // enabled fixed sample rate
+//        boolean enableFixSampleRate = PreferenceManager.getInstance().isCallFixedVideoResolution();
+//        EMClient.getInstance().callManager().getCallOptions().enableFixedVideoResolution(enableFixSampleRate);
+//
+//        // Offline call push
+//        EMClient.getInstance().callManager().getCallOptions().setIsSendPushIfOffline(getModel().isPushCall());
+//    }
 
     protected void setEaseUIProviders() {
         //set user avatar to circle shape
@@ -526,92 +518,92 @@ public class DemoHelper {
             }
         };
 
-        IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
+//        IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
 //        if (callReceiver == null) {
 //            callReceiver = new CallReceiver();
 //        }
-        EMClient.getInstance().conferenceManager().addConferenceListener(new EMConferenceListener() {
-            @Override
-            public void onMemberJoined(EMConferenceMember member) {
-                EMLog.i(TAG, String.format("member joined username: %s, member: %d", member.memberName,
-                        EMClient.getInstance().conferenceManager().getConferenceMemberList().size()));
-            }
-
-            @Override
-            public void onMemberExited(EMConferenceMember member) {
-                EMLog.i(TAG, String.format("member exited username: %s, member size: %d", member.memberName,
-                        EMClient.getInstance().conferenceManager().getConferenceMemberList().size()));
-            }
-
-            @Override
-            public void onStreamAdded(EMConferenceStream stream) {
-                EMLog.i(TAG, String.format("Stream added streamId: %s, streamName: %s, memberName: %s, username: %s, extension: %s, videoOff: %b, mute: %b",
-                        stream.getStreamId(), stream.getStreamName(), stream.getMemberName(), stream.getUsername(),
-                        stream.getExtension(), stream.isVideoOff(), stream.isAudioOff()));
-                EMLog.i(TAG, String.format("Conference stream subscribable: %d, subscribed: %d",
-                        EMClient.getInstance().conferenceManager().getAvailableStreamMap().size(),
-                        EMClient.getInstance().conferenceManager().getSubscribedStreamMap().size()));
-            }
-
-            @Override
-            public void onStreamRemoved(EMConferenceStream stream) {
-                EMLog.i(TAG, String.format("Stream removed streamId: %s, streamName: %s, memberName: %s, username: %s, extension: %s, videoOff: %b, mute: %b",
-                        stream.getStreamId(), stream.getStreamName(), stream.getMemberName(), stream.getUsername(),
-                        stream.getExtension(), stream.isVideoOff(), stream.isAudioOff()));
-                EMLog.i(TAG, String.format("Conference stream subscribable: %d, subscribed: %d",
-                        EMClient.getInstance().conferenceManager().getAvailableStreamMap().size(),
-                        EMClient.getInstance().conferenceManager().getSubscribedStreamMap().size()));
-            }
-
-            @Override
-            public void onStreamUpdate(EMConferenceStream stream) {
-                EMLog.i(TAG, String.format("Stream added streamId: %s, streamName: %s, memberName: %s, username: %s, extension: %s, videoOff: %b, mute: %b",
-                        stream.getStreamId(), stream.getStreamName(), stream.getMemberName(), stream.getUsername(),
-                        stream.getExtension(), stream.isVideoOff(), stream.isAudioOff()));
-                EMLog.i(TAG, String.format("Conference stream subscribable: %d, subscribed: %d",
-                        EMClient.getInstance().conferenceManager().getAvailableStreamMap().size(),
-                        EMClient.getInstance().conferenceManager().getSubscribedStreamMap().size()));
-            }
-
-            @Override
-            public void onPassiveLeave(int error, String message) {
-                EMLog.i(TAG, String.format("passive leave code: %d, message: %s", error, message));
-            }
-
-            @Override
-            public void onConferenceState(ConferenceState state) {
-                EMLog.i(TAG, String.format("State code=%d", state.ordinal()));
-            }
-
-            @Override
-            public void onStreamStatistics(EMStreamStatistics statistics) {
-                EMLog.d(TAG, statistics.toString());
-            }
-
-            @Override
-            public void onStreamSetup(String streamId) {
-                EMLog.i(TAG, String.format("Stream id - %s", streamId));
-            }
-
-            @Override
-            public void onSpeakers(List<String> speakers) {
-            }
-
-            @Override
-            public void onReceiveInvite(String confId, String password, String extension) {
-                EMLog.i(TAG, String.format("Receive conference invite confId: %s, password: %s, extension: %s", confId, password, extension));
-//                goConference(confId, password, extension);
-            }
-
-            @Override
-            public void onRoleChanged(EMConferenceManager.EMConferenceRole role) {
-            }
-
-            @Override
-            public void onAttributesUpdated(EMConferenceAttribute[] attributes) {
-
-            }
-        });
+//        EMClient.getInstance().conferenceManager().addConferenceListener(new EMConferenceListener() {
+//            @Override
+//            public void onMemberJoined(EMConferenceMember member) {
+//                EMLog.i(TAG, String.format("member joined username: %s, member: %d", member.memberName,
+//                        EMClient.getInstance().conferenceManager().getConferenceMemberList().size()));
+//            }
+//
+//            @Override
+//            public void onMemberExited(EMConferenceMember member) {
+//                EMLog.i(TAG, String.format("member exited username: %s, member size: %d", member.memberName,
+//                        EMClient.getInstance().conferenceManager().getConferenceMemberList().size()));
+//            }
+//
+//            @Override
+//            public void onStreamAdded(EMConferenceStream stream) {
+//                EMLog.i(TAG, String.format("Stream added streamId: %s, streamName: %s, memberName: %s, username: %s, extension: %s, videoOff: %b, mute: %b",
+//                        stream.getStreamId(), stream.getStreamName(), stream.getMemberName(), stream.getUsername(),
+//                        stream.getExtension(), stream.isVideoOff(), stream.isAudioOff()));
+//                EMLog.i(TAG, String.format("Conference stream subscribable: %d, subscribed: %d",
+//                        EMClient.getInstance().conferenceManager().getAvailableStreamMap().size(),
+//                        EMClient.getInstance().conferenceManager().getSubscribedStreamMap().size()));
+//            }
+//
+//            @Override
+//            public void onStreamRemoved(EMConferenceStream stream) {
+//                EMLog.i(TAG, String.format("Stream removed streamId: %s, streamName: %s, memberName: %s, username: %s, extension: %s, videoOff: %b, mute: %b",
+//                        stream.getStreamId(), stream.getStreamName(), stream.getMemberName(), stream.getUsername(),
+//                        stream.getExtension(), stream.isVideoOff(), stream.isAudioOff()));
+//                EMLog.i(TAG, String.format("Conference stream subscribable: %d, subscribed: %d",
+//                        EMClient.getInstance().conferenceManager().getAvailableStreamMap().size(),
+//                        EMClient.getInstance().conferenceManager().getSubscribedStreamMap().size()));
+//            }
+//
+//            @Override
+//            public void onStreamUpdate(EMConferenceStream stream) {
+//                EMLog.i(TAG, String.format("Stream added streamId: %s, streamName: %s, memberName: %s, username: %s, extension: %s, videoOff: %b, mute: %b",
+//                        stream.getStreamId(), stream.getStreamName(), stream.getMemberName(), stream.getUsername(),
+//                        stream.getExtension(), stream.isVideoOff(), stream.isAudioOff()));
+//                EMLog.i(TAG, String.format("Conference stream subscribable: %d, subscribed: %d",
+//                        EMClient.getInstance().conferenceManager().getAvailableStreamMap().size(),
+//                        EMClient.getInstance().conferenceManager().getSubscribedStreamMap().size()));
+//            }
+//
+//            @Override
+//            public void onPassiveLeave(int error, String message) {
+//                EMLog.i(TAG, String.format("passive leave code: %d, message: %s", error, message));
+//            }
+//
+//            @Override
+//            public void onConferenceState(ConferenceState state) {
+//                EMLog.i(TAG, String.format("State code=%d", state.ordinal()));
+//            }
+//
+//            @Override
+//            public void onStreamStatistics(EMStreamStatistics statistics) {
+//                EMLog.d(TAG, statistics.toString());
+//            }
+//
+//            @Override
+//            public void onStreamSetup(String streamId) {
+//                EMLog.i(TAG, String.format("Stream id - %s", streamId));
+//            }
+//
+//            @Override
+//            public void onSpeakers(List<String> speakers) {
+//            }
+//
+//            @Override
+//            public void onReceiveInvite(String confId, String password, String extension) {
+//                EMLog.i(TAG, String.format("Receive conference invite confId: %s, password: %s, extension: %s", confId, password, extension));
+////                goConference(confId, password, extension);
+//            }
+//
+//            @Override
+//            public void onRoleChanged(EMConferenceManager.EMConferenceRole role) {
+//            }
+//
+//            @Override
+//            public void onAttributesUpdated(EMConferenceAttribute[] attributes) {
+//
+//            }
+//        });
         //register incoming call receiver
 //        appContext.registerReceiver(callReceiver, callFilter);
         //register connection listener
@@ -626,9 +618,9 @@ public class DemoHelper {
     /**
      * 处理会议邀请
      *
-     * @param confId   会议 id
-     * @param password 会议密码
-     */
+//     * @param confId   会议 id
+//     * @param password 会议密码
+//     */
 //    public void goConference(String confId, String password, String extension) {
 //        if (isDuringMediaCommunication()) {
 //            return;
@@ -1403,7 +1395,7 @@ public class DemoHelper {
      * @param callback          callback
      */
     public void logout(boolean unbindDeviceToken, final EMCallBack callback) {
-        endCall();
+//        endCall();
         Log.d(TAG, "logout: " + unbindDeviceToken);
         EMClient.getInstance().logout(unbindDeviceToken, new EMCallBack() {
 
@@ -1542,13 +1534,13 @@ public class DemoHelper {
 //        return userProManager;
 //    }
 
-    void endCall() {
-        try {
-            EMClient.getInstance().callManager().endCall();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    void endCall() {
+//        try {
+//            EMClient.getInstance().callManager().endCall();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void addSyncGroupListener(DataSyncListener listener) {
         if (listener == null) {

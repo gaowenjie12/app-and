@@ -25,8 +25,8 @@ public abstract class NetCompleteBack<View> extends CacheAble<View, RootResponse
         LogUtil.e(tRootResponse.toString());
 
 
-        switch (tRootResponse.getErrCode()) {
-            case 0:
+        switch (tRootResponse.getCode()) {
+            case 1:
                 onComplete(v, tRootResponse);
                 if (getCacheType() != CacheType.None) {//需要缓存
                     ACache.get(DApplication.getInstance()).put(StrUtils.string2md5(cacheKey), DApplication.gson.toJson(tRootResponse));
@@ -35,7 +35,7 @@ public abstract class NetCompleteBack<View> extends CacheAble<View, RootResponse
 
             case 401:
 
-                ToastUtils.showShort(tRootResponse.getMessage());
+                ToastUtils.showShort(tRootResponse.getMsg());
                 DApplication.getInstance().exit();
                 DApplication.getInstance().startLogin();
                 break;
@@ -50,7 +50,7 @@ public abstract class NetCompleteBack<View> extends CacheAble<View, RootResponse
                     }
                 }
 
-                Toast.makeText(DApplication.getInstance(), tRootResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DApplication.getInstance(), tRootResponse.getCode(), Toast.LENGTH_SHORT).show();
                 callBackServerError(v, tRootResponse);
                 break;
         }

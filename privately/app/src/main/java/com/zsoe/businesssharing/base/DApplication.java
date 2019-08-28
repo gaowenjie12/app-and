@@ -24,6 +24,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.R;
+import com.zsoe.businesssharing.business.login.LoginUser;
 import com.zsoe.businesssharing.commonview.imagepicker.ImagePicker;
 import com.zsoe.businesssharing.commonview.imagepicker.view.CropImageView;
 import com.zsoe.businesssharing.easechat.DemoHelper;
@@ -64,7 +65,6 @@ public class DApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
 
 
         //init demo helper
@@ -208,6 +208,23 @@ public class DApplication extends Application {
     }
 
 
+    private LoginUser loginUser;
+
+    /**
+     * 登录信息
+     */
+    public LoginUser getLoginUser() {
+        if (null == loginUser) {
+            loginUser = FancyUtils.getLoginUser();
+        }
+        return loginUser;
+    }
+
+    public void initLoginUser(LoginUser loginUser) {
+        this.loginUser = loginUser;
+    }
+
+
     public void exit() { // 遍历List，退出每一个Activity
         try {
             for (Activity activity : mList) {
@@ -313,9 +330,8 @@ public class DApplication extends Application {
 //                        .removeHeader("Content-Type")
                         .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                         .addHeader("charset", "UTF-8")
-                        .addHeader("ClientID", "2")
                         .addHeader("appVersion", String.valueOf(getVersionCode()))
-                        .addHeader("Authorization", "Bearer " + getToken())
+                        .addHeader("token", getToken())
 //                        .method(originalRequest.method(), gzip(originalRequest.body()))
                         .build();
                 return chain.proceed(compressedRequest);
@@ -346,7 +362,7 @@ public class DApplication extends Application {
     }
 
 
-    private String token;
+    private String token = "";
 
     /**
      * 获取全局token
@@ -356,7 +372,12 @@ public class DApplication extends Application {
 
     public String getToken() {
         if (TextUtils.isEmpty(token)) {
-//            token = PreferencesUtils.getInstance().getToken();
+            LoginUser loginUser = getLoginUser();
+            if (null != loginUser) {
+                token = getLoginUser().getToken();
+            } else {
+                token = "";
+            }
         }
         return token;
     }

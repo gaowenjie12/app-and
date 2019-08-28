@@ -17,7 +17,7 @@ public class HttpResponseFunc<T> implements Func1<RootResponse<T>, T> {
     @Override
     public T call(RootResponse<T> httpResult) {
 
-        int status = httpResult.getErrCode();
+        int status = httpResult.getCode();
 
         if (status == 0) {
             return httpResult.getData();
@@ -25,9 +25,9 @@ public class HttpResponseFunc<T> implements Func1<RootResponse<T>, T> {
             //登录失效，被踢出
             DApplication.getInstance().exit();
             DApplication.getInstance().startLogin();
-            Toast.makeText(DApplication.getInstance(), httpResult.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(DApplication.getInstance(), httpResult.getMsg(), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(DApplication.getInstance(), httpResult.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(DApplication.getInstance(), httpResult.getMsg(), Toast.LENGTH_SHORT).show();
         }
         return null;
     }
