@@ -13,10 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.ItemFinancBean;
 import com.zsoe.businesssharing.commonview.HeaderGridSpacingItemDecoration;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreHandler;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 import com.zsoe.businesssharing.utils.ScreenUtils;
 
@@ -29,7 +36,9 @@ import rx.functions.Action1;
  * 融资项目
  */
 
-public class RongZiXiangMuFragment extends BaseFragment {
+
+@RequiresPresenter(FanancListPresenter.class)
+public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
 
     private static final String TAG = "HomeFragment";
 
@@ -53,6 +62,8 @@ public class RongZiXiangMuFragment extends BaseFragment {
 
 
     private RecyclerView mRvProductList;
+    OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
+    private List<ItemFinancBean> noticeBeanList = new ArrayList<>();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -61,64 +72,41 @@ public class RongZiXiangMuFragment extends BaseFragment {
         mRvProductList = view.findViewById(R.id.rv_product_list);
 
 
-        initPtrFrameLayout(new Action1<String>() {
+        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemFinancBean>(R.layout.item_daikuan_list_layout, noticeBeanList) {
             @Override
-            public void call(String s) {
-                //刷新
-
-            }
-        });
-
-        List<BannerItemBean> bannerItemBeans = new ArrayList<>();
-
-        BannerItemBean bannerItemBean = new BannerItemBean();
-        bannerItemBean.setUrl_title("简介");
-        bannerItemBean.setImg("http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
-        bannerItemBeans.add(bannerItemBean);
-
-        BannerItemBean bannerItemBean2 = new BannerItemBean();
-        bannerItemBean2.setUrl_title("简介");
-
-        bannerItemBean2.setImg("http://hbimg.b0.upaiyun.com/9be8e0054e2ed5e02fa91c6c66267f9d51859e951b83e-qMhDYE_fw658");
-        bannerItemBeans.add(bannerItemBean2);
-
-        BannerItemBean bannerItemBean3 = new BannerItemBean();
-        bannerItemBean3.setUrl_title("简介");
-
-        bannerItemBean3.setImg("http://img694.ph.126.net/2CR9OPpnSjmHa_7BzGVE9Q==/2868511487659481204.jpg");
-        bannerItemBeans.add(bannerItemBean3);
-
-        BannerItemBean bannerItemBean4 = new BannerItemBean();
-        bannerItemBean4.setUrl_title("简介");
-
-        bannerItemBean4.setImg("http://i1.hdslb.com/bfs/archive/20b81aa9dcffd6db03dc14296ff3b84874f0c529.png");
-        bannerItemBeans.add(bannerItemBean4);
-
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
-
-
-        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_daikuan_list_layout, bannerItemBeans) {
-            @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
+            protected void convert(BaseViewHolder holder, final ItemFinancBean item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.imgTop);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
 
-                holder.setText(R.id.tvBottom, "智慧家居专家-一站式智能照明整体解决方案");
-                holder.setText(R.id.tv_name, "北京智能科技有限公司");
+                holder.setText(R.id.tvBottom, item.getTitle());
+                holder.setText(R.id.tv_name, item.getCompanyname());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, FinancingLoansDetailActivity.class));
+                        Intent intent = new Intent(mContext, FinancingLoansDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getId());
+                        startActivity(intent);
                     }
                 });
             }
         };
 
+
+        getPresenter().loadMoreDefault = new OpenLoadMoreDefault(mContext, noticeBeanList);
+        getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+                getPresenter().finance_list();
+
+            }
+        });
+
+        LoadMoreDefaultFooterRecyclerView defaultFooterRecyclerView = (LoadMoreDefaultFooterRecyclerView) getPresenter().loadMoreDefault.getFooterView();
+
+        noticeBeanOnionRecycleAdapter.setLoadMoreContainer(getPresenter().loadMoreDefault);
 
         //设置布局的方式
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
@@ -130,5 +118,28 @@ public class RongZiXiangMuFragment extends BaseFragment {
         mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
         mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
+
+
+        initPtrFrameLayout(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                //刷新
+                getPresenter().loadMoreDefault.refresh();
+                getPresenter().finance_list();
+
+            }
+        });
+
+        DialogManager.getInstance().showNetLoadingView(mContext);
+        mPtrFrame.autoRefresh();
+    }
+
+
+    /**
+     * 关闭刷新/更新数据
+     */
+    public void updateList() {
+        mPtrFrame.refreshComplete();
+        noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
     }
 }

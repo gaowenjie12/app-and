@@ -11,9 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreHandler;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
 import java.util.ArrayList;
@@ -21,7 +28,8 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-public class JoinInvestmentActivity extends BaseActivity {
+@RequiresPresenter(JoinInvestmentPresenter.class)
+public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter> {
 
     private RecyclerView mRvJoinList;
 
@@ -37,60 +45,43 @@ public class JoinInvestmentActivity extends BaseActivity {
             @Override
             public void call(String s) {
                 //刷新
-
+                getPresenter().loadMoreDefault.refresh();
+                getPresenter().join_merchant_list();
             }
         });
+
+        DialogManager.getInstance().showNetLoadingView(mContext);
+        mPtrFrame.autoRefresh();
+
     }
+
+
+    OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
+    private List<ItemJoinInvestmentBean> noticeBeanList = new ArrayList<>();
+
 
     private void initView() {
         mRvJoinList = (RecyclerView) findViewById(R.id.rv_join_list);
 
-        List<BannerItemBean> bannerItemBeans = new ArrayList<>();
-
-        BannerItemBean bannerItemBean = new BannerItemBean();
-        bannerItemBean.setUrl_title("简介");
-        bannerItemBean.setImg("http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
-        bannerItemBeans.add(bannerItemBean);
-
-        BannerItemBean bannerItemBean2 = new BannerItemBean();
-        bannerItemBean2.setUrl_title("简介");
-
-        bannerItemBean2.setImg("http://hbimg.b0.upaiyun.com/9be8e0054e2ed5e02fa91c6c66267f9d51859e951b83e-qMhDYE_fw658");
-        bannerItemBeans.add(bannerItemBean2);
-
-        BannerItemBean bannerItemBean3 = new BannerItemBean();
-        bannerItemBean3.setUrl_title("简介");
-
-        bannerItemBean3.setImg("http://img694.ph.126.net/2CR9OPpnSjmHa_7BzGVE9Q==/2868511487659481204.jpg");
-        bannerItemBeans.add(bannerItemBean3);
-
-        BannerItemBean bannerItemBean4 = new BannerItemBean();
-        bannerItemBean4.setUrl_title("简介");
-
-        bannerItemBean4.setImg("http://i1.hdslb.com/bfs/archive/20b81aa9dcffd6db03dc14296ff3b84874f0c529.png");
-        bannerItemBeans.add(bannerItemBean4);
-
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
-
-
-        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_tuiguang_list_layout, bannerItemBeans) {
+        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemJoinInvestmentBean>(R.layout.item_tuiguang_list_layout, noticeBeanList) {
             @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
+            protected void convert(BaseViewHolder holder, final ItemJoinInvestmentBean item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
 
-                holder.setText(R.id.tv_name, "为何马云仅有7%的股份就控制了阿里,孙正义是最大股东却说了不算");
-                holder.setText(R.id.tv_zhiwei, "发布时间：2019-07-07");
-                holder.setText(R.id.tv_p_c, "1268人看过");
+                holder.setText(R.id.tv_name, item.getTitle());
+                holder.setText(R.id.tv_zhiwei, item.getJoindate());
+                holder.setText(R.id.tv_p_c, item.getReadnum() + "人看过");
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, JoinInvestmentDetailActivity.class));
+
+                        Intent intent = new Intent(mContext, JoinInvestmentDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getId());
+                        startActivity(intent);
 
                     }
                 });
@@ -99,9 +90,31 @@ public class JoinInvestmentActivity extends BaseActivity {
         };
 
 
+        getPresenter().loadMoreDefault = new OpenLoadMoreDefault(mContext, noticeBeanList);
+        getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+                getPresenter().join_merchant_list();
+            }
+        });
+
+
+        LoadMoreDefaultFooterRecyclerView defaultFooterRecyclerView = (LoadMoreDefaultFooterRecyclerView) getPresenter().loadMoreDefault.getFooterView();
+        noticeBeanOnionRecycleAdapter.setLoadMoreContainer(getPresenter().loadMoreDefault);
+
+
         mRvJoinList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
         mRvJoinList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
         mRvJoinList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvJoinList.setAdapter(noticeBeanOnionRecycleAdapter);
+    }
+
+
+    /**
+     * 关闭刷新/更新数据
+     */
+    public void updateList() {
+        mPtrFrame.refreshComplete();
+        noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
     }
 }

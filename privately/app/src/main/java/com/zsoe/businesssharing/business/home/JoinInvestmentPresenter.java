@@ -1,4 +1,4 @@
-package com.zsoe.businesssharing.business.exhibitionhall;
+package com.zsoe.businesssharing.business.home;
 
 
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
-import com.zsoe.businesssharing.bean.ChanPinBeanItem;
+import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
 
 import java.util.List;
@@ -18,12 +18,12 @@ import rx.Observable;
 import rx.functions.Func0;
 
 
-public class ProductListPresenter extends BasePresenter<ProductListActivity> {
+public class JoinInvestmentPresenter extends BasePresenter<JoinInvestmentActivity> {
     final public int REQUEST_LOGIN = 1;
     FormBody body;
 
     //用来维持页码
-    public OpenLoadMoreDefault<ChanPinBeanItem> loadMoreDefault;
+    public OpenLoadMoreDefault<ItemJoinInvestmentBean> loadMoreDefault;
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -31,28 +31,28 @@ public class ProductListPresenter extends BasePresenter<ProductListActivity> {
 
 
         restartableFirst(REQUEST_LOGIN,
-                new Func0<Observable<RootResponse<List<ChanPinBeanItem>>>>() {
+                new Func0<Observable<RootResponse<List<ItemJoinInvestmentBean>>>>() {
                     @Override
-                    public Observable<RootResponse<List<ChanPinBeanItem>>> call() {
+                    public Observable<RootResponse<List<ItemJoinInvestmentBean>>> call() {
 
-                        return DApplication.getServerAPI().product_list(body);
+                        return DApplication.getServerAPI().join_merchant_list(body);
                     }
                 },
-                new NetCallBack<ProductListActivity, List<ChanPinBeanItem>>() {
+                new NetCallBack<JoinInvestmentActivity, List<ItemJoinInvestmentBean>>() {
                     @Override
-                    public void callBack(ProductListActivity v, List<ChanPinBeanItem> noticeBeanList) {
+                    public void callBack(JoinInvestmentActivity v, List<ItemJoinInvestmentBean> noticeBeanList) {
 
                         loadMoreDefault.fixNumAndClear();
                         loadMoreDefault.loadMoreFinish(noticeBeanList);
                         v.updateList();
                     }
                 },
-                new BaseToastNetError<ProductListActivity>());
+                new BaseToastNetError<JoinInvestmentActivity>());
 
 
     }
 
-    public void product_list() {
+    public void join_merchant_list() {
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 

@@ -26,7 +26,7 @@ public class OpenLoadMoreDefault<V> implements LoadMoreContainer {
     //标示目前是缓存数据
     private boolean isCache;
     private int page = 1;
-    public static final int pageNum = 10;
+    public static final int pagesize = 10;
     private boolean mListEmpty = true;
     private boolean mShowLoadingForFirstPage = false;
     private LoadMoreUIHandler mLoadMoreUIHandler;
@@ -38,7 +38,7 @@ public class OpenLoadMoreDefault<V> implements LoadMoreContainer {
         datas = list;
         pagerAble = new HashMap<>();
         pagerAble.put("page", String.valueOf(page));
-        pagerAble.put("pageNum", String.valueOf(pageNum));
+        pagerAble.put("pagesize", String.valueOf(pagesize));
         useDefaultFooter();
 
     }
@@ -48,7 +48,7 @@ public class OpenLoadMoreDefault<V> implements LoadMoreContainer {
         datas = list;
         pagerAble = new HashMap<>();
         pagerAble.put("page", String.valueOf(page));
-        pagerAble.put("pageNum", String.valueOf(pageNum));
+        pagerAble.put("pagesize", String.valueOf(pagesize));
         useDefaultFooter(showEmpty);
 
     }
@@ -109,7 +109,7 @@ public class OpenLoadMoreDefault<V> implements LoadMoreContainer {
         }
         if (list != null) {
             datas.addAll(list);
-            loadMoreFinish(datas.isEmpty(), list.size() >= pageNum);
+            loadMoreFinish(datas.isEmpty(), list.size() >= pagesize);
         } else {
             loadMoreFinish(datas.isEmpty(), false);
         }

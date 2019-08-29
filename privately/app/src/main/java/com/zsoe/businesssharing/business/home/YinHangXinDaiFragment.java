@@ -13,8 +13,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.ItemBankBean;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreHandler;
+import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
 import java.util.ArrayList;
@@ -26,7 +32,9 @@ import rx.functions.Action1;
  * 银行信贷
  */
 
-public class YinHangXinDaiFragment extends BaseFragment {
+
+@RequiresPresenter(BankListPresenter.class)
+public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
 
     private static final String TAG = "HomeFragment";
 
@@ -50,67 +58,72 @@ public class YinHangXinDaiFragment extends BaseFragment {
 
     private RecyclerView mRvProductList;
 
+
+    OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
+    private List<ItemBankBean> noticeBeanList = new ArrayList<>();
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRvProductList = view.findViewById(R.id.rv_product_list);
+
+        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemBankBean>(R.layout.item_bank_list_layout, noticeBeanList) {
+            @Override
+            protected void convert(BaseViewHolder holder, final ItemBankBean item) {
+                super.convert(holder, item);
+
+                SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
+
+                holder.setText(R.id.tv_name, item.getTitle());
+                holder.setText(R.id.tv_zhiwei, item.getDes());
+
+
+            }
+        };
+
+
+        getPresenter().loadMoreDefault = new OpenLoadMoreDefault(mContext, noticeBeanList);
+        getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+                getPresenter().loan_list();
+
+            }
+        });
+
+        LoadMoreDefaultFooterRecyclerView defaultFooterRecyclerView = (LoadMoreDefaultFooterRecyclerView) getPresenter().loadMoreDefault.getFooterView();
+
+        noticeBeanOnionRecycleAdapter.setLoadMoreContainer(getPresenter().loadMoreDefault);
+
+
+        mRvProductList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
+        mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
+        mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
+        mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
+
 
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
             public void call(String s) {
                 //刷新
+                getPresenter().loadMoreDefault.refresh();
+                getPresenter().loan_list();
 
             }
         });
 
-        List<BannerItemBean> bannerItemBeans = new ArrayList<>();
-
-        BannerItemBean bannerItemBean = new BannerItemBean();
-        bannerItemBean.setUrl_title("简介");
-        bannerItemBean.setImg("http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
-        bannerItemBeans.add(bannerItemBean);
-
-        BannerItemBean bannerItemBean2 = new BannerItemBean();
-        bannerItemBean2.setUrl_title("简介");
-
-        bannerItemBean2.setImg("http://hbimg.b0.upaiyun.com/9be8e0054e2ed5e02fa91c6c66267f9d51859e951b83e-qMhDYE_fw658");
-        bannerItemBeans.add(bannerItemBean2);
-
-        BannerItemBean bannerItemBean3 = new BannerItemBean();
-        bannerItemBean3.setUrl_title("简介");
-
-        bannerItemBean3.setImg("http://img694.ph.126.net/2CR9OPpnSjmHa_7BzGVE9Q==/2868511487659481204.jpg");
-        bannerItemBeans.add(bannerItemBean3);
-
-        BannerItemBean bannerItemBean4 = new BannerItemBean();
-        bannerItemBean4.setUrl_title("简介");
-
-        bannerItemBean4.setImg("http://i1.hdslb.com/bfs/archive/20b81aa9dcffd6db03dc14296ff3b84874f0c529.png");
-        bannerItemBeans.add(bannerItemBean4);
-
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
+        DialogManager.getInstance().showNetLoadingView(mContext);
+        mPtrFrame.autoRefresh();
+    }
 
 
-        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_bank_list_layout, bannerItemBeans) {
-            @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
-                super.convert(holder, item);
-
-                SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
-
-                holder.setText(R.id.tv_name, "北京字节跳动科技有限公司");
-                holder.setText(R.id.tv_zhiwei, "主营业务：数码、平板销售数码、平板销售...");
-
-            }
-        };
-        mRvProductList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
-        mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
-        mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
-        mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
-
+    /**
+     * 关闭刷新/更新数据
+     */
+    public void updateList() {
+        mPtrFrame.refreshComplete();
+        noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
     }
 }
