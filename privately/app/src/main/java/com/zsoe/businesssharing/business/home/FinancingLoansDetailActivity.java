@@ -1,6 +1,5 @@
 package com.zsoe.businesssharing.business.home;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +19,7 @@ import com.zsoe.businesssharing.bean.DetailFinanceBean;
 import com.zsoe.businesssharing.bean.FileDownBean;
 import com.zsoe.businesssharing.commonview.ExpandableTextView;
 import com.zsoe.businesssharing.utils.DialogManager;
-import com.zsoe.businesssharing.utils.ScreenUtils;
+import com.zsoe.businesssharing.utils.GlideUtils;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.Jzvd;
@@ -76,8 +75,7 @@ public class FinancingLoansDetailActivity extends BaseActivity<DetailFinacPresen
         mJzVideo.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL);
 
         mJzVideo.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        Bitmap videoThumb = ScreenUtils.createVideoThumbnail(detailFinanceBean.getVideourl(), 200, 200);
-        mJzVideo.thumbImageView.setImageBitmap(videoThumb);
+        GlideUtils.loadImage(mContext,detailFinanceBean.getVideocoverurl(),mJzVideo.thumbImageView);
 
         mTvTitle.setText(detailFinanceBean.getTitle());
         mTvCompanyName.setText(detailFinanceBean.getCompanyname());

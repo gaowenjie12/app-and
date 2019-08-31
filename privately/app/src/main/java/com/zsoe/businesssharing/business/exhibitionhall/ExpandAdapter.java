@@ -11,7 +11,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.bean.ItemInsdustry;
 import com.zsoe.businesssharing.utils.GlideUtils;
 
 import java.util.List;
@@ -40,10 +41,10 @@ public class ExpandAdapter extends RecyclerView.Adapter<ExpandAdapter.ViewHolder
         }
     }
 
-    private List<BannerItemBean> mDatas;
+    private List<ItemInsdustry> mDatas;
     private Context mContext;
 
-    public ExpandAdapter(Context mContext, List<BannerItemBean> data) {
+    public ExpandAdapter(Context mContext, List<ItemInsdustry> data) {
         this.mContext = mContext;
         this.mDatas = data;
     }
@@ -51,13 +52,17 @@ public class ExpandAdapter extends RecyclerView.Adapter<ExpandAdapter.ViewHolder
     //③ 在Adapter中实现3个方法
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tv_hangye.setText(mDatas.get(position).getUrl_title());
-        GlideUtils.loadImage(mContext, mDatas.get(position).getImg(), holder.hangye_image);
+        ItemInsdustry itemInsdustry = mDatas.get(position);
+
+        holder.tv_hangye.setText(itemInsdustry.getName());
+        GlideUtils.loadImage(mContext,itemInsdustry.getThumb(), holder.hangye_image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //item 点击事件
-                mContext.startActivity(new Intent(mContext, IndustryActivity.class));
+                Intent intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1,itemInsdustry.getId());
+                mContext.startActivity(intent);
             }
         });
     }

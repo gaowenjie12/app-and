@@ -8,7 +8,7 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
-import com.zsoe.businesssharing.bean.ChanPinBeanItem;
+import com.zsoe.businesssharing.bean.ItemCompany;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
 
 import java.util.List;
@@ -18,12 +18,12 @@ import rx.Observable;
 import rx.functions.Func0;
 
 
-public class ProductListPresenter extends BasePresenter<ProductListActivity> {
+public class CompanyListPresenter extends BasePresenter<CompaniesListActivity> {
     final public int REQUEST_LOGIN = 1;
     FormBody body;
 
     //用来维持页码
-    public OpenLoadMoreDefault<ChanPinBeanItem> loadMoreDefault;
+    public OpenLoadMoreDefault<ItemCompany> loadMoreDefault;
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -31,28 +31,28 @@ public class ProductListPresenter extends BasePresenter<ProductListActivity> {
 
 
         restartableFirst(REQUEST_LOGIN,
-                new Func0<Observable<RootResponse<List<ChanPinBeanItem>>>>() {
+                new Func0<Observable<RootResponse<List<ItemCompany>>>>() {
                     @Override
-                    public Observable<RootResponse<List<ChanPinBeanItem>>> call() {
+                    public Observable<RootResponse<List<ItemCompany>>> call() {
 
-                        return DApplication.getServerAPI().product_list(body);
+                        return DApplication.getServerAPI().company_list(body);
                     }
                 },
-                new NetCallBack<ProductListActivity, List<ChanPinBeanItem>>() {
+                new NetCallBack<CompaniesListActivity, List<ItemCompany>>() {
                     @Override
-                    public void callBack(ProductListActivity v, List<ChanPinBeanItem> noticeBeanList) {
+                    public void callBack(CompaniesListActivity v, List<ItemCompany> noticeBeanList) {
 
                         loadMoreDefault.fixNumAndClear();
                         loadMoreDefault.loadMoreFinish(noticeBeanList);
                         v.updateList();
                     }
                 },
-                new BaseToastNetError<ProductListActivity>());
+                new BaseToastNetError<CompaniesListActivity>());
 
 
     }
 
-    public void product_list(String keyword) {
+    public void company_list(String keyword) {
         loadMoreDefault.pagerAble.put("keyword", keyword);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);

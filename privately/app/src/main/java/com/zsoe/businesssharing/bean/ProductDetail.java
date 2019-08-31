@@ -1,30 +1,23 @@
 package com.zsoe.businesssharing.bean;
 
+import java.util.List;
+
 /**
  * @author 于长亮   & E-mail: yuchangl3757@qq.com
- * @create_time 创建时间：2019-08-29 21:52
+ * @create_time 创建时间：2019-08-31 16:49
  * @version:
  * @类说明:
  */
-public class DetailFinanceBean {
-
+public class ProductDetail {
 
     private int id;
     private int shopid;
-    private String title;
+    private String productname;
     private String videourl;
     private String content;
-    private String filedata;
-    private String companyname;
     private String videocoverurl;
-
-    public String getVideocoverurl() {
-        return videocoverurl;
-    }
-
-    public void setVideocoverurl(String videocoverurl) {
-        this.videocoverurl = videocoverurl;
-    }
+    private String companyname;
+    private List<String> photos;
 
     public void setId(int id) {
         this.id = id;
@@ -42,12 +35,12 @@ public class DetailFinanceBean {
         return shopid;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setProductname(String productname) {
+        this.productname = productname;
     }
 
-    public String getTitle() {
-        return title;
+    public String getProductname() {
+        return productname;
     }
 
     public void setVideourl(String videourl) {
@@ -66,12 +59,12 @@ public class DetailFinanceBean {
         return content;
     }
 
-    public void setFiledata(String filedata) {
-        this.filedata = filedata;
+    public void setVideocoverurl(String videocoverurl) {
+        this.videocoverurl = videocoverurl;
     }
 
-    public String getFiledata() {
-        return filedata;
+    public String getVideocoverurl() {
+        return videocoverurl;
     }
 
     public void setCompanyname(String companyname) {
@@ -80,6 +73,14 @@ public class DetailFinanceBean {
 
     public String getCompanyname() {
         return companyname;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
     }
 
 }

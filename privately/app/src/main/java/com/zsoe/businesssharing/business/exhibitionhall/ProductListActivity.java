@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ChanPinBeanItem;
@@ -56,7 +57,7 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().product_list();
+                getPresenter().product_list("");
             }
         });
 
@@ -87,7 +88,9 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, ProductDetailActivity.class));
+                        Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getId());
+                        startActivity(intent);
                     }
                 });
 
@@ -99,7 +102,7 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().product_list();
+                getPresenter().product_list("");
             }
         });
 

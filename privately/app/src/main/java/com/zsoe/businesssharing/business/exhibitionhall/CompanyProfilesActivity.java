@@ -16,21 +16,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
-import com.zsoe.businesssharing.bean.BannerItemBean;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.CompanyInfo;
 import com.zsoe.businesssharing.commonview.ExpandableTextView;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 import com.zsoe.businesssharing.utils.GlideUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
-public class CompanyProfilesActivity extends BaseActivity implements View.OnClickListener {
+@RequiresPresenter(CompanyInfoPresenter.class)
+public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> implements View.OnClickListener {
 
     private SimpleDraweeView mCompanyImage;
     private TextView mTvMasterName;
@@ -66,7 +69,9 @@ public class CompanyProfilesActivity extends BaseActivity implements View.OnClic
         initView();
 
         initTitleText("企业简介");
-        setDate();
+        int id = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+        DialogManager.getInstance().showNetLoadingView(this);
+        getPresenter().company_info("" + id);
     }
 
     private void initView() {
@@ -86,7 +91,7 @@ public class CompanyProfilesActivity extends BaseActivity implements View.OnClic
     }
 
 
-    public void setDate() {
+    public void setData(CompanyInfo companyInfo) {
         // 将列表中的每个视频设置为默认16:9的比例
         ViewGroup.LayoutParams params = mJzVideo.getLayoutParams();
         // 宽度为屏幕宽度
@@ -95,54 +100,27 @@ public class CompanyProfilesActivity extends BaseActivity implements View.OnClic
         params.height = (int) (params.width * 9f / 16f);
         mJzVideo.setLayoutParams(params);
 
-        JZDataSource jzDataSource = new JZDataSource("http://v.cdn.sohu.com/93/7a28fd59b399ae79ea441253504a278a/0");
+        JZDataSource jzDataSource = new JZDataSource(companyInfo.getVideourl());
         mJzVideo.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL);
 
         mJzVideo.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        GlideUtils.loadImage(mContext, "http://p.cdn.sohu.com/089a1b13/5b4098facc8075a2012419c8793270bc", mJzVideo.thumbImageView);
+        GlideUtils.loadImage(mContext, companyInfo.getVideocoverurl(), mJzVideo.thumbImageView);
 
 
-        FrecoFactory.getInstance().disPlay(mCompanyImage, "http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
+        FrecoFactory.getInstance().disPlay(mCompanyImage, companyInfo.getAvatar());
 
-        mTvMasterName.setText("王者荣耀");
-        mTvMasterZhiwei.setText("北京智能科技有限公司");
+        mTvMasterName.setText(companyInfo.getName());
+        mTvMasterZhiwei.setText(companyInfo.getCompanydes());
 
+        List<String> photos = companyInfo.getPhotos();
 
-        List<BannerItemBean> bannerItemBeans = new ArrayList<>();
-
-        BannerItemBean bannerItemBean = new BannerItemBean();
-        bannerItemBean.setUrl_title("简介");
-        bannerItemBean.setImg("http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
-        bannerItemBeans.add(bannerItemBean);
-
-        BannerItemBean bannerItemBean2 = new BannerItemBean();
-        bannerItemBean2.setUrl_title("简介");
-
-        bannerItemBean2.setImg("http://hbimg.b0.upaiyun.com/9be8e0054e2ed5e02fa91c6c66267f9d51859e951b83e-qMhDYE_fw658");
-        bannerItemBeans.add(bannerItemBean2);
-
-        BannerItemBean bannerItemBean3 = new BannerItemBean();
-        bannerItemBean3.setUrl_title("简介");
-
-        bannerItemBean3.setImg("http://img694.ph.126.net/2CR9OPpnSjmHa_7BzGVE9Q==/2868511487659481204.jpg");
-        bannerItemBeans.add(bannerItemBean3);
-
-        BannerItemBean bannerItemBean4 = new BannerItemBean();
-        bannerItemBean4.setUrl_title("简介");
-
-        bannerItemBean4.setImg("http://i1.hdslb.com/bfs/archive/20b81aa9dcffd6db03dc14296ff3b84874f0c529.png");
-        bannerItemBeans.add(bannerItemBean4);
-
-        bannerItemBeans.addAll(bannerItemBeans);
-        bannerItemBeans.addAll(bannerItemBeans);
-
-        OnionRecycleAdapter jiazhiAdapter = new OnionRecycleAdapter<BannerItemBean>(R.layout.item_xuanchuanpian_layout, bannerItemBeans) {
+        OnionRecycleAdapter jiazhiAdapter = new OnionRecycleAdapter<String>(R.layout.item_xuanchuanpian_layout, photos) {
             @Override
-            protected void convert(BaseViewHolder holder, final BannerItemBean item) {
+            protected void convert(BaseViewHolder holder, final String item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getImg());
+                FrecoFactory.getInstance().disPlay(simpleDraweeView,item);
             }
         };
 

@@ -3,13 +3,18 @@ package com.zsoe.businesssharing.base;
 
 import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.bean.ChanPinBeanItem;
+import com.zsoe.businesssharing.bean.CompanyInfo;
 import com.zsoe.businesssharing.bean.DetailFinanceBean;
 import com.zsoe.businesssharing.bean.DetailJoinInvestmentBean;
 import com.zsoe.businesssharing.bean.FileDownBean;
+import com.zsoe.businesssharing.bean.GalleryRoomBean;
 import com.zsoe.businesssharing.bean.HomeBean;
+import com.zsoe.businesssharing.bean.IndustryRoot;
 import com.zsoe.businesssharing.bean.ItemBankBean;
+import com.zsoe.businesssharing.bean.ItemCompany;
 import com.zsoe.businesssharing.bean.ItemFinancBean;
 import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
+import com.zsoe.businesssharing.bean.ProductDetail;
 import com.zsoe.businesssharing.business.login.LoginUser;
 
 import java.util.List;
@@ -60,7 +65,13 @@ public interface ServerAPI {
     Observable<RootResponse<List<ChanPinBeanItem>>> product_list(@Body FormBody body);
 
     /**
-     * 产品列表
+     * 产品详情
+     */
+    @POST("index/product_info")
+    Observable<RootResponse<ProductDetail>> product_info(@Body FormBody body);
+
+    /**
+     *
      */
     @POST("keyword")
     Observable<RootResponse<List<ChanPinBeanItem>>> keyword(@Body FormBody body);
@@ -101,5 +112,29 @@ public interface ServerAPI {
      */
     @POST("index/finance_file_download")
     Observable<RootResponse<FileDownBean>> finance_file_download(@Body FormBody body);
+
+    /**
+     * 展厅页接口
+     */
+    @POST("hall/index")
+    Observable<RootResponse<GalleryRoomBean>> hallIndex(@Body FormBody body);
+
+    /**
+     * 行业详情
+     */
+    @POST("hall/industry_info")
+    Observable<RootResponse<IndustryRoot>> industry_info(@Body FormBody body);
+
+    /**
+     * 企业详情
+     */
+    @POST("hall/company_info")
+    Observable<RootResponse<CompanyInfo>> company_info(@Body FormBody body);
+
+    /**
+     * POST 企业列表
+     */
+    @POST("hall/company_list")
+    Observable<RootResponse<List<ItemCompany>>> company_list(@Body FormBody body);
 
 }
