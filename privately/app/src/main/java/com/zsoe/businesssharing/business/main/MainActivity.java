@@ -11,11 +11,13 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.TabEntity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+@RequiresPresenter(MainPresenter.class)
+public class MainActivity extends BaseActivity<MainPresenter> {
 
 
 //    private ViewPager mViewPager;
@@ -50,6 +52,8 @@ public class MainActivity extends BaseActivity {
         initView();
         initBottomNavigationView();
         initData();
+
+        getPresenter().industry_allcate();
     }
 
 

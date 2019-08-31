@@ -1,6 +1,5 @@
 package com.zsoe.businesssharing.business.exhibitionhall;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,14 +7,14 @@ import android.widget.ListView;
 
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
-import com.zsoe.businesssharing.bean.CityBean;
-import com.zsoe.businesssharing.bean.ProvinceBean;
+import com.zsoe.businesssharing.base.FancyUtils;
+import com.zsoe.businesssharing.bean.ChildHangYe;
+import com.zsoe.businesssharing.bean.RootHangYe;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.BaseBaseAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.SimpleTextAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.util.DpUtils;
 import com.zsoe.businesssharing.commonview.dropfilter.view.FilterCheckedTextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class IndustryClassificationActivity extends BaseActivity {
@@ -23,13 +22,13 @@ public class IndustryClassificationActivity extends BaseActivity {
     private ListView mLvFirst;
     private ListView mLvSecond;
 
-    private BaseBaseAdapter<ProvinceBean> mFirstAdpater;
-    private BaseBaseAdapter<CityBean> mSecondAdapter;
+    private BaseBaseAdapter<RootHangYe> mFirstAdpater;
+    private BaseBaseAdapter<ChildHangYe> mSecondAdapter;
 
-    private List<ProvinceBean> provinceBeans;//省
-    private List<CityBean> selectCityBeans;
+    private List<RootHangYe> provinceBeans;//省
+    private List<ChildHangYe> selectCityBeans;
 
-    private ProvinceBean currentProvinceBean;
+    private RootHangYe currentProvinceBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,50 +37,6 @@ public class IndustryClassificationActivity extends BaseActivity {
         initView();
 
         initTitleText("全部行业");
-
-        provinceBeans = new ArrayList<>();
-        List<CityBean> cityBeans = new ArrayList<>();
-
-        //市数据
-        for (int i = 0; i < 26; i++) {
-            CityBean bean = new CityBean();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-                bean.setPid("没用String");
-
-                cityBeans.add(bean);
-            } else {
-                bean.setId(i);
-                bean.setName("市" + i);
-                bean.setPid("没用String");
-                cityBeans.add(bean);
-            }
-        }
-
-        //省数据
-        for (int i = 0; i < 36; i++) {
-            ProvinceBean bean = new ProvinceBean();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-                bean.setPid("没用String");
-
-                provinceBeans.add(bean);
-
-                //省份添加市数据
-                bean.setChild((ArrayList<CityBean>) cityBeans);
-            } else {
-                bean.setId(i);
-                bean.setName("省" + i);
-                bean.setPid("没用String");
-
-                provinceBeans.add(bean);
-                //省份添加市数据
-                bean.setChild((ArrayList<CityBean>) cityBeans);
-            }
-        }
-
         setDate();
 
     }
@@ -97,9 +52,10 @@ public class IndustryClassificationActivity extends BaseActivity {
 
     private void setDate() {
 
-        mFirstAdpater = new SimpleTextAdapter<ProvinceBean>(provinceBeans, mContext) {//区适配
+        provinceBeans = FancyUtils.getRootHangYe();
+        mFirstAdpater = new SimpleTextAdapter<RootHangYe>(provinceBeans, mContext) {//区适配
             @Override
-            public String provideText(ProvinceBean provinceBean) {
+            public String provideText(RootHangYe provinceBean) {
                 return provinceBean.getName();
             }
 
@@ -111,9 +67,9 @@ public class IndustryClassificationActivity extends BaseActivity {
         };
 
 
-        mSecondAdapter = new SimpleTextAdapter<CityBean>(null, mContext) {//市 适配
+        mSecondAdapter = new SimpleTextAdapter<ChildHangYe>(null, mContext) {//市 适配
             @Override
-            public String provideText(CityBean cityBean) {
+            public String provideText(ChildHangYe cityBean) {
                 return cityBean.getName();
             }
 
@@ -143,8 +99,8 @@ public class IndustryClassificationActivity extends BaseActivity {
         mLvSecond.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                CityBean cityBean = selectCityBeans.get(position);
-                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+                ChildHangYe cityBean = selectCityBeans.get(position);
+//                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
             }
         });
 

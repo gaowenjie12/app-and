@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.Communicationthumbs;
 import com.zsoe.businesssharing.bean.GalleryRoomBean;
@@ -137,14 +138,18 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
         tv_daka_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, MasterListActivity.class));
+                Intent intent = new Intent(mContext, MasterListActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, "1");
+                startActivity(intent);
             }
         });
 
         tv_daliang_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, MasterListActivity.class));
+                Intent intent = new Intent(mContext, MasterListActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, "2");
+                startActivity(intent);
             }
         });
 

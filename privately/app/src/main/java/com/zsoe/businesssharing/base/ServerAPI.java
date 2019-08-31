@@ -14,7 +14,9 @@ import com.zsoe.businesssharing.bean.ItemBankBean;
 import com.zsoe.businesssharing.bean.ItemCompany;
 import com.zsoe.businesssharing.bean.ItemFinancBean;
 import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
+import com.zsoe.businesssharing.bean.MasterBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
+import com.zsoe.businesssharing.bean.RootHangYe;
 import com.zsoe.businesssharing.business.login.LoginUser;
 
 import java.util.List;
@@ -136,5 +138,23 @@ public interface ServerAPI {
      */
     @POST("hall/company_list")
     Observable<RootResponse<List<ItemCompany>>> company_list(@Body FormBody body);
+
+    /**
+     * POST 行业人物列表
+     */
+    @POST("hall/industry_person_list")
+    Observable<RootResponse<List<MasterBean>>> industry_person_list(@Body FormBody body);
+
+    /**
+     * POST 人物详情
+     */
+    @POST("hall/industry_person_info")
+    Observable<RootResponse<MasterBean>> industry_person_info(@Body FormBody body);
+
+    /**
+     * POST 全部行业分类
+     */
+    @POST("hall/industry_allcate")
+    Observable<RootResponse<List<RootHangYe>>> industry_allcate(@Body FormBody body);
 
 }
