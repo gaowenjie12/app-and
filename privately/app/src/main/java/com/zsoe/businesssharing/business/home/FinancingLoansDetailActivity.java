@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zsoe.businesssharing.R;
@@ -20,6 +21,12 @@ import com.zsoe.businesssharing.bean.FileDownBean;
 import com.zsoe.businesssharing.commonview.ExpandableTextView;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.GlideUtils;
+import com.zsoe.businesssharing.utils.download.DownloadInfo;
+import com.zsoe.businesssharing.utils.download.DownloadManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.Jzvd;
@@ -53,6 +60,7 @@ public class FinancingLoansDetailActivity extends BaseActivity<DetailFinacPresen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_financing_loans_detail);
         initView();
+        EventBus.getDefault().register(this);
 
         initTitleText("融资详情");
 
@@ -75,7 +83,7 @@ public class FinancingLoansDetailActivity extends BaseActivity<DetailFinacPresen
         mJzVideo.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL);
 
         mJzVideo.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        GlideUtils.loadImage(mContext,detailFinanceBean.getVideocoverurl(),mJzVideo.thumbImageView);
+        GlideUtils.loadImage(mContext, detailFinanceBean.getVideocoverurl(), mJzVideo.thumbImageView);
 
         mTvTitle.setText(detailFinanceBean.getTitle());
         mTvCompanyName.setText(detailFinanceBean.getCompanyname());
@@ -83,8 +91,7 @@ public class FinancingLoansDetailActivity extends BaseActivity<DetailFinacPresen
     }
 
     public void getFile(FileDownBean fileDownBean) {
-
-
+        DownloadManager.getInstance().download(fileDownBean.getFiledata_url());
     }
 
     private void initView() {
@@ -136,5 +143,37 @@ public class FinancingLoansDetailActivity extends BaseActivity<DetailFinacPresen
     protected void onPause() {
         super.onPause();
         Jzvd.releaseAllVideos();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void update(DownloadInfo info) {
+
+        if (DownloadInfo.DOWNLOAD.equals(info.getDownloadStatus())) {
+
+
+        } else if (DownloadInfo.DOWNLOAD_OVER.equals(info.getDownloadStatus())) {
+
+            Toast.makeText(this, "下载资料成功,请前往文件管理AAA文件夹查看", Toast.LENGTH_SHORT).show();
+
+        } else if (DownloadInfo.DOWNLOAD_PAUSE.equals(info.getDownloadStatus())) {
+
+            Toast.makeText(this, "下载暂停", Toast.LENGTH_SHORT).show();
+
+        } else if (DownloadInfo.DOWNLOAD_CANCEL.equals(info.getDownloadStatus())) {
+
+            Toast.makeText(this, "下载取消", Toast.LENGTH_SHORT).show();
+
+        } else if (DownloadInfo.DOWNLOAD_ERROR.equals(info.getDownloadStatus())) {
+
+            Toast.makeText(this, "下载出错", Toast.LENGTH_SHORT).show();
+
+        }
     }
 }

@@ -17,6 +17,15 @@ public class DetailJoinInvestmentBean {
     private String policytext;
     private String companyname;
     private String des;
+    private String videocoverurl;
+
+    public String getVideocoverurl() {
+        return videocoverurl;
+    }
+
+    public void setVideocoverurl(String videocoverurl) {
+        this.videocoverurl = videocoverurl;
+    }
 
     public void setId(int id) {
         this.id = id;

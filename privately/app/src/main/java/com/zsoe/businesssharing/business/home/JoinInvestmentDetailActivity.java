@@ -1,7 +1,6 @@
 package com.zsoe.businesssharing.business.home;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
@@ -19,7 +19,7 @@ import com.zsoe.businesssharing.business.exhibitionhall.CompanyProfilesActivity;
 import com.zsoe.businesssharing.commonview.ExpandableTextView;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
-import com.zsoe.businesssharing.utils.ScreenUtils;
+import com.zsoe.businesssharing.utils.GlideUtils;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.Jzvd;
@@ -67,6 +67,11 @@ public class JoinInvestmentDetailActivity extends BaseActivity<DetailJoinInvestm
     }
 
     public void setDate(DetailJoinInvestmentBean detailJoinInvestmentBean) {
+        if (null == detailJoinInvestmentBean) {
+            ToastUtils.showShort("对象为空");
+            finish();
+            return;
+        }
         // 将列表中的每个视频设置为默认16:9的比例
         ViewGroup.LayoutParams params = mJzVideo.getLayoutParams();
         // 宽度为屏幕宽度
@@ -80,8 +85,7 @@ public class JoinInvestmentDetailActivity extends BaseActivity<DetailJoinInvestm
 
         mJzVideo.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        Bitmap videoThumb = ScreenUtils.createVideoThumbnail(detailJoinInvestmentBean.getVideourl(), 200, 200);
-        mJzVideo.thumbImageView.setImageBitmap(videoThumb);
+        GlideUtils.loadImage(mContext, detailJoinInvestmentBean.getVideocoverurl(), mJzVideo.thumbImageView);
 
 
         mTvTitle.setText(detailJoinInvestmentBean.getTitle());

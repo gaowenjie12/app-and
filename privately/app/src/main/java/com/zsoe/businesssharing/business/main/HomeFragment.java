@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ExtenactivityBean;
@@ -34,6 +35,7 @@ import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
 import com.zsoe.businesssharing.business.home.HomePresenter;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
+import com.zsoe.businesssharing.business.home.JoinInvestmentDetailActivity;
 import com.zsoe.businesssharing.business.home.ProcurementAndInventoryActivity;
 import com.zsoe.businesssharing.business.home.SearchActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
@@ -242,8 +244,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, ProductDetailActivity.class));
-
+                        Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkid());
+                        startActivity(intent);
                     }
                 });
 
@@ -276,7 +279,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, EventDetailsActivity.class));
+                        Intent intent = new Intent(mContext, JoinInvestmentDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
+                        startActivity(intent);
                     }
                 });
 

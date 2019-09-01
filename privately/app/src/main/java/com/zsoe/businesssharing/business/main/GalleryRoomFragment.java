@@ -245,7 +245,9 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(mContext, MasterDetailActivity.class));
+                    Intent intent = new Intent(mContext, MasterDetailActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+                    startActivity(intent);
 
                 }
             });
