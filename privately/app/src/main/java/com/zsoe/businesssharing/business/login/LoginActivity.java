@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.umeng.socialize.UMShareAPI;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.FancyUtils;
@@ -235,6 +236,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         mAnimatorTranslateY.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorTranslateY.start();
         zoomOut(logo);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
 }

@@ -22,6 +22,8 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.business.login.LoginUser;
@@ -128,6 +130,14 @@ public class DApplication extends Application {
          */
         initImagePicker();
         initImageLoader();
+
+        UMShareAPI.get(this);
+        /**
+         * 友盟相关平台配置。注意友盟官方新文档中没有这项配置，但是如果不配置会吊不起来相关平台的授权界面
+         */
+        PlatformConfig.setWeixin("wx96c57014385a0e0c", "你的微信AppSecret");//微信APPID和AppSecret
+        PlatformConfig.setQQZone("1109739836", "jqoB2ONdjIZdsiPj");//QQAPPID和AppSecret
+        PlatformConfig.setSinaWeibo("你的微博APPID", "你的微博APPSecret","微博的后台配置回调地址");//微博
     }
 
 
