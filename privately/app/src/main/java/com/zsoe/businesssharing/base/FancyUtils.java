@@ -5,11 +5,8 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.google.gson.reflect.TypeToken;
-import com.zsoe.businesssharing.bean.RootHangYe;
+import com.zsoe.businesssharing.bean.GongYouBean;
 import com.zsoe.businesssharing.business.login.LoginUser;
-
-import java.util.List;
 
 /**
  * Fancy 工具类,里面都是公用使用的东西
@@ -59,20 +56,17 @@ public final class FancyUtils {
     }
 
 
-    public static void setRootHangYe(List<RootHangYe> rootHangYe) {
+    public static void setRootHangYe(GongYouBean rootHangYe) {
         String data = DApplication.getInstance().gson.toJson(rootHangYe);
         SPUtils.getInstance(SP_NAME).put(INDUSTRY_ALLCATE, data);
     }
 
-
     @Nullable
-    public static List<RootHangYe> getRootHangYe() {
+    public static GongYouBean getRootHangYe() {
         String data = SPUtils.getInstance(SP_NAME).getString(INDUSTRY_ALLCATE, "");
         if (TextUtils.isEmpty(data)) {
             return null;
         }
-
-        return DApplication.getInstance().gson.fromJson(data, new TypeToken<List<RootHangYe>>() {
-        }.getType());
+        return DApplication.getInstance().gson.fromJson(data, GongYouBean.class);
     }
 }

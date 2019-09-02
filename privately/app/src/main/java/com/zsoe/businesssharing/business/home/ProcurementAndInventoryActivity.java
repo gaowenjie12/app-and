@@ -12,16 +12,16 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
-import com.zsoe.businesssharing.bean.AreaBean;
 import com.zsoe.businesssharing.bean.BannerItemBean;
-import com.zsoe.businesssharing.bean.CityBean;
 import com.zsoe.businesssharing.bean.FilterBean;
-import com.zsoe.businesssharing.bean.InstitutionPriceBean;
-import com.zsoe.businesssharing.bean.ProvinceBean;
+import com.zsoe.businesssharing.bean.GongYouBean;
+import com.zsoe.businesssharing.bean.RootHangYe;
 import com.zsoe.businesssharing.commonview.dropfilter.DropDownMenu;
 import com.zsoe.businesssharing.commonview.dropfilter.interfaces.OnFilterDoneListener;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.utils.EmptyUtil;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
 import java.util.ArrayList;
@@ -36,17 +36,19 @@ public class ProcurementAndInventoryActivity extends BaseActivity implements OnF
     DropDownMenu dropDownMenu;
     //数据
     private FilterBean filterBean;//总数据源
-    private List<ProvinceBean> provinceBeans;//省
-    private List<CityBean> cityBeans;//市
-    private List<AreaBean> areaBeans;//区
-    private List<InstitutionPriceBean> priceBeans;//价格
+
+
+//    private List<ProvinceBean> provinceBeans;//省
+//    private List<CityBean> cityBeans;//市
+
+    //    private List<InstitutionPriceBean> priceBeans;//价格
     private String[] titleList;//标题
-    private List<String> sortListData;//排序
-    private List<FilterBean.InstitutionObject> objectbeans;//收住对象
-    private List<FilterBean.PlaceProperty> propertyBeans;//机构性质
-    private List<FilterBean.Bed> beds;//床位
-    private List<FilterBean.InstitutionPlace> places;//类型
-    private List<FilterBean.InstitutionFeature> features;//特色
+
+//    private List<FilterBean.InstitutionObject> objectbeans;//收住对象
+//    private List<FilterBean.PlaceProperty> propertyBeans;//机构性质
+//    private List<FilterBean.Bed> beds;//床位
+//    private List<FilterBean.InstitutionPlace> places;//类型
+//    private List<FilterBean.InstitutionFeature> features;//特色
 
     //筛选器适配
     private DropMenuAdapter dropMenuAdapter;
@@ -85,40 +87,47 @@ public class ProcurementAndInventoryActivity extends BaseActivity implements OnF
     private void initFilterDropDownView() {
         //绑定数据源
         dropMenuAdapter = new DropMenuAdapter(mContext, titleList, this);
-        dropMenuAdapter.setSortListData(sortListData);
+//        dropMenuAdapter.setSortListData(sortListData);
         dropMenuAdapter.setFilterBean(filterBean);
         dropDownMenu.setMenuAdapter(dropMenuAdapter);
 
-        //01 省市区 回调参数
+        //行业
         dropMenuAdapter.setOnPlaceCallbackListener(new DropMenuAdapter.OnPlaceCallbackListener() {
             @Override
-            public void onPlaceCallbackListener(int provinceId, int cityId, int areaId) {
-                ToastUtils.showShort("省的id=" + provinceId + "--" + cityId + "--" + areaId);
-
+            public void onPlaceCallbackListener(int provinceId, int cityId) {
+                ToastUtils.showShort("省的id=" + provinceId + "--" + cityId);
             }
         });
-        //02 多条件 回调参数
+        //商品种类
         dropMenuAdapter.setOnMultiFilterCallbackListener(new DropMenuAdapter.OnMultiFilterCallbackListener() {
             @Override
-            public void onMultiFilterCallbackListener(int objId, int propertyId, int bedId, int typeId, String serviceId) {
+            public void onMultiFilterCallbackListener(int objId, int propertyId) {
 
-                ToastUtils.showShort("多选的i依次是=" + objId + "--" + propertyId + "--" + bedId + "--" + typeId + "--" + serviceId);
+                ToastUtils.showShort("多选的i依次是=" + objId + "--" + propertyId);
             }
         });
 
-        //03 dropMenuAdapter 价格范围回调
+        //采购量
         dropMenuAdapter.setOnPriceCallbackListener(new DropMenuAdapter.OnPriceCallbackListener() {
             @Override
-            public void onPriceCallbackListener(InstitutionPriceBean item) {
-                ToastUtils.showShort("价格=" + item.getName() + "--id=" + item.getId());
+            public void onPriceCallbackListener() {
+                ToastUtils.showShort("采购量");
             }
         });
 
-        //04 dropMenuAdapter 排序回调 0 1 2
+        //库存规模
         dropMenuAdapter.setOnSortCallbackListener(new DropMenuAdapter.OnSortCallbackListener() {
             @Override
-            public void onSortCallbackListener(int item) {
-                ToastUtils.showShort("排序id=" + item);
+            public void onSortCallbackListener() {
+                ToastUtils.showShort("库存规模");
+            }
+        });
+
+        //浏览量
+        dropMenuAdapter.setLiuLanCallbackListener(new DropMenuAdapter.OnLiuLanCallbackListener() {
+            @Override
+            public void onLiuLanCallbackListener() {
+                ToastUtils.showShort("浏览量");
             }
         });
 
@@ -130,17 +139,37 @@ public class ProcurementAndInventoryActivity extends BaseActivity implements OnF
      * 初始化
      */
     private void initView() {
-        filterBean = new FilterBean();
-        provinceBeans = new ArrayList<>();
-        cityBeans = new ArrayList<>();
-        areaBeans = new ArrayList<>();
-        priceBeans = new ArrayList<>();
 
-        objectbeans = new ArrayList<>();
-        propertyBeans = new ArrayList<>();
-        beds = new ArrayList<>();
-        places = new ArrayList<>();
-        features = new ArrayList<>();
+        GongYouBean rootHangYe = FancyUtils.getRootHangYe();
+        if (EmptyUtil.isEmpty(rootHangYe)) {
+            return;
+        }
+        List<RootHangYe> industrycatelist = rootHangYe.getIndustrycatelist();
+        if (EmptyUtil.isEmpty(industrycatelist)) {
+            return;
+        }
+
+        List<RootHangYe> productcatelist = rootHangYe.getProductcatelist();
+        if (EmptyUtil.isEmpty(productcatelist)) {
+            return;
+        }
+
+
+        filterBean = new FilterBean();
+
+        filterBean.setIndustrycatelist(industrycatelist);
+        filterBean.setProductcatelist(productcatelist);
+
+//        provinceBeans = new ArrayList<>();
+//        cityBeans = new ArrayList<>();
+//        areaBeans = new ArrayList<>();
+//        priceBeans = new ArrayList<>();
+//
+//        objectbeans = new ArrayList<>();
+//        propertyBeans = new ArrayList<>();
+//        beds = new ArrayList<>();
+//        places = new ArrayList<>();
+//        features = new ArrayList<>();
     }
 
     /**
@@ -150,238 +179,235 @@ public class ProcurementAndInventoryActivity extends BaseActivity implements OnF
     private void initData() {
 
         //筛选标题数据（固定数据）
-        titleList = new String[]{"区域", "筛选", "价格", "排序"};
+        titleList = new String[]{"行业分类", "商品品类", "采购量", "库存规模", "浏览量"};
 
         //排序数据
-        sortListData = new ArrayList<>();
-        sortListData.add("综合排序");
-        sortListData.add("价格 从高到底");
-        sortListData.add("价格 从低到高");
+//        sortListData = new ArrayList<>();
+//        sortListData.add("综合排序");
+//        sortListData.add("价格 从高到底");
+//        sortListData.add("价格 从低到高");
 
-        //区数据
-        for (int i = 0; i < 33; i++) {
-            AreaBean bean = new AreaBean();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-                bean.setPid("没用String");
-
-                areaBeans.add(bean);
-            } else {
-                bean.setId(i);
-                bean.setName("区" + i);
-                bean.setPid("没用String");
-
-                areaBeans.add(bean);
-            }
-        }
-
-        //市数据
-        for (int i = 0; i < 26; i++) {
-            CityBean bean = new CityBean();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-                bean.setPid("没用String");
-
-                cityBeans.add(bean);
-
-                //添加区数据
-                bean.setChild((ArrayList<AreaBean>) areaBeans);
-            } else {
-                bean.setId(i);
-                bean.setName("市" + i);
-                bean.setPid("没用String");
-
-                cityBeans.add(bean);
-                //添加区数据
-                bean.setChild((ArrayList<AreaBean>) areaBeans);
-            }
-        }
-
-        //省数据
-        for (int i = 0; i < 36; i++) {
-            ProvinceBean bean = new ProvinceBean();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-                bean.setPid("没用String");
-
-                provinceBeans.add(bean);
-
-                //省份添加市数据
-                bean.setChild((ArrayList<CityBean>) cityBeans);
-            } else {
-                bean.setId(i);
-                bean.setName("省" + i);
-                bean.setPid("没用String");
-
-                provinceBeans.add(bean);
-                //省份添加市数据
-                bean.setChild((ArrayList<CityBean>) cityBeans);
-            }
-        }
+//        //区数据
+//        for (int i = 0; i < 33; i++) {
+//            AreaBean bean = new AreaBean();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setName("不限");
+//                bean.setPid("没用String");
+//
+//                areaBeans.add(bean);
+//            } else {
+//                bean.setId(i);
+//                bean.setName("区" + i);
+//                bean.setPid("没用String");
+//
+//                areaBeans.add(bean);
+//            }
+//        }
+//
+//        //市数据
+//        for (int i = 0; i < 26; i++) {
+//            CityBean bean = new CityBean();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setName("不限");
+//                bean.setPid("没用String");
+//
+//                cityBeans.add(bean);
+//
+//            } else {
+//                bean.setId(i);
+//                bean.setName("市" + i);
+//                bean.setPid("没用String");
+//
+//                cityBeans.add(bean);
+//
+//            }
+//        }
+//
+//        //省数据
+//        for (int i = 0; i < 36; i++) {
+//            ProvinceBean bean = new ProvinceBean();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setName("不限");
+//                bean.setPid("没用String");
+//
+//                provinceBeans.add(bean);
+//
+//                //省份添加市数据
+//                bean.setChild((ArrayList<CityBean>) cityBeans);
+//            } else {
+//                bean.setId(i);
+//                bean.setName("省" + i);
+//                bean.setPid("没用String");
+//
+//                provinceBeans.add(bean);
+//                //省份添加市数据
+//                bean.setChild((ArrayList<CityBean>) cityBeans);
+//            }
+//        }
 
         //价格
-        for (int i = 0; i < 10; i++) {
-            InstitutionPriceBean bean = new InstitutionPriceBean();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("2000元以下");
-                priceBeans.add(bean);
-            } else if (i == 9) {
-                bean.setId(i);
-                bean.setName("xxx元以上");
-                priceBeans.add(bean);
-            } else {
-                bean.setId(i);
-                bean.setName((2000 + i * 100) + "元");
-                priceBeans.add(bean);
-            }
-
-        }
-
+//        for (int i = 0; i < 10; i++) {
+//            InstitutionPriceBean bean = new InstitutionPriceBean();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setName("2000元以下");
+//                priceBeans.add(bean);
+//            } else if (i == 9) {
+//                bean.setId(i);
+//                bean.setName("xxx元以上");
+//                priceBeans.add(bean);
+//            } else {
+//                bean.setId(i);
+//                bean.setName((2000 + i * 100) + "元");
+//                priceBeans.add(bean);
+//            }
+//
+//        }
+//
 
         //多选数据（5条）
         //01收住对象
-        for (int i = 0; i < 7; i++) {
-
-            FilterBean.InstitutionObject bean = new FilterBean.InstitutionObject();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setType("不限");
-
-                objectbeans.add(bean);
-            } else {
-                bean.setId(i);
-                bean.setType("对象" + i);
-
-                objectbeans.add(bean);
-            }
-        }
+//        for (int i = 0; i < 7; i++) {
+//
+//            FilterBean.InstitutionObject bean = new FilterBean.InstitutionObject();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setType("不限");
+//
+//                objectbeans.add(bean);
+//            } else {
+//                bean.setId(i);
+//                bean.setType("对象" + i);
+//
+//                objectbeans.add(bean);
+//            }
+//        }
         //02 机构性质
-        for (int i = 0; i < 3; i++) {
-
-            FilterBean.PlaceProperty bean = new FilterBean.PlaceProperty();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-
-                propertyBeans.add(bean);
-            } else if (i == 1) {
-                bean.setId(i);
-                bean.setName("公办");
-
-                propertyBeans.add(bean);
-            } else if (i == 2) {
-                bean.setId(i);
-                bean.setName("民办");
-
-                propertyBeans.add(bean);
-            }
-        }
+//        for (int i = 0; i < 3; i++) {
+//
+//            FilterBean.PlaceProperty bean = new FilterBean.PlaceProperty();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setName("不限");
+//
+//                propertyBeans.add(bean);
+//            } else if (i == 1) {
+//                bean.setId(i);
+//                bean.setName("公办");
+//
+//                propertyBeans.add(bean);
+//            } else if (i == 2) {
+//                bean.setId(i);
+//                bean.setName("民办");
+//
+//                propertyBeans.add(bean);
+//            }
+//        }
 
         //03床位
-
-        for (int i = 0; i < 4; i++) {
-
-            FilterBean.Bed bean = new FilterBean.Bed();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-
-                beds.add(bean);
-            } else if (i == 1) {
-                bean.setId(i);
-                bean.setName("100以下");
-
-                beds.add(bean);
-            } else if (i == 2) {
-                bean.setId(i);
-                bean.setName("100-500张");
-
-                beds.add(bean);
-            } else if (i == 3) {
-                bean.setId(i);
-                bean.setName("500张以上");
-
-                beds.add(bean);
-            }
-        }
+//
+//        for (int i = 0; i < 4; i++) {
+//
+//            FilterBean.Bed bean = new FilterBean.Bed();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setName("不限");
+//
+//                beds.add(bean);
+//            } else if (i == 1) {
+//                bean.setId(i);
+//                bean.setName("100以下");
+//
+//                beds.add(bean);
+//            } else if (i == 2) {
+//                bean.setId(i);
+//                bean.setName("100-500张");
+//
+//                beds.add(bean);
+//            } else if (i == 3) {
+//                bean.setId(i);
+//                bean.setName("500张以上");
+//
+//                beds.add(bean);
+//            }
+//        }
         //04机构类型
 
-        for (int i = 0; i < 7; i++) {
-
-            FilterBean.InstitutionPlace bean = new FilterBean.InstitutionPlace();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setType("不限");
-
-                places.add(bean);
-            } else if (i == 1) {
-                bean.setId(i);
-                bean.setType("社区养老院");
-
-                places.add(bean);
-            } else if (i == 2) {
-                bean.setId(i);
-                bean.setType("敬老院");
-
-                places.add(bean);
-            } else if (i == 3) {
-                bean.setId(i);
-                bean.setType("疗养院");
-
-                places.add(bean);
-            } else {
-                bean.setId(i);
-                bean.setType("其他" + i);
-
-                places.add(bean);
-            }
-        }
-        //05特色
-
-        for (int i = 0; i < 7; i++) {
-
-            FilterBean.InstitutionFeature bean = new FilterBean.InstitutionFeature();
-            if (i == 0) {
-                bean.setId(i);
-                bean.setName("不限");
-
-                features.add(bean);
-            } else if (i == 1) {
-                bean.setId(i);
-                bean.setName("医养结合");
-
-                features.add(bean);
-            } else if (i == 2) {
-                bean.setId(i);
-                bean.setName("免费试住");
-
-                features.add(bean);
-            } else if (i == 3) {
-                bean.setId(i);
-                bean.setName("合作医院");
-
-                features.add(bean);
-            } else {
-                bean.setId(i);
-                bean.setName("其他" + i);
-
-                features.add(bean);
-            }
-        }
-
-        //假数据整合，当成接口返回bean
-        filterBean.setType((ArrayList<FilterBean.InstitutionPlace>) places);
-        filterBean.setFeature((ArrayList<FilterBean.InstitutionFeature>) features);
-        filterBean.setBed((ArrayList<FilterBean.Bed>) beds);
-        filterBean.setObject((ArrayList<FilterBean.InstitutionObject>) objectbeans);
-        filterBean.setProperty((ArrayList<FilterBean.PlaceProperty>) propertyBeans);
-        filterBean.setPrice((ArrayList<InstitutionPriceBean>) priceBeans);
-
-        filterBean.setProvince((ArrayList<ProvinceBean>) provinceBeans);
+//        for (int i = 0; i < 7; i++) {
+//
+//            FilterBean.InstitutionPlace bean = new FilterBean.InstitutionPlace();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setType("不限");
+//
+//                places.add(bean);
+//            } else if (i == 1) {
+//                bean.setId(i);
+//                bean.setType("社区养老院");
+//
+//                places.add(bean);
+//            } else if (i == 2) {
+//                bean.setId(i);
+//                bean.setType("敬老院");
+//
+//                places.add(bean);
+//            } else if (i == 3) {
+//                bean.setId(i);
+//                bean.setType("疗养院");
+//
+//                places.add(bean);
+//            } else {
+//                bean.setId(i);
+//                bean.setType("其他" + i);
+//
+//                places.add(bean);
+//            }
+//        }
+//        //05特色
+//
+//        for (int i = 0; i < 7; i++) {
+//
+//            FilterBean.InstitutionFeature bean = new FilterBean.InstitutionFeature();
+//            if (i == 0) {
+//                bean.setId(i);
+//                bean.setName("不限");
+//
+//                features.add(bean);
+//            } else if (i == 1) {
+//                bean.setId(i);
+//                bean.setName("医养结合");
+//
+//                features.add(bean);
+//            } else if (i == 2) {
+//                bean.setId(i);
+//                bean.setName("免费试住");
+//
+//                features.add(bean);
+//            } else if (i == 3) {
+//                bean.setId(i);
+//                bean.setName("合作医院");
+//
+//                features.add(bean);
+//            } else {
+//                bean.setId(i);
+//                bean.setName("其他" + i);
+//
+//                features.add(bean);
+//            }
+//        }
+//
+//        //假数据整合，当成接口返回bean
+//        filterBean.setType((ArrayList<FilterBean.InstitutionPlace>) places);
+//        filterBean.setFeature((ArrayList<FilterBean.InstitutionFeature>) features);
+//        filterBean.setBed((ArrayList<FilterBean.Bed>) beds);
+//        filterBean.setObject((ArrayList<FilterBean.InstitutionObject>) objectbeans);
+//        filterBean.setProperty((ArrayList<FilterBean.PlaceProperty>) propertyBeans);
+//        filterBean.setPrice((ArrayList<InstitutionPriceBean>) priceBeans);
+//
+//        filterBean.setProvince((ArrayList<ProvinceBean>) provinceBeans);
     }
 
 

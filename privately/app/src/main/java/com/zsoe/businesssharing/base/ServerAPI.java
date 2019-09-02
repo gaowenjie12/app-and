@@ -8,6 +8,7 @@ import com.zsoe.businesssharing.bean.DetailFinanceBean;
 import com.zsoe.businesssharing.bean.DetailJoinInvestmentBean;
 import com.zsoe.businesssharing.bean.FileDownBean;
 import com.zsoe.businesssharing.bean.GalleryRoomBean;
+import com.zsoe.businesssharing.bean.GongYouBean;
 import com.zsoe.businesssharing.bean.HomeBean;
 import com.zsoe.businesssharing.bean.IndustryRoot;
 import com.zsoe.businesssharing.bean.ItemBankBean;
@@ -16,7 +17,6 @@ import com.zsoe.businesssharing.bean.ItemFinancBean;
 import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
 import com.zsoe.businesssharing.bean.MasterBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
-import com.zsoe.businesssharing.bean.RootHangYe;
 import com.zsoe.businesssharing.business.login.LoginUser;
 
 import java.util.List;
@@ -155,6 +155,6 @@ public interface ServerAPI {
      * POST 全部行业分类
      */
     @POST("hall/industry_allcate")
-    Observable<RootResponse<List<RootHangYe>>> industry_allcate(@Body FormBody body);
+    Observable<RootResponse<GongYouBean>> industry_allcate(@Body FormBody body);
 
 }

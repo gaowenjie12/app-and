@@ -9,11 +9,13 @@ import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.bean.ChildHangYe;
+import com.zsoe.businesssharing.bean.GongYouBean;
 import com.zsoe.businesssharing.bean.RootHangYe;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.BaseBaseAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.SimpleTextAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.util.DpUtils;
 import com.zsoe.businesssharing.commonview.dropfilter.view.FilterCheckedTextView;
+import com.zsoe.businesssharing.utils.EmptyUtil;
 
 import java.util.List;
 
@@ -52,7 +54,16 @@ public class IndustryClassificationActivity extends BaseActivity {
 
     private void setDate() {
 
-        provinceBeans = FancyUtils.getRootHangYe();
+        GongYouBean rootHangYe = FancyUtils.getRootHangYe();
+        if (EmptyUtil.isEmpty(rootHangYe)) {
+            return;
+        }
+        List<RootHangYe> industrycatelist = rootHangYe.getIndustrycatelist();
+        if (EmptyUtil.isEmpty(industrycatelist)) {
+            return;
+        }
+
+        provinceBeans = industrycatelist;
         mFirstAdpater = new SimpleTextAdapter<RootHangYe>(provinceBeans, mContext) {//区适配
             @Override
             public String provideText(RootHangYe provinceBean) {

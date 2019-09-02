@@ -1,28 +1,20 @@
 package com.zsoe.businesssharing.business.home;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.core.content.ContextCompat;
 
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.bean.AreaBean;
-import com.zsoe.businesssharing.bean.CityBean;
+import com.zsoe.businesssharing.bean.ChildHangYe;
 import com.zsoe.businesssharing.bean.FilterBean;
-import com.zsoe.businesssharing.bean.InstitutionPriceBean;
-import com.zsoe.businesssharing.bean.ProvinceBean;
-import com.zsoe.businesssharing.commonview.dropfilter.FilterTypeBean;
+import com.zsoe.businesssharing.bean.RootHangYe;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.MenuAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.SimpleTextAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.interfaces.OnFilterDoneListener;
 import com.zsoe.businesssharing.commonview.dropfilter.typeview.DoubleGridView;
 import com.zsoe.businesssharing.commonview.dropfilter.typeview.DoubleListView;
-import com.zsoe.businesssharing.commonview.dropfilter.typeview.MultiGridView;
-import com.zsoe.businesssharing.commonview.dropfilter.typeview.SingleGridView;
-import com.zsoe.businesssharing.commonview.dropfilter.typeview.SingleListView;
-import com.zsoe.businesssharing.commonview.dropfilter.typeview.ThreeListView;
 import com.zsoe.businesssharing.commonview.dropfilter.util.CommonUtil;
 import com.zsoe.businesssharing.commonview.dropfilter.util.DpUtils;
 import com.zsoe.businesssharing.commonview.dropfilter.util.FilterUtils;
@@ -43,9 +35,11 @@ public class DropMenuAdapter implements MenuAdapter {
 
     private FilterBean filterBean;//筛选 总数据源
 
-    private List<String> sortListData;//排序 数据源
-    private List<InstitutionPriceBean> priceListData;//价格 数据源
-    private List<ProvinceBean> provinceBeanList;//省份 数据源(包含 市 区数据)
+    //行业分类
+    private List<RootHangYe> industrycatelist;
+    //商品分类
+    private List<RootHangYe> productcatelist;
+
 
     public DropMenuAdapter(Context context, String[] titles, OnFilterDoneListener onFilterDoneListener) {
         this.mContext = context;
@@ -76,26 +70,38 @@ public class DropMenuAdapter implements MenuAdapter {
         View view = parentContainer.getChildAt(position);
 
         switch (position) {
-            case 0://省市区 三级联动
+            case 0://行业
 
-//                view = createDoubleListView();//前辈的省市两级联动
+                view = createDoubleListView();
+                break;
+            case 1://商品种类
+                view = createDoubleListView2();
+                break;
+            case 2://采购量
+//                view = createSingleGridView();
+                break;
+            case 3://库存规模
 
-                view = createThreeListView();
+//                view = createSingleListView();
                 break;
-            case 1://多筛选
-//                view = createDoubleGrid();//前辈的两个条件的筛选
-                view = createMutiGrid();
-                break;
-            case 2://价格
-                view = createSingleGridView();
-                break;
-            case 3://排序
+            case 4:
+                //浏览量
 
-                view = createSingleListView();
                 break;
         }
 
         return view;
+    }
+
+    @Override
+    public void onClick(int position) {
+        if (position == 2) {
+            onPriceCallbackListener.onPriceCallbackListener();
+        } else if (position == 3) {
+            onSortCallbackListener.onSortCallbackListener();
+        } else if (position == 4) {
+            onLiuLanCallbackListener.onLiuLanCallbackListener();
+        }
     }
 
     /**
@@ -103,14 +109,9 @@ public class DropMenuAdapter implements MenuAdapter {
      */
     public void setFilterBean(FilterBean filterBean) {
         this.filterBean = filterBean;
-        provinceBeanList = filterBean.getProvince();
-        priceListData = filterBean.getPrice();
+        industrycatelist = filterBean.getIndustrycatelist();
+        productcatelist = filterBean.getProductcatelist();
     }
-
-    public void setSortListData(List<String> sortListData) {
-        this.sortListData = sortListData;
-    }
-
 
     /**
      * 回调监听
@@ -120,7 +121,7 @@ public class DropMenuAdapter implements MenuAdapter {
     public OnPlaceCallbackListener onPlaceCallbackListener;
 
     public interface OnPlaceCallbackListener {
-        void onPlaceCallbackListener(int provinceId, int cityId, int areaId);//只需id，
+        void onPlaceCallbackListener(int provinceId, int cityId);//只需id，
     }
 
     public void setOnPlaceCallbackListener(OnPlaceCallbackListener onPlaceCallbackListener) {
@@ -131,7 +132,7 @@ public class DropMenuAdapter implements MenuAdapter {
     public OnMultiFilterCallbackListener onMultiFilterCallbackListener;
 
     public interface OnMultiFilterCallbackListener {
-        void onMultiFilterCallbackListener(int objId, int propertyId, int bedId, int typeId, String serviceId);
+        void onMultiFilterCallbackListener(int objId, int propertyId);
     }
 
     public void setOnMultiFilterCallbackListener(OnMultiFilterCallbackListener onMultiFilterCallbackListener) {
@@ -143,7 +144,7 @@ public class DropMenuAdapter implements MenuAdapter {
 
     //本类中调用该实例方法
     public interface OnPriceCallbackListener {
-        void onPriceCallbackListener(InstitutionPriceBean item);
+        void onPriceCallbackListener();
     }
 
     //act中调用
@@ -155,11 +156,22 @@ public class DropMenuAdapter implements MenuAdapter {
     public OnSortCallbackListener onSortCallbackListener;
 
     public interface OnSortCallbackListener {
-        void onSortCallbackListener(int item);
+        void onSortCallbackListener();
     }
 
     public void setOnSortCallbackListener(OnSortCallbackListener onSortCallbackListener) {
         this.onSortCallbackListener = onSortCallbackListener;
+    }
+
+    //04排序范围监听
+    public OnLiuLanCallbackListener onLiuLanCallbackListener;
+
+    public interface OnLiuLanCallbackListener {
+        void onLiuLanCallbackListener();
+    }
+
+    public void setLiuLanCallbackListener(OnLiuLanCallbackListener onLiuLanCallbackListener) {
+        this.onLiuLanCallbackListener = onLiuLanCallbackListener;
     }
 
 
@@ -172,271 +184,270 @@ public class DropMenuAdapter implements MenuAdapter {
      *
      * @return·
      */
-    private View createThreeListView() {
-
-        final ThreeListView<ProvinceBean, CityBean, AreaBean> mThreeListView = new ThreeListView<ProvinceBean, CityBean, AreaBean>(mContext);
-
-        //创建adapter
-        mThreeListView
-                .firstAdapter(new SimpleTextAdapter<ProvinceBean>(null, mContext) {//省适配
-                    @Override
-                    public String provideText(ProvinceBean provinceBean) {
-                        return provinceBean.getName();
-                    }
-
-                    @Override
-                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
-                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10));
-                    }
-                })
-                .secondAdapter(new SimpleTextAdapter<CityBean>(null, mContext) {//市 适配
-                    @Override
-                    public String provideText(CityBean cityBean) {
-                        return cityBean.getName();
-                    }
-
-                    @Override
-                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
-                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10));
-                        checkedTextView.setBackgroundResource(android.R.color.white);
-                    }
-                })
-                .thirdAdapter(new SimpleTextAdapter<AreaBean>(null, mContext) {//区适配
-                    @Override
-                    public String provideText(AreaBean areaBean) {
-                        return areaBean.getName();
-                    }
-
-                    @Override
-                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
-                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10));
-                        checkedTextView.setBackgroundResource(android.R.color.white);
-                    }
-                })
-                .onFirstListItemClickListener(new ThreeListView.OnFirstListItemClickListener<ProvinceBean, CityBean, AreaBean>() {//省listView点击监听
-                    @Override
-                    public List<CityBean> onFistListItemClick(ProvinceBean itemBean, int position) {
-                        List<CityBean> cityBeanList = itemBean.getChild();
-
-                        mThreeListView.getThirdListView().setVisibility(View.INVISIBLE);
-                        mThreeListView.getSecondListView().setVisibility(View.VISIBLE);
-                        //没有下一级数据，就显示
-                        if (CommonUtil.isEmpty(cityBeanList)) {
-
-                            FilterUtils.instance().ThreeListfirst = itemBean.getName();
-
-                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
-                            FilterUtils.instance().positionTitle = itemBean.getName();
-
-                            //触发返回
-                            onPlaceCallbackListener.onPlaceCallbackListener(itemBean.getId(), 0, 0);//后台规定，不限的id=0
-                            onFilterDone(0);//act回调
-                        }
-                        //点击 不限后，结束显示
-                        if (itemBean.getId() == 0) {
-                            FilterUtils.instance().ThreeListfirst = itemBean.getName();
-                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
-                            FilterUtils.instance().positionTitle = "全国";//筛选器现实的内容-显示全国名称
-
-                            //触发返回
-                            onFilterDone(0);//act回调
-                            onPlaceCallbackListener.onPlaceCallbackListener(0, 0, 0);//后台规定，不限的id=0
-                            //市 区 布局不显示
-                            mThreeListView.getSecondListView().setVisibility(View.INVISIBLE);
-                            mThreeListView.getThirdListView().setVisibility(View.INVISIBLE);
-                        }
-                        return cityBeanList;
-                    }
-                })
-                .onSecondListItemClickListener(new ThreeListView.OnSecondListItemClickListener<ProvinceBean, CityBean, AreaBean>() {//市的list点击监听
-
-                    //点击市listView监听
-                    @Override
-                    public List<AreaBean> onSecondListItemClick(ProvinceBean firstBean, CityBean secondBean, int position) {
-
-                        //获取区的list
-                        List<AreaBean> areaBeanList = secondBean.getChild();
-                        mThreeListView.getThirdListView().setVisibility(View.VISIBLE);
-
-                        //没有下一级数据，就结束显示
-                        if (CommonUtil.isEmpty(areaBeanList)) {
-
-                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
-                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
-
-                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
-                            FilterUtils.instance().positionTitle = secondBean.getName();//筛选器现实的内容-显示全国名称
-
-
-                            onFilterDone(0);//act回调
-                        }
-
-                        //点击 不限后，结束显示
-                        if (secondBean.getId() == 0) {
-                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
-                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
-                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
-                            FilterUtils.instance().positionTitle = firstBean.getName();//筛选器现实的内容-显示省名称
-
-                            //触发返回
-                            onFilterDone(0);//act回调
-                            onPlaceCallbackListener.onPlaceCallbackListener(firstBean.getId(), 0, 0);//后台规定，不限的id=0
-
-                            //区的布局不显示
-                            mThreeListView.getThirdListView().setVisibility(View.INVISIBLE);
-                        }
-
-                        return areaBeanList;
-                    }
-                })
-                .onThirdListItemClickListener(new ThreeListView.OnThirdListItemClickListener<ProvinceBean, CityBean, AreaBean>() {
-                    @Override
-                    public void onThreelistItemClick(ProvinceBean firstBean, CityBean secondBean, AreaBean thirdBean) {
-                        //后台筛选需要传省市区的三个id,需要获取后保存
-
-                        if (thirdBean.getId() == 0) {//若选中不限区，这筛选器的title显示市的名称
-                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
-                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
-                            FilterUtils.instance().ThreeListThrid = thirdBean.getName();
-
-                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
-                            FilterUtils.instance().positionTitle = secondBean.getName();
-
-                            //触发返回
-                            onPlaceCallbackListener.onPlaceCallbackListener(firstBean.getId(), secondBean.getId(), thirdBean.getId());
-                            onFilterDone(0);
-                        } else {
-                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
-                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
-                            FilterUtils.instance().ThreeListThrid = thirdBean.getName();
-
-                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
-                            FilterUtils.instance().positionTitle = thirdBean.getName();
-
-                            //触发返回
-                            onPlaceCallbackListener.onPlaceCallbackListener(firstBean.getId(), secondBean.getId(), thirdBean.getId());
-                            onFilterDone(0);
-                        }
-                    }
-                });
-
-        //初始化选中.
-        mThreeListView.setFirstList(provinceBeanList, 0);
-        mThreeListView.setSecondList(provinceBeanList.get(0).getChild(), 0);
-        mThreeListView.setThirdList(provinceBeanList.get(0).getChild().get(0).getChild(), 0);
-        mThreeListView.getFirstListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
-        mThreeListView.getSecondListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
-        mThreeListView.getThirdListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
-
-        return mThreeListView;
-    }
-
+//    private View createThreeListView() {
+//
+//        final ThreeListView<ProvinceBean, CityBean, AreaBean> mThreeListView = new ThreeListView<ProvinceBean, CityBean, AreaBean>(mContext);
+//
+//        //创建adapter
+//        mThreeListView
+//                .firstAdapter(new SimpleTextAdapter<ProvinceBean>(null, mContext) {//省适配
+//                    @Override
+//                    public String provideText(ProvinceBean provinceBean) {
+//                        return provinceBean.getName();
+//                    }
+//
+//                    @Override
+//                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
+//                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10));
+//                    }
+//                })
+//                .secondAdapter(new SimpleTextAdapter<CityBean>(null, mContext) {//市 适配
+//                    @Override
+//                    public String provideText(CityBean cityBean) {
+//                        return cityBean.getName();
+//                    }
+//
+//                    @Override
+//                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
+//                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10));
+//                        checkedTextView.setBackgroundResource(android.R.color.white);
+//                    }
+//                })
+//                .thirdAdapter(new SimpleTextAdapter<AreaBean>(null, mContext) {//区适配
+//                    @Override
+//                    public String provideText(AreaBean areaBean) {
+//                        return areaBean.getName();
+//                    }
+//
+//                    @Override
+//                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
+//                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10), DpUtils.dpToPx(mContext, 10));
+//                        checkedTextView.setBackgroundResource(android.R.color.white);
+//                    }
+//                })
+//                .onFirstListItemClickListener(new ThreeListView.OnFirstListItemClickListener<ProvinceBean, CityBean, AreaBean>() {//省listView点击监听
+//                    @Override
+//                    public List<CityBean> onFistListItemClick(ProvinceBean itemBean, int position) {
+//                        List<CityBean> cityBeanList = itemBean.getChild();
+//
+//                        mThreeListView.getThirdListView().setVisibility(View.INVISIBLE);
+//                        mThreeListView.getSecondListView().setVisibility(View.VISIBLE);
+//                        //没有下一级数据，就显示
+//                        if (CommonUtil.isEmpty(cityBeanList)) {
+//
+//                            FilterUtils.instance().ThreeListfirst = itemBean.getName();
+//
+//                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
+//                            FilterUtils.instance().positionTitle = itemBean.getName();
+//
+//                            //触发返回
+//                            onPlaceCallbackListener.onPlaceCallbackListener(itemBean.getId(), 0, 0);//后台规定，不限的id=0
+//                            onFilterDone(0);//act回调
+//                        }
+//                        //点击 不限后，结束显示
+//                        if (itemBean.getId() == 0) {
+//                            FilterUtils.instance().ThreeListfirst = itemBean.getName();
+//                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
+//                            FilterUtils.instance().positionTitle = "全国";//筛选器现实的内容-显示全国名称
+//
+//                            //触发返回
+//                            onFilterDone(0);//act回调
+//                            onPlaceCallbackListener.onPlaceCallbackListener(0, 0, 0);//后台规定，不限的id=0
+//                            //市 区 布局不显示
+//                            mThreeListView.getSecondListView().setVisibility(View.INVISIBLE);
+//                            mThreeListView.getThirdListView().setVisibility(View.INVISIBLE);
+//                        }
+//                        return cityBeanList;
+//                    }
+//                })
+//                .onSecondListItemClickListener(new ThreeListView.OnSecondListItemClickListener<ProvinceBean, CityBean, AreaBean>() {//市的list点击监听
+//
+//                    //点击市listView监听
+//                    @Override
+//                    public List<AreaBean> onSecondListItemClick(ProvinceBean firstBean, CityBean secondBean, int position) {
+//
+//                        //获取区的list
+//                        List<AreaBean> areaBeanList = secondBean.getChild();
+//                        mThreeListView.getThirdListView().setVisibility(View.VISIBLE);
+//
+//                        //没有下一级数据，就结束显示
+//                        if (CommonUtil.isEmpty(areaBeanList)) {
+//
+//                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
+//                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
+//
+//                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
+//                            FilterUtils.instance().positionTitle = secondBean.getName();//筛选器现实的内容-显示全国名称
+//
+//
+//                            onFilterDone(0);//act回调
+//                        }
+//
+//                        //点击 不限后，结束显示
+//                        if (secondBean.getId() == 0) {
+//                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
+//                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
+//                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
+//                            FilterUtils.instance().positionTitle = firstBean.getName();//筛选器现实的内容-显示省名称
+//
+//                            //触发返回
+//                            onFilterDone(0);//act回调
+//                            onPlaceCallbackListener.onPlaceCallbackListener(firstBean.getId(), 0, 0);//后台规定，不限的id=0
+//
+//                            //区的布局不显示
+//                            mThreeListView.getThirdListView().setVisibility(View.INVISIBLE);
+//                        }
+//
+//                        return areaBeanList;
+//                    }
+//                })
+//                .onThirdListItemClickListener(new ThreeListView.OnThirdListItemClickListener<ProvinceBean, CityBean, AreaBean>() {
+//                    @Override
+//                    public void onThreelistItemClick(ProvinceBean firstBean, CityBean secondBean, AreaBean thirdBean) {
+//                        //后台筛选需要传省市区的三个id,需要获取后保存
+//
+//                        if (thirdBean.getId() == 0) {//若选中不限区，这筛选器的title显示市的名称
+//                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
+//                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
+//                            FilterUtils.instance().ThreeListThrid = thirdBean.getName();
+//
+//                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
+//                            FilterUtils.instance().positionTitle = secondBean.getName();
+//
+//                            //触发返回
+//                            onPlaceCallbackListener.onPlaceCallbackListener(firstBean.getId(), secondBean.getId(), thirdBean.getId());
+//                            onFilterDone(0);
+//                        } else {
+//                            FilterUtils.instance().ThreeListfirst = firstBean.getName();
+//                            FilterUtils.instance().ThreeListsecond = secondBean.getName();
+//                            FilterUtils.instance().ThreeListThrid = thirdBean.getName();
+//
+//                            FilterUtils.instance().position = 0;//显示在第一个筛选标题的位置，不可改
+//                            FilterUtils.instance().positionTitle = thirdBean.getName();
+//
+//                            //触发返回
+//                            onPlaceCallbackListener.onPlaceCallbackListener(firstBean.getId(), secondBean.getId(), thirdBean.getId());
+//                            onFilterDone(0);
+//                        }
+//                    }
+//                });
+//
+//        //初始化选中.
+//        mThreeListView.setFirstList(provinceBeanList, 0);
+//        mThreeListView.setSecondList(provinceBeanList.get(0).getChild(), 0);
+//        mThreeListView.setThirdList(provinceBeanList.get(0).getChild().get(0).getChild(), 0);
+//        mThreeListView.getFirstListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
+//        mThreeListView.getSecondListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
+//        mThreeListView.getThirdListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
+//
+//        return mThreeListView;
+//    }
 
 
     /**
      * 02 多筛选设置（5个grid数据）
      */
-    private View createMutiGrid() {
-
-        MultiGridView<FilterBean.InstitutionObject, FilterBean.PlaceProperty, FilterBean.Bed, FilterBean.InstitutionPlace, FilterBean.InstitutionFeature> multiGridView =
-                new MultiGridView(mContext);
-
-        multiGridView.setFilterBean(filterBean)
-                .setOnFilterDoneListener(onFilterDoneListener)
-                .build()
-                .setOnMultiGridViewClick(new MultiGridView.OnMultiGridViewCallbackListener() {
-                    @Override
-                    public void onSureClickListener(int objId, int propertyId, int bedId, int typeId, String serviceId) {
-                        //筛选选中值处理
-                        MLog.e("MultiGridView回调给==DropMenuAdapter的结果==", objId, propertyId, bedId, typeId, serviceId);
-                        onMultiFilterCallbackListener.onMultiFilterCallbackListener(objId, propertyId, bedId, typeId, serviceId);//返回act处理
-                        onFilterDone(1);
-                    }
-                });
-
-        return multiGridView;
-    }
+//    private View createMutiGrid() {
+//
+//        MultiGridView<FilterBean.InstitutionObject, FilterBean.PlaceProperty, FilterBean.Bed, FilterBean.InstitutionPlace, FilterBean.InstitutionFeature> multiGridView =
+//                new MultiGridView(mContext);
+//
+//        multiGridView.setFilterBean(filterBean)
+//                .setOnFilterDoneListener(onFilterDoneListener)
+//                .build()
+//                .setOnMultiGridViewClick(new MultiGridView.OnMultiGridViewCallbackListener() {
+//                    @Override
+//                    public void onSureClickListener(int objId, int propertyId, int bedId, int typeId, String serviceId) {
+//                        //筛选选中值处理
+//                        MLog.e("MultiGridView回调给==DropMenuAdapter的结果==", objId, propertyId, bedId, typeId, serviceId);
+//                        onMultiFilterCallbackListener.onMultiFilterCallbackListener(objId, propertyId, bedId, typeId, serviceId);//返回act处理
+//                        onFilterDone(1);
+//                    }
+//                });
+//
+//        return multiGridView;
+//    }
 
     /**
      * 03筛选-价格
      *
      * @return
      */
-    private View createSingleGridView() {
-
-        SingleGridView<InstitutionPriceBean> singleGridView = new SingleGridView<InstitutionPriceBean>(mContext)
-                .adapter(new SimpleTextAdapter<InstitutionPriceBean>(null, mContext) {
-                    @Override
-                    public String provideText(InstitutionPriceBean s) {
-                        MLog.d("createSingleGridView--item点击" + s.getName());
-                        return s.getName();
-                    }
-
-                    @Override
-                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
-                        checkedTextView.setPadding(0, DpUtils.dpToPx(context, 10), 0, DpUtils.dpToPx(context, 10));
-                        checkedTextView.setGravity(Gravity.CENTER);
-                        checkedTextView.setBackgroundResource(R.drawable.filter_btn_reset_style);
-                    }
-                })
-                .onSingleGridViewClick(new SingleGridView.OnSingleGridViewClickListener<InstitutionPriceBean>() {
-                    @Override
-                    public void onSingleGridViewCallback(InstitutionPriceBean item) {
-                        //获取到点击的数据
-                        // ToastUtil.ToastShort(mContext, "item响应 name=" + item.getName() + "--id=" + item.getId());
-                        onPriceCallbackListener.onPriceCallbackListener(item);//回调到act中操作
-                        onFilterDone(2);
-                    }
-                });
-
-        //初始化选中
-        singleGridView.setList(priceListData, 0);
-
-        return singleGridView;
-    }
+//    private View createSingleGridView() {
+//
+//        SingleGridView<InstitutionPriceBean> singleGridView = new SingleGridView<InstitutionPriceBean>(mContext)
+//                .adapter(new SimpleTextAdapter<InstitutionPriceBean>(null, mContext) {
+//                    @Override
+//                    public String provideText(InstitutionPriceBean s) {
+//                        MLog.d("createSingleGridView--item点击" + s.getName());
+//                        return s.getName();
+//                    }
+//
+//                    @Override
+//                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
+//                        checkedTextView.setPadding(0, DpUtils.dpToPx(context, 10), 0, DpUtils.dpToPx(context, 10));
+//                        checkedTextView.setGravity(Gravity.CENTER);
+//                        checkedTextView.setBackgroundResource(R.drawable.filter_btn_reset_style);
+//                    }
+//                })
+//                .onSingleGridViewClick(new SingleGridView.OnSingleGridViewClickListener<InstitutionPriceBean>() {
+//                    @Override
+//                    public void onSingleGridViewCallback(InstitutionPriceBean item) {
+//                        //获取到点击的数据
+//                        // ToastUtil.ToastShort(mContext, "item响应 name=" + item.getName() + "--id=" + item.getId());
+//                        onPriceCallbackListener.onPriceCallbackListener(item);//回调到act中操作
+//                        onFilterDone(2);
+//                    }
+//                });
+//
+//        //初始化选中
+//        singleGridView.setList(priceListData, 0);
+//
+//        return singleGridView;
+//    }
 
     /**
      * 04 筛选--排序
      *
      * @return
      */
-    private View createSingleListView() {
-
-        SingleListView<String> singleListView = new SingleListView<String>(mContext)
-                .setSingleListAdapter(new SimpleTextAdapter<String>(null, mContext) {
-                    @Override
-                    public String provideText(String string) {
-                        return string;
-                    }
-
-                    @Override
-                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
-                        int dp = DpUtils.dpToPx(mContext, 15);
-                        checkedTextView.setPadding(dp, dp, 0, dp);
-                    }
-                })
-                .onSingleListClick(new SingleListView.OnSingleListClickListener<String>() {
-                    @Override
-                    public void onSingleListCallback(String item) {
-                        int sortId = -1;
-                        if (item.contains("从高到底")) {
-                            sortId = 1;
-                        } else if (item.contains("从低到高")) {
-                            sortId = 2;
-                        } else if (item.contains("综合排序")) {
-                            sortId = 0;
-                        } else {
-                            sortId = 0;
-                        }
-                        onSortCallbackListener.onSortCallbackListener(sortId);//回调到act中操作
-                        onFilterDone(3);
-                    }
-                });
-
-        //设置默认选项
-        singleListView.setList(sortListData, 0);
-        return singleListView;
-    }
+//    private View createSingleListView() {
+//
+//        SingleListView<String> singleListView = new SingleListView<String>(mContext)
+//                .setSingleListAdapter(new SimpleTextAdapter<String>(null, mContext) {
+//                    @Override
+//                    public String provideText(String string) {
+//                        return string;
+//                    }
+//
+//                    @Override
+//                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
+//                        int dp = DpUtils.dpToPx(mContext, 15);
+//                        checkedTextView.setPadding(dp, dp, 0, dp);
+//                    }
+//                })
+//                .onSingleListClick(new SingleListView.OnSingleListClickListener<String>() {
+//                    @Override
+//                    public void onSingleListCallback(String item) {
+//                        int sortId = -1;
+//                        if (item.contains("从高到底")) {
+//                            sortId = 1;
+//                        } else if (item.contains("从低到高")) {
+//                            sortId = 2;
+//                        } else if (item.contains("综合排序")) {
+//                            sortId = 0;
+//                        } else {
+//                            sortId = 0;
+//                        }
+//                        onSortCallbackListener.onSortCallbackListener(sortId);//回调到act中操作
+//                        onFilterDone(3);
+//                    }
+//                });
+//
+//        //设置默认选项
+//        singleListView.setList(sortListData, 0);
+//        return singleListView;
+//    }
 
 
     /**
@@ -494,17 +505,17 @@ public class DropMenuAdapter implements MenuAdapter {
     }
 
     /**
-     * 市 区二级筛选 （未删）
+     * 行业
      *
      * @return
      */
     private View createDoubleListView() {
 
-        DoubleListView<FilterTypeBean, String> comTypeDoubleListView = new DoubleListView<FilterTypeBean, String>(mContext)
-                .leftAdapter(new SimpleTextAdapter<FilterTypeBean>(null, mContext) {
+        DoubleListView<RootHangYe, ChildHangYe> comTypeDoubleListView = new DoubleListView<RootHangYe, ChildHangYe>(mContext)
+                .leftAdapter(new SimpleTextAdapter<RootHangYe>(null, mContext) {
                     @Override
-                    public String provideText(FilterTypeBean filterType) {
-                        return filterType.desc;
+                    public String provideText(RootHangYe filterType) {
+                        return filterType.getName();
                     }
 
                     @Override
@@ -512,10 +523,10 @@ public class DropMenuAdapter implements MenuAdapter {
                         checkedTextView.setPadding(DpUtils.dpToPx(mContext, 44), DpUtils.dpToPx(mContext, 15), 0, DpUtils.dpToPx(mContext, 15));
                     }
                 })
-                .rightAdapter(new SimpleTextAdapter<String>(null, mContext) {
+                .rightAdapter(new SimpleTextAdapter<ChildHangYe>(null, mContext) {
                     @Override
-                    public String provideText(String s) {
-                        return s;
+                    public String provideText(ChildHangYe s) {
+                        return s.getName();
                     }
 
                     @Override
@@ -524,76 +535,125 @@ public class DropMenuAdapter implements MenuAdapter {
                         checkedTextView.setBackgroundResource(android.R.color.white);
                     }
                 })
-                .onLeftItemClickListener(new DoubleListView.OnLeftItemClickListener<FilterTypeBean, String>() {
+                .onLeftItemClickListener(new DoubleListView.OnLeftItemClickListener<RootHangYe, ChildHangYe>() {
                     @Override
-                    public List<String> provideRightList(FilterTypeBean item, int position) {
-                        List<String> child = item.child;
+                    public List<ChildHangYe> provideRightList(RootHangYe item, int position) {
+                        List<ChildHangYe> child = item.getChild();
                         if (CommonUtil.isEmpty(child)) {
-                            FilterUtils.instance().doubleListLeft = item.desc;
+                            FilterUtils.instance().doubleListLeft = item.getName();
                             FilterUtils.instance().doubleListRight = "";
 
-                            FilterUtils.instance().position = 1;
-                            FilterUtils.instance().positionTitle = item.desc;
+                            FilterUtils.instance().position = 0;
+                            FilterUtils.instance().positionTitle = item.getName();
 
                             MLog.ToastShort(mContext, "item响应");
                             onFilterDone(0);
+
+                            //触发返回
+//                            onPlaceCallbackListener.onPlaceCallbackListener(item.getId(), 0);
                         }
 
                         return child;
                     }
                 })
-                .onRightItemClickListener(new DoubleListView.OnRightItemClickListener<FilterTypeBean, String>() {
+                .onRightItemClickListener(new DoubleListView.OnRightItemClickListener<RootHangYe, ChildHangYe>() {
                     @Override
-                    public void onRightItemClick(FilterTypeBean item, String string) {
-                        FilterUtils.instance().doubleListLeft = item.desc;
-                        FilterUtils.instance().doubleListRight = string;
+                    public void onRightItemClick(RootHangYe item, ChildHangYe childHangYe) {
+                        FilterUtils.instance().doubleListLeft = item.getName();
+                        FilterUtils.instance().doubleListRight = childHangYe.getName();
 
-                        FilterUtils.instance().position = 1;
-                        FilterUtils.instance().positionTitle = string;
+                        FilterUtils.instance().position = 0;
+                        FilterUtils.instance().positionTitle = childHangYe.getName();
 
                         MLog.ToastShort(mContext, "item响应");
 
                         onFilterDone(0);
+
+                        //触发返回
+                        onPlaceCallbackListener.onPlaceCallbackListener(item.getId(), childHangYe.getId());
                     }
                 });
-
-
-        //假数据
-        List<FilterTypeBean> list = new ArrayList<>();
-
-        //第一项
-        FilterTypeBean filterType = new FilterTypeBean();
-        filterType.desc = "北京";
-        List<String> childList0 = new ArrayList<>();
-        for (int i = 4; i < 8; ++i) {
-            childList0.add("北京市区" + i);
-        }
-        filterType.child = childList0;
-        list.add(filterType);
-
-        //第二项
-        filterType = new FilterTypeBean();
-        filterType.desc = "山东";
-        List<String> childList = new ArrayList<>();
-        for (int i = 0; i < 23; ++i) {
-            childList.add("山东各市" + i);
-        }
-        filterType.child = childList;
-        list.add(filterType);
-
-        //第三项
-        filterType = new FilterTypeBean();
-        filterType.desc = "12";
-        childList = new ArrayList<>();
-        for (int i = 0; i < 3; ++i) {
-            childList.add("12" + i);
-        }
-        filterType.child = childList;
-        list.add(filterType);
-
         //初始化选中.
-        comTypeDoubleListView.setLeftList(list, 1);
-        comTypeDoubleListView.setRightList(list.get(1).child, -1);
+        comTypeDoubleListView.setLeftList(industrycatelist, 0);
+        comTypeDoubleListView.setRightList(industrycatelist.get(0).getChild(), 0);
+        comTypeDoubleListView.getLeftListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
+
+        return comTypeDoubleListView;
+    }
+
+    /**
+     * 商品种类
+     *
+     * @return
+     */
+    private View createDoubleListView2() {
+
+        DoubleListView<RootHangYe, ChildHangYe> comTypeDoubleListView = new DoubleListView<RootHangYe, ChildHangYe>(mContext)
+                .leftAdapter(new SimpleTextAdapter<RootHangYe>(null, mContext) {
+                    @Override
+                    public String provideText(RootHangYe filterType) {
+                        return filterType.getName();
+                    }
+
+                    @Override
+                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
+                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 44), DpUtils.dpToPx(mContext, 15), 0, DpUtils.dpToPx(mContext, 15));
+                    }
+                })
+                .rightAdapter(new SimpleTextAdapter<ChildHangYe>(null, mContext) {
+                    @Override
+                    public String provideText(ChildHangYe s) {
+                        return s.getName();
+                    }
+
+                    @Override
+                    protected void initCheckedTextView(FilterCheckedTextView checkedTextView) {
+                        checkedTextView.setPadding(DpUtils.dpToPx(mContext, 30), DpUtils.dpToPx(mContext, 15), 0, DpUtils.dpToPx(mContext, 15));
+                        checkedTextView.setBackgroundResource(android.R.color.white);
+                    }
+                })
+                .onLeftItemClickListener(new DoubleListView.OnLeftItemClickListener<RootHangYe, ChildHangYe>() {
+                    @Override
+                    public List<ChildHangYe> provideRightList(RootHangYe item, int position) {
+                        List<ChildHangYe> child = item.getChild();
+                        if (CommonUtil.isEmpty(child)) {
+                            FilterUtils.instance().doubleListLeft = item.getName();
+                            FilterUtils.instance().doubleListRight = "";
+
+                            FilterUtils.instance().position = 0;
+                            FilterUtils.instance().positionTitle = item.getName();
+
+                            MLog.ToastShort(mContext, "item响应");
+                            onFilterDone(0);
+
+                            //触发返回
+//                            onPlaceCallbackListener.onPlaceCallbackListener(item.getId(), 0);
+                        }
+
+                        return child;
+                    }
+                })
+                .onRightItemClickListener(new DoubleListView.OnRightItemClickListener<RootHangYe, ChildHangYe>() {
+                    @Override
+                    public void onRightItemClick(RootHangYe item, ChildHangYe childHangYe) {
+                        FilterUtils.instance().doubleListLeft = item.getName();
+                        FilterUtils.instance().doubleListRight = childHangYe.getName();
+
+                        FilterUtils.instance().position = 0;
+                        FilterUtils.instance().positionTitle = childHangYe.getName();
+
+                        MLog.ToastShort(mContext, "item响应");
+
+                        onFilterDone(0);
+
+                        //触发返回
+                        onMultiFilterCallbackListener.onMultiFilterCallbackListener(item.getId(), childHangYe.getId());//返回act处理
+
+                    }
+                });
+        //初始化选中.
+        comTypeDoubleListView.setLeftList(productcatelist, 0);
+        comTypeDoubleListView.setRightList(productcatelist.get(0).getChild(), 0);
         comTypeDoubleListView.getLeftListView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.b_c_fafafa));
 
         return comTypeDoubleListView;

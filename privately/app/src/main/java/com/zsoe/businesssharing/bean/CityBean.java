@@ -1,7 +1,6 @@
 package com.zsoe.businesssharing.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * 市
@@ -11,7 +10,6 @@ public class CityBean implements Serializable {
     int id;
     String name;
     String pid;
-    ArrayList<AreaBean> child;
 
     public int getId() {
         return id;
@@ -37,11 +35,4 @@ public class CityBean implements Serializable {
         this.pid = pid;
     }
 
-    public ArrayList<AreaBean> getChild() {
-        return child;
-    }
-
-    public void setChild(ArrayList<AreaBean> child) {
-        this.child = child;
-    }
 }

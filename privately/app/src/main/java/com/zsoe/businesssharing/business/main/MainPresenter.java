@@ -9,10 +9,9 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
-import com.zsoe.businesssharing.bean.RootHangYe;
+import com.zsoe.businesssharing.bean.GongYouBean;
 
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.FormBody;
 import rx.Observable;
@@ -30,17 +29,17 @@ public class MainPresenter extends BasePresenter<MainActivity> {
 
 
         restartableFirst(REQUEST_LOGIN,
-                new Func0<Observable<RootResponse<List<RootHangYe>>>>() {
+                new Func0<Observable<RootResponse<GongYouBean>>>() {
                     @Override
-                    public Observable<RootResponse<List<RootHangYe>>> call() {
+                    public Observable<RootResponse<GongYouBean>> call() {
 
                         return DApplication.getServerAPI().industry_allcate(body);
                     }
                 },
 
-                new NetCallBack<MainActivity, List<RootHangYe>>() {
+                new NetCallBack<MainActivity,GongYouBean>() {
                     @Override
-                    public void callBack(MainActivity v, List<RootHangYe> o) {
+                    public void callBack(MainActivity v, GongYouBean o) {
                         FancyUtils.setRootHangYe(o);
                     }
                 },

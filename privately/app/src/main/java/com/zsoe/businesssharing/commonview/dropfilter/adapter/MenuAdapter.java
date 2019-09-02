@@ -30,4 +30,9 @@ public interface MenuAdapter {
      * 设置每个筛选条目的View
      */
     View getView(int position, FrameLayout parentContainer);
+
+    /**
+     * 点击
+     */
+    void onClick(int position);
 }
