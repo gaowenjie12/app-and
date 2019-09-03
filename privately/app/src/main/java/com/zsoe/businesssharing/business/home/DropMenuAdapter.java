@@ -546,7 +546,7 @@ public class DropMenuAdapter implements MenuAdapter {
                             FilterUtils.instance().position = 0;
                             FilterUtils.instance().positionTitle = item.getName();
 
-                            MLog.ToastShort(mContext, "item响应");
+//                            MLog.ToastShort(mContext, "item响应");
                             onFilterDone(0);
 
                             //触发返回
@@ -565,7 +565,7 @@ public class DropMenuAdapter implements MenuAdapter {
                         FilterUtils.instance().position = 0;
                         FilterUtils.instance().positionTitle = childHangYe.getName();
 
-                        MLog.ToastShort(mContext, "item响应");
+//                        MLog.ToastShort(mContext, "item响应");
 
                         onFilterDone(0);
 
@@ -623,8 +623,8 @@ public class DropMenuAdapter implements MenuAdapter {
                             FilterUtils.instance().position = 0;
                             FilterUtils.instance().positionTitle = item.getName();
 
-                            MLog.ToastShort(mContext, "item响应");
-                            onFilterDone(0);
+//                            MLog.ToastShort(mContext, "item响应");
+                            onFilterDone(1);
 
                             //触发返回
 //                            onPlaceCallbackListener.onPlaceCallbackListener(item.getId(), 0);
@@ -642,9 +642,9 @@ public class DropMenuAdapter implements MenuAdapter {
                         FilterUtils.instance().position = 0;
                         FilterUtils.instance().positionTitle = childHangYe.getName();
 
-                        MLog.ToastShort(mContext, "item响应");
+//                        MLog.ToastShort(mContext, "item响应");
 
-                        onFilterDone(0);
+                        onFilterDone(1);
 
                         //触发返回
                         onMultiFilterCallbackListener.onMultiFilterCallbackListener(item.getId(), childHangYe.getId());//返回act处理

@@ -235,13 +235,13 @@
         </receiver>
 
 
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5cecca2b570df318b40009ff" /> <!-- 个推SDK配置开始 -->
+<!--        <meta-data-->
+<!--            android:name="UMENG_APPKEY"-->
+<!--            android:value="5cecca2b570df318b40009ff" /> &lt;!&ndash; 个推SDK配置开始 &ndash;&gt;-->
 
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" /> <!-- 配置的第三方参数属性 -->
+<!--        <meta-data-->
+<!--            android:name="UMENG_CHANNEL"-->
+<!--            android:value="${UMENG_CHANNEL_VALUE}" /> &lt;!&ndash; 配置的第三方参数属性 &ndash;&gt;-->
 
 
         <activity

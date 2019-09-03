@@ -204,6 +204,7 @@ public class DropDownMenu extends RelativeLayout implements View.OnClickListener
     @Override
     public void onItemClick(View v, int position, boolean open) {
         if (position == 2 || position == 3 || position == 4) {
+            close();
             mMenuAdapter.onClick(position);
             return;
         }
@@ -218,7 +219,12 @@ public class DropDownMenu extends RelativeLayout implements View.OnClickListener
                 return;
             }
 
-            frameLayoutContainer.getChildAt(filterTabsIndicator.getLastIndicatorPosition()).setVisibility(View.GONE);
+            View childAt = frameLayoutContainer.getChildAt(filterTabsIndicator.getLastIndicatorPosition());
+            if (null != childAt) {
+                childAt.setVisibility(View.GONE);
+            }
+
+
             frameLayoutContainer.getChildAt(position).setVisibility(View.VISIBLE);
 
 
