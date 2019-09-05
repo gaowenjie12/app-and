@@ -3,6 +3,7 @@ package com.zsoe.businesssharing.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.R;
+import com.zsoe.businesssharing.business.login.LoginActivity;
 import com.zsoe.businesssharing.business.login.LoginUser;
 import com.zsoe.businesssharing.commonview.imagepicker.ImagePicker;
 import com.zsoe.businesssharing.commonview.imagepicker.view.CropImageView;
@@ -61,7 +63,6 @@ public class DApplication extends Application {
     public static Gson gson = new Gson();
     private ImagePicker imagePicker;
 
-    public String cid;
 
     @Override
     public void onCreate() {
@@ -137,7 +138,7 @@ public class DApplication extends Application {
          */
         PlatformConfig.setWeixin("wx96c57014385a0e0c", "你的微信AppSecret");//微信APPID和AppSecret
         PlatformConfig.setQQZone("1109739836", "jqoB2ONdjIZdsiPj");//QQAPPID和AppSecret
-        PlatformConfig.setSinaWeibo("你的微博APPID", "你的微博APPSecret","微博的后台配置回调地址");//微博
+        PlatformConfig.setSinaWeibo("你的微博APPID", "你的微博APPSecret", "微博的后台配置回调地址");//微博
     }
 
 
@@ -196,13 +197,6 @@ public class DApplication extends Application {
         return null;
     }
 
-    public void startLogin() {
-//        Intent intent = new Intent(this, LoginOrRegisterActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-    }
-
-
     /**
      * 这个问题由于项目中类太多，方法太多。 Android平台的Java虚拟机Dalvik在执行DEX格式的Java应用程序时，
      * 使用原生类型short来 索引DEX文件中的方法。这意味着单个DEX文件可被引用的方法总数被限制为65536。
@@ -246,12 +240,8 @@ public class DApplication extends Application {
             e.printStackTrace();
         }
 
-
-//        this.token = null;
-//        this.loginBean = null;
-//        this.userId = 0;
-//        this.role = 0;
-
+        this.loginUser = null;
+        FancyUtils.setLoginUser(null);
     }
 
     // add Activity
@@ -415,12 +405,12 @@ public class DApplication extends Application {
      * @return
      */
 
-    public long getUserId() {
-        if (userId == 0) {
-//            userId = PreferencesUtils.getInstance().getUserId();
-        }
-        return userId;
-    }
+//    public long getUserId() {
+//        if (userId == 0) {
+////            userId = PreferencesUtils.getInstance().getUserId();
+//        }
+//        return userId;
+//    }
 
 
 //    private LoginBean loginBean;
@@ -437,8 +427,6 @@ public class DApplication extends Application {
 //        }
 //        return loginBean;
 //    }
-
-
     public static ServerAPI getServerAPI() {
         return serverAPI;
     }
@@ -481,4 +469,11 @@ public class DApplication extends Application {
         return null;
 
     }
+
+    public void startLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
 }

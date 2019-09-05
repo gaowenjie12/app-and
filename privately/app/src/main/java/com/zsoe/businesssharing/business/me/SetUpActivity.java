@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.DApplication;
 
 public class SetUpActivity extends BaseActivity implements View.OnClickListener {
 
@@ -54,6 +55,9 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
             case R.id.rl_jianchagengxin:
                 break;
             case R.id.btn_login:
+                // 确认
+                DApplication.getInstance().exit();
+                DApplication.getInstance().startLogin();
                 break;
         }
     }

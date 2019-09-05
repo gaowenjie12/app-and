@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.exhibitionhall;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,6 +8,7 @@ import android.widget.ListView;
 
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.bean.ChildHangYe;
 import com.zsoe.businesssharing.bean.GongYouBean;
@@ -112,6 +114,12 @@ public class IndustryClassificationActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 ChildHangYe cityBean = selectCityBeans.get(position);
 //                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+
+                Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, 0);
+                intent.putExtra(Config.INTENT_PARAMS2, cityBean.getId());
+                startActivity(intent);
+
             }
         });
 

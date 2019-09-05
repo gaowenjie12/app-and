@@ -5,6 +5,7 @@ import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.bean.ChanPinBeanItem;
 import com.zsoe.businesssharing.bean.CompanyInfo;
 import com.zsoe.businesssharing.bean.DetailFinanceBean;
+import com.zsoe.businesssharing.bean.DetailJiaoLiuBean;
 import com.zsoe.businesssharing.bean.DetailJoinInvestmentBean;
 import com.zsoe.businesssharing.bean.FileDownBean;
 import com.zsoe.businesssharing.bean.GalleryRoomBean;
@@ -15,8 +16,10 @@ import com.zsoe.businesssharing.bean.ItemBankBean;
 import com.zsoe.businesssharing.bean.ItemCompany;
 import com.zsoe.businesssharing.bean.ItemFinancBean;
 import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
+import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.bean.MasterBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
+import com.zsoe.businesssharing.bean.StockBean;
 import com.zsoe.businesssharing.business.login.LoginUser;
 
 import java.util.List;
@@ -156,5 +159,23 @@ public interface ServerAPI {
      */
     @POST("hall/industry_allcate")
     Observable<RootResponse<GongYouBean>> industry_allcate(@Body FormBody body);
+
+    /**
+     * POST 全部行业分类
+     */
+    @POST("index/stock_purchase_list")
+    Observable<RootResponse<List<StockBean>>> stock_purchase_list(@Body FormBody body);
+
+    /**
+     * POST 交流会列表 /api/v1/hall/communication_list
+     */
+    @POST("hall/communication_list")
+    Observable<RootResponse<List<JiaoLiuBean>>> communication_list(@Body FormBody body);
+
+    /**
+     * POST 交流会详情 /api/v1/hall/communication_info
+     */
+    @POST("hall/communication_info")
+    Observable<RootResponse<DetailJiaoLiuBean>> communication_info(@Body FormBody body);
 
 }

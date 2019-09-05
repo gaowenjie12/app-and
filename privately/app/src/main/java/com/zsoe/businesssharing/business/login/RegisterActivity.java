@@ -4,11 +4,13 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,11 +60,29 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     private Button mBtnRegister;
     private LinearLayout mBody;
 
+    private CountDownTimer loginTimer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
+
+
+        loginTimer = new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                mTvGetcode.setText("重新发送（" + (millisUntilFinished / 1000) + "s）");
+                mTvGetcode.setTextColor(getResources().getColor(R.color.text_9));
+
+            }
+
+            public void onFinish() {
+                mTvGetcode.setEnabled(true);
+                mTvGetcode.setTextColor(getResources().getColor(R.color.dark_green));
+                mTvGetcode.setText("发送验证码");
+            }
+        };
 
         keyboardWatcher = new KeyboardWatcher(findViewById(Window.ID_ANDROID_CONTENT));
         keyboardWatcher.addSoftKeyboardStateListener(this);
@@ -95,9 +115,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
                     return;
                 }
 
+                boolean checked = checkBox.isChecked();
+                if (!checked) {
+                    ToastUtils.showShort("请勾选用户服务协议");
+                    return;
+                }
+
 
                 DialogManager.getInstance().showNetLoadingView(mContext);
-                getPresenter().register(s, "s3", pass);
+                getPresenter().register(s, s3, pass);
 
                 break;
             case R.id.tv_getcode:
@@ -120,6 +146,12 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    public void chenggong() {
+        // 发生成功
+        loginTimer.start();
+        mTvGetcode.setEnabled(false);
     }
 
 
@@ -170,6 +202,9 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (loginTimer != null) {
+            loginTimer.cancel();
+        }
         keyboardWatcher.removeSoftKeyboardStateListener(this);
     }
 
@@ -199,6 +234,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         zoomOut(mLogo);
     }
 
+    CheckBox checkBox;
+
     private void initView() {
         mClose = (ImageView) findViewById(R.id.close);
         mClose.setOnClickListener(this);
@@ -211,6 +248,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         mBtnRegister = (Button) findViewById(R.id.btn_register);
         mBtnRegister.setOnClickListener(this);
         mBody = (LinearLayout) findViewById(R.id.body);
+        checkBox = (CheckBox) findViewById(R.id.checkbox);
 
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
 

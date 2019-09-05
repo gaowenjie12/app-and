@@ -3,6 +3,7 @@ package com.zsoe.businesssharing.business.home;
 import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
@@ -84,10 +85,6 @@ public class DropMenuAdapter implements MenuAdapter {
 
 //                view = createSingleListView();
                 break;
-            case 4:
-                //浏览量
-
-                break;
         }
 
         return view;
@@ -98,10 +95,16 @@ public class DropMenuAdapter implements MenuAdapter {
         if (position == 2) {
             onPriceCallbackListener.onPriceCallbackListener();
         } else if (position == 3) {
-            onSortCallbackListener.onSortCallbackListener();
-        } else if (position == 4) {
             onLiuLanCallbackListener.onLiuLanCallbackListener();
         }
+    }
+
+
+    private TextView positionTextView;
+
+    @Override
+    public void selectItem(TextView textView) {
+        positionTextView = textView;
     }
 
     /**
@@ -450,6 +453,9 @@ public class DropMenuAdapter implements MenuAdapter {
 //    }
 
 
+    private int mTabDefaultColor = 0xFF333333;// 未选中默认颜色
+    private int mTabSelectedColor = 0xFFFF8b45;// 指针选中颜色(已修改成主题色 橙色)
+
     /**
      * 每一块筛选按钮的act回调
      *
@@ -458,9 +464,25 @@ public class DropMenuAdapter implements MenuAdapter {
     private void onFilterDone(int tabPosition) {
         if (onFilterDoneListener != null) {
             if (tabPosition == 0) {
+
+//                Drawable drawable = positionTextView.getCompoundDrawables()[2];
+//                int level = drawable.getLevel();
+//                // 点击同一个条目时
+//                positionTextView.setTextColor(level == 0 ? mTabSelectedColor : mTabDefaultColor);
+//                drawable.setLevel(1 - level);
+
+
                 onFilterDoneListener.onFilterDone(0, FilterUtils.instance().positionTitle, "");
             } else if (tabPosition == 1) {
-                onFilterDoneListener.onFilterDone(1, "筛选", "");
+
+//                Drawable drawable = positionTextView.getCompoundDrawables()[2];
+//                int level = drawable.getLevel();
+//                // 点击同一个条目时
+//                positionTextView.setTextColor(level == 0 ? mTabSelectedColor : mTabDefaultColor);
+//                drawable.setLevel(1 - level);
+
+
+                onFilterDoneListener.onFilterDone(1, FilterUtils.instance().positionTitle, "");
             } else if (tabPosition == 2) {
                 onFilterDoneListener.onFilterDone(2, "价格", "");
             } else if (tabPosition == 3) {

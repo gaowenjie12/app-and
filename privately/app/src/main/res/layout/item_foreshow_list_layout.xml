@@ -62,12 +62,12 @@
     </LinearLayout>
 
     <ImageView
+        android:padding="@dimen/adaptive_10dp"
         android:id="@+id/iv_shoucang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_margin="10dp"
         android:src="@mipmap/shoucang_pre" />
 
     <View

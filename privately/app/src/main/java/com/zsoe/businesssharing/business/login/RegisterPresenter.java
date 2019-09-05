@@ -37,7 +37,7 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity> {
                 new NetCompleteBack<RegisterActivity>() {
                     @Override
                     public void onComplete(RegisterActivity v, RootResponse t) {
-
+                            v.chenggong();
                     }
                 },
                 new BaseToastNetError<RegisterActivity>());

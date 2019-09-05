@@ -24,7 +24,8 @@
         android:layout_marginTop="70dp"
         android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:text="注册"
+        android:text="账号注册"
+        android:textColor="@color/main_c"
         android:textSize="18sp"
         android:textStyle="bold"
         app:drawableHeight="40dp"
@@ -105,6 +106,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="获取验证码"
+                android:textColor="@color/main_c"
                 android:textSize="14dp" />
 
         </LinearLayout>
@@ -153,9 +155,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/bg_btn_login_selected"
+            android:background="@color/main_c"
             android:text="立即注册"
-            android:textColor="@color/text_6"
+            android:textColor="@color/white"
             android:textSize="18dp" />
 
     </LinearLayout>
@@ -176,16 +178,20 @@
             android:padding="10dp">
 
             <CheckBox
+                android:id="@+id/checkbox"
+                android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:textColor="@color/text_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我已阅读并接受"
                 android:textSize="14dp" />
 
             <TextView
+                android:textColor="@color/main_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《用户服务协议》"

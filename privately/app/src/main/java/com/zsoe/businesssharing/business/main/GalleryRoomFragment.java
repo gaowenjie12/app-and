@@ -295,7 +295,10 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
                     @Override
                     public void onClick(View view) {
 
-                        startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+                        Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, 1);
+                        intent.putExtra(Config.INTENT_PARAMS2, 0);
+                        startActivity(intent);
 
                     }
                 });
@@ -305,7 +308,13 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
                 relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+//                        startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+
+                        Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, 2);
+                        intent.putExtra(Config.INTENT_PARAMS2, 0);
+                        startActivity(intent);
+
                     }
                 });
             }

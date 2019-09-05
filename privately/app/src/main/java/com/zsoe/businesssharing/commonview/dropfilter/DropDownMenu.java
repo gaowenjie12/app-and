@@ -170,7 +170,7 @@ public class DropDownMenu extends RelativeLayout implements View.OnClickListener
         }
 
         frameLayoutContainer.startAnimation(alphaDismissAnimation);
-        filterTabsIndicator.resetCurrentPos();
+//        filterTabsIndicator.resetCurrentPos();
 
         if (currentView != null) {
             currentView.startAnimation(dismissAnimation);
@@ -203,7 +203,7 @@ public class DropDownMenu extends RelativeLayout implements View.OnClickListener
 
     @Override
     public void onItemClick(View v, int position, boolean open) {
-        if (position == 2 || position == 3 || position == 4) {
+        if (position == 2 || position == 3) {
             close();
             mMenuAdapter.onClick(position);
             return;

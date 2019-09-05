@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.commonview.dropfilter.adapter;
 
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 /**
  * author: baiiu
@@ -35,4 +36,6 @@ public interface MenuAdapter {
      * 点击
      */
     void onClick(int position);
+
+    void selectItem(TextView textView);
 }

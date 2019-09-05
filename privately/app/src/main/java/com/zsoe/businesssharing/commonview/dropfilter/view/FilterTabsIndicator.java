@@ -159,10 +159,13 @@ public class FilterTabsIndicator extends LinearLayout {
         setTitles(Arrays.asList(list));
     }
 
+    MenuAdapter menuAdapter;
+
     public void setTitles(MenuAdapter menuAdapter) {
         if (menuAdapter == null) {
             return;
         }
+        this.menuAdapter = menuAdapter;
         this.removeAllViews();
 
         mTabCount = menuAdapter.getMenuCount();
@@ -180,23 +183,32 @@ public class FilterTabsIndicator extends LinearLayout {
         int level = drawable.getLevel();
 
         if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(tv, pos, level == 1);
+            mOnItemClickListener.onItemClick(tv, pos, false);
         }
 
-        if (mLastIndicatorPosition == pos) {
+        if (pos == 2 || pos == 3) {
             // 点击同一个条目时
             tv.setTextColor(level == 0 ? mTabSelectedColor : mTabDefaultColor);
             drawable.setLevel(1 - level);
-
-            return;
         }
 
+//        else {
+//            menuAdapter.selectItem(tv);
+//        }
+//        if (mLastIndicatorPosition == pos) {
+//            // 点击同一个条目时
+//            tv.setTextColor(level == 0 ? mTabSelectedColor : mTabDefaultColor);
+//            drawable.setLevel(1 - level);
+//
+//            return;
+//        }
+
         mCurrentIndicatorPosition = pos;
-        resetPos(mLastIndicatorPosition);
+//        resetPos(mLastIndicatorPosition);
 
         //highLightPos(pos);
-        tv.setTextColor(mTabSelectedColor);
-        tv.getCompoundDrawables()[2].setLevel(1);
+//        tv.setTextColor(mTabSelectedColor);
+//        tv.getCompoundDrawables()[2].setLevel(1);
 
         mLastIndicatorPosition = pos;
     }
@@ -287,9 +299,9 @@ public class FilterTabsIndicator extends LinearLayout {
             throw new IllegalArgumentException("position 越界");
         }
         TextView tv = getChildAtCurPos(position);
-        tv.setTextColor(mTabDefaultColor);
+        tv.setTextColor(mTabSelectedColor);
         tv.setText(text);
-        tv.getCompoundDrawables()[2].setLevel(0);
+        tv.getCompoundDrawables()[2].setLevel(1);
     }
 
     public int getLastIndicatorPosition() {

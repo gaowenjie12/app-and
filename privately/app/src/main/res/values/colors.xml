@@ -50,6 +50,7 @@
     <color name="text_color_unchecked">#222222</color>
 
     <color name="main_bg">#F4F4F4</color>
+    <color name="main_c">#AC9472</color>
 
     <color name="viewfinder_mask">#60000000</color>
     <color name="viewfinder_frame">#7F1FB3E2</color>
