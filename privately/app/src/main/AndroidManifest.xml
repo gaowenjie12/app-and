@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zsoe.businesssharing">
-
     <!-- iBeancon功能所需权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 个推3.0电子围栏功能所需权限 -->
@@ -55,24 +54,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-
+        <activity android:name=".business.attention.BuZhangXinxiActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
 
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 适配全面屏 -->
-
-        <!--企业所在地-->
+        <!-- 企业所在地 -->
         <activity
             android:name=".business.me.EnterpriseLocationActivity"
-            android:screenOrientation="portrait"></activity>
-        <!-- 认证公司 -->
+            android:screenOrientation="portrait" /> <!-- 认证公司 -->
         <activity
             android:name=".business.me.CertificationCompanyActivity"
             android:screenOrientation="portrait" /> <!-- 我的签到 -->
@@ -172,7 +168,6 @@
             android:name=".business.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -193,10 +188,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".base.BrowserActivity"
-            android:screenOrientation="portrait" />
-
-
-        <!-- 开机自启动服务 -->
+            android:screenOrientation="portrait" /> <!-- 开机自启动服务 -->
         <receiver android:name=".receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -204,13 +196,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </receiver>
-
-        <!-- 设置环信应用的appkey -->
+        </receiver> <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="easemob-demo#chatdemoui" />
-        <!-- 声明sdk所需的service -->
+            android:value="easemob-demo#chatdemoui" /> <!-- 声明sdk所需的service -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true"
@@ -218,9 +207,7 @@
         <service
             android:name="com.hyphenate.chat.EMJobService"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!-- 声明sdk所需的receiver -->
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 声明sdk所需的receiver -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -232,39 +219,32 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>
-
-
-<!--        <meta-data-->
-<!--            android:name="UMENG_APPKEY"-->
-<!--            android:value="5cecca2b570df318b40009ff" /> &lt;!&ndash; 个推SDK配置开始 &ndash;&gt;-->
-
-<!--        <meta-data-->
-<!--            android:name="UMENG_CHANNEL"-->
-<!--            android:value="${UMENG_CHANNEL_VALUE}" /> &lt;!&ndash; 配置的第三方参数属性 &ndash;&gt;-->
-
-
+        </receiver> <!-- <meta-data -->
+        <!-- android:name="UMENG_APPKEY" -->
+        <!-- android:value="5cecca2b570df318b40009ff" /> &lt;!&ndash; 个推SDK配置开始 &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="${UMENG_CHANNEL_VALUE}" /> &lt;!&ndash; 配置的第三方参数属性 &ndash;&gt; -->
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -282,7 +262,6 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
     </application>
 
 </manifest>

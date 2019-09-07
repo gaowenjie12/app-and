@@ -110,7 +110,6 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
         LoadMoreDefaultFooterRecyclerView defaultFooterRecyclerView = (LoadMoreDefaultFooterRecyclerView) getPresenter().loadMoreDefault.getFooterView();
         noticeBeanOnionRecycleAdapter.setLoadMoreContainer(getPresenter().loadMoreDefault);
 
-
         mRvProductList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
         mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
         mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加

@@ -266,7 +266,10 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
             tv_dongtai.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(mContext, LatestNewsActivity.class));
+                    Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, 6);
+                    intent.putExtra(Config.INTENT_PARAMS2, itemInsdustry.getId());
+                    startActivity(intent);
                 }
             });
         }

@@ -7,19 +7,23 @@ import com.zsoe.businesssharing.bean.CompanyInfo;
 import com.zsoe.businesssharing.bean.DetailFinanceBean;
 import com.zsoe.businesssharing.bean.DetailJiaoLiuBean;
 import com.zsoe.businesssharing.bean.DetailJoinInvestmentBean;
+import com.zsoe.businesssharing.bean.FenHuiBean;
 import com.zsoe.businesssharing.bean.FileDownBean;
 import com.zsoe.businesssharing.bean.GalleryRoomBean;
 import com.zsoe.businesssharing.bean.GongYouBean;
 import com.zsoe.businesssharing.bean.HomeBean;
 import com.zsoe.businesssharing.bean.IndustryRoot;
 import com.zsoe.businesssharing.bean.ItemBankBean;
+import com.zsoe.businesssharing.bean.ItemBuZhangXinxBean;
 import com.zsoe.businesssharing.bean.ItemCompany;
 import com.zsoe.businesssharing.bean.ItemFinancBean;
 import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
+import com.zsoe.businesssharing.bean.ItemWenZhangBean;
 import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.bean.MasterBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
 import com.zsoe.businesssharing.bean.StockBean;
+import com.zsoe.businesssharing.bean.XinXiBena;
 import com.zsoe.businesssharing.business.login.LoginUser;
 
 import java.util.List;
@@ -177,5 +181,37 @@ public interface ServerAPI {
      */
     @POST("hall/communication_info")
     Observable<RootResponse<DetailJiaoLiuBean>> communication_info(@Body FormBody body);
+
+    /**
+     * 分会介绍 /api/v1/attention/index
+     */
+    @POST("attention/index")
+    Observable<RootResponse<FenHuiBean>> attentionIndex(@Body FormBody body);
+
+    /**
+     * 架构文化 /api/v1/attention/frame
+     */
+    @POST("attention/frame")
+    Observable<RootResponse<FenHuiBean>> attentionFrame(@Body FormBody body);
+
+    /**
+     * 信箱 /api/v1/attention/mailbox 可以使用
+     */
+    @POST("attention/mailbox")
+    Observable<RootResponse<List<XinXiBena>>> attentionMailbox(@Body FormBody body);
+
+
+    /**
+     * 部长列表 /api/v1/attention/minister_list 可以使用
+     */
+    @POST("attention/minister_list")
+    Observable<RootResponse<List<ItemBuZhangXinxBean>>> minister_list(@Body FormBody body);
+
+
+    /**
+     * 平台文章列表(5种类型)；1事件2帮助中心3系统公告4行业资讯5头条快讯 /api/v1/msg/article_list 可以使用
+     */
+    @POST("msg/article_list")
+    Observable<RootResponse<List<ItemWenZhangBean>>> article_list(@Body FormBody body);
 
 }

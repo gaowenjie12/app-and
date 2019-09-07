@@ -1,4 +1,4 @@
-package com.zsoe.businesssharing.business.exhibitionhall;
+package com.zsoe.businesssharing.business.attention;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
-import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
-import com.zsoe.businesssharing.bean.ItemWenZhangBean;
+import com.zsoe.businesssharing.bean.ItemBuZhangXinxBean;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
@@ -27,29 +26,25 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-@RequiresPresenter(LatestNewsPresenter.class)
-public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
+@RequiresPresenter(BuZhangXInxiPresenter.class)
+public class BuZhangXinxiActivity extends BaseActivity<BuZhangXInxiPresenter> {
 
     private RecyclerView mRvProductList;
-    private int type, daliang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_latest_news);
+        setContentView(R.layout.activity_bu_zhang_xinxi);
         initView();
-        initTitleText("近期动态");
+        initTitleText("部长信箱");
 
-        type = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
-        daliang = getIntent().getIntExtra(Config.INTENT_PARAMS2, -1);
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().article_list(type + "",daliang+"");
-
+                getPresenter().minister_list();
             }
         });
 
@@ -57,23 +52,19 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
         mPtrFrame.autoRefresh();
     }
 
-
-    OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
-    private List<ItemWenZhangBean> noticeBeanList = new ArrayList<>();
-
     private void initView() {
         mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
 
-        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemWenZhangBean>(R.layout.item_latestnew_layout, noticeBeanList) {
+        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemBuZhangXinxBean>(R.layout.item_buzhangxinxiang_layout, noticeBeanList) {
             @Override
-            protected void convert(BaseViewHolder holder, final ItemWenZhangBean item) {
+            protected void convert(BaseViewHolder holder, final ItemBuZhangXinxBean item) {
                 super.convert(holder, item);
 
-                SimpleDraweeView simpleDraweeView = holder.getView(R.id.iv_image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
+                SimpleDraweeView simpleDraweeView = holder.getView(R.id.image);
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getAvatar());
 
-                holder.setText(R.id.tv_title, item.getTitle());
-                holder.setText(R.id.tv_time, "发布时间：" + item.getCreatetime());
+                holder.setText(R.id.tv_title, item.getStaffname());
+                holder.setText(R.id.tv_real_name, item.getRealname());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -90,7 +81,7 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().article_list(type + "",daliang+"");
+                getPresenter().minister_list();
             }
         });
 
@@ -104,6 +95,7 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
         mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
 
+
     }
 
 
@@ -114,4 +106,9 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
         mPtrFrame.refreshComplete();
         noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
     }
+
+
+    OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
+    private List<ItemBuZhangXinxBean> noticeBeanList = new ArrayList<>();
+
 }
