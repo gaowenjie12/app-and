@@ -1,4 +1,4 @@
-package com.zsoe.businesssharing.business.exhibitionhall;
+package com.zsoe.businesssharing.business.me;
 
 
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
-import com.zsoe.businesssharing.bean.ItemWenZhangBean;
+import com.zsoe.businesssharing.bean.MessageReturnBean;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
 
 import java.util.List;
@@ -18,12 +18,12 @@ import rx.Observable;
 import rx.functions.Func0;
 
 
-public class LatestNewsPresenter extends BasePresenter<LatestNewsActivity> {
+public class MessageRemindListPresenter extends BasePresenter<MessageRemindActivity> {
     final public int REQUEST_LOGIN = 1;
     FormBody body;
 
     //用来维持页码
-    public OpenLoadMoreDefault<ItemWenZhangBean> loadMoreDefault;
+    public OpenLoadMoreDefault<MessageReturnBean> loadMoreDefault;
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -31,30 +31,29 @@ public class LatestNewsPresenter extends BasePresenter<LatestNewsActivity> {
 
 
         restartableFirst(REQUEST_LOGIN,
-                new Func0<Observable<RootResponse<List<ItemWenZhangBean>>>>() {
+                new Func0<Observable<RootResponse<List<MessageReturnBean>>>>() {
                     @Override
-                    public Observable<RootResponse<List<ItemWenZhangBean>>> call() {
+                    public Observable<RootResponse<List<MessageReturnBean>>> call() {
 
-                        return DApplication.getServerAPI().article_list(body);
+                        return DApplication.getServerAPI().mailbox_list(body);
                     }
                 },
-                new NetCallBack<LatestNewsActivity, List<ItemWenZhangBean>>() {
+                new NetCallBack<MessageRemindActivity, List<MessageReturnBean>>() {
                     @Override
-                    public void callBack(LatestNewsActivity v, List<ItemWenZhangBean> noticeBeanList) {
+                    public void callBack(MessageRemindActivity v, List<MessageReturnBean> noticeBeanList) {
 
                         loadMoreDefault.fixNumAndClear();
                         loadMoreDefault.loadMoreFinish(noticeBeanList);
                         v.updateList();
                     }
                 },
-                new BaseToastNetError<LatestNewsActivity>());
+                new BaseToastNetError<MessageRemindActivity>());
 
 
     }
 
-    public void article_list(String type,String person_id) {
-        loadMoreDefault.pagerAble.put("type", type);
-        loadMoreDefault.pagerAble.put("person_id", person_id);
+    public void mailbox_list(String uid) {
+        loadMoreDefault.pagerAble.put("uid", uid);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 

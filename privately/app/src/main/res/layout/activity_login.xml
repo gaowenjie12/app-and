@@ -111,9 +111,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:background="@drawable/bg_btn_login_selected"
+            android:background="@color/main_c"
             android:text="登录"
-            android:textColor="@color/text_6"
+            android:textColor="@color/white"
             android:textSize="18dp" />
 
         <RelativeLayout

@@ -1,6 +1,5 @@
 package com.zsoe.businesssharing.base;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -31,7 +30,7 @@ import com.zsoe.businesssharing.R;
 /**
  * x5webview activity
  */
-public class BrowserActivity extends Activity {
+public class BrowserActivity extends BaseActivity {
     /**
      * 作为一个浏览器的示例展示出来，采用android+web的模式
      */

@@ -7,12 +7,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BottomPopupView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ItemBuZhangXinxBean;
+import com.zsoe.businesssharing.commonview.CustomEditTextBottomPopup;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
@@ -30,13 +37,21 @@ import rx.functions.Action1;
 public class BuZhangXinxiActivity extends BaseActivity<BuZhangXInxiPresenter> {
 
     private RecyclerView mRvProductList;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bu_zhang_xinxi);
         initView();
-        initTitleText("部长信箱");
+        type = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+
+
+        if (type == 3) {
+            initTitleText("部长信箱");
+        } else {
+            initTitleText("大会长信箱");
+        }
 
 
         initPtrFrameLayout(new Action1<String>() {
@@ -44,7 +59,7 @@ public class BuZhangXinxiActivity extends BaseActivity<BuZhangXInxiPresenter> {
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().minister_list();
+                getPresenter().minister_list(type + "");
             }
         });
 
@@ -70,9 +85,20 @@ public class BuZhangXinxiActivity extends BaseActivity<BuZhangXInxiPresenter> {
                     @Override
                     public void onClick(View view) {
 
+                        bottomPopupView = new CustomEditTextBottomPopup(mContext).setCommentListener(new CustomEditTextBottomPopup.CommentListener() {
+                            @Override
+                            public void onFinish(String str) {
+                                DialogManager.getInstance().showNetLoadingView(mContext);
+                                getPresenter().save_mailbox_msg(item.getId()+"", DApplication.getInstance().getLoginUser().getId() + "", str);
+                            }
+                        });
+
+                        new XPopup.Builder(mContext)
+                                .autoOpenSoftInput(true)
+                                .asCustom(bottomPopupView)
+                                .show();
                     }
                 });
-
             }
         };
 
@@ -81,7 +107,8 @@ public class BuZhangXinxiActivity extends BaseActivity<BuZhangXInxiPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().minister_list();
+                getPresenter().minister_list(type + "");
+
             }
         });
 
@@ -111,4 +138,10 @@ public class BuZhangXinxiActivity extends BaseActivity<BuZhangXInxiPresenter> {
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
     private List<ItemBuZhangXinxBean> noticeBeanList = new ArrayList<>();
 
+    BottomPopupView bottomPopupView;
+
+    public void setMsgSuccess(RootResponse t) {
+        ToastUtils.showShort(t.getMsg());
+        bottomPopupView.dismiss();
+    }
 }

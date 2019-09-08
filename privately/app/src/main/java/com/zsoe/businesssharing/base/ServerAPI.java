@@ -21,7 +21,9 @@ import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
 import com.zsoe.businesssharing.bean.ItemWenZhangBean;
 import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.bean.MasterBean;
+import com.zsoe.businesssharing.bean.MessageReturnBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
+import com.zsoe.businesssharing.bean.RootEventBean;
 import com.zsoe.businesssharing.bean.StockBean;
 import com.zsoe.businesssharing.bean.XinXiBena;
 import com.zsoe.businesssharing.business.login.LoginUser;
@@ -202,9 +204,9 @@ public interface ServerAPI {
 
 
     /**
-     * 部长列表 /api/v1/attention/minister_list 可以使用
+     * 部长列表 大会长列表 /api/v1/attention/minister_and_associator_list 可以使用
      */
-    @POST("attention/minister_list")
+    @POST("attention/minister_and_associator_list")
     Observable<RootResponse<List<ItemBuZhangXinxBean>>> minister_list(@Body FormBody body);
 
 
@@ -213,5 +215,25 @@ public interface ServerAPI {
      */
     @POST("msg/article_list")
     Observable<RootResponse<List<ItemWenZhangBean>>> article_list(@Body FormBody body);
+
+
+    /**
+     * 事件列表 /api/v1/attention/event 可以使用
+     */
+    @POST("attention/event")
+    Observable<RootResponse<RootEventBean>> attentionEvent(@Body FormBody body);
+
+    /**
+     * 信箱提交留言 /api/v1/attention/save_mailbox_msg 可以使用
+     */
+    @POST("attention/save_mailbox_msg")
+    Observable<RootResponse> save_mailbox_msg(@Body FormBody body);
+
+
+    /**
+     * 普通用户 身份 领导回信列表 or 领导身份 信箱页面 列表 /api/v1/msg/mailbox_list 可以使用
+     */
+    @POST("msg/mailbox_list")
+    Observable<RootResponse<List<MessageReturnBean>>> mailbox_list(@Body FormBody body);
 
 }

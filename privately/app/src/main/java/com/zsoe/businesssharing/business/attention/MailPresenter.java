@@ -9,6 +9,7 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
+import com.zsoe.businesssharing.base.presenter.NetCompleteBack;
 import com.zsoe.businesssharing.bean.XinXiBena;
 
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import rx.functions.Func0;
 
 public class MailPresenter extends BasePresenter<MailFragment> {
     final public int REQUEST_LOGIN = 1;
+    final public int REQUEST_LOGIN2 = 2;
     FormBody body;
 
     @Override
@@ -43,7 +45,30 @@ public class MailPresenter extends BasePresenter<MailFragment> {
                         v.setData(xinXiBenas);
                     }
                 }
-                , new BaseToastNetError<MailFragment>(){
+                , new BaseToastNetError<MailFragment>() {
+                    @Override
+                    public void call(MailFragment v, Throwable throwable) {
+                        super.call(v, throwable);
+                        ToastUtils.showShort(throwable.getMessage());
+                    }
+                });
+
+
+        restartableFirst(REQUEST_LOGIN2,
+                new Func0<Observable<RootResponse>>() {
+                    @Override
+                    public Observable<RootResponse> call() {
+
+                        return DApplication.getServerAPI().save_mailbox_msg(body);
+                    }
+                },
+                new NetCompleteBack<MailFragment>() {
+                    @Override
+                    public void onComplete(MailFragment v, RootResponse t) {
+                        v.setMsgSuccess(t);
+                    }
+                }
+                , new BaseToastNetError<MailFragment>() {
                     @Override
                     public void call(MailFragment v, Throwable throwable) {
                         super.call(v, throwable);
@@ -58,6 +83,19 @@ public class MailPresenter extends BasePresenter<MailFragment> {
         HashMap<String, String> params = new HashMap<>();
         body = signForm(params);
         start(REQUEST_LOGIN);
+
+    }
+
+    public void save_mailbox_msg(String mid, String uid, String msg) {
+
+        HashMap<String, String> params = new HashMap<>();
+
+        params.put("mid", mid);
+        params.put("uid", uid);
+        params.put("msg", msg);
+
+        body = signForm(params);
+        start(REQUEST_LOGIN2);
 
     }
 

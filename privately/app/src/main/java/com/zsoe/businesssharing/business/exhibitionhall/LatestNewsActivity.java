@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.exhibitionhall;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
@@ -31,7 +33,7 @@ import rx.functions.Action1;
 public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
 
     private RecyclerView mRvProductList;
-    private int type, daliang;
+    private int type, person_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +43,14 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
         initTitleText("近期动态");
 
         type = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
-        daliang = getIntent().getIntExtra(Config.INTENT_PARAMS2, -1);
+        person_id = getIntent().getIntExtra(Config.INTENT_PARAMS2, -1);
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().article_list(type + "",daliang+"");
+                getPresenter().article_list(type + "", person_id + "");
 
             }
         });
@@ -63,8 +65,7 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
 
     private void initView() {
         mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
-
-        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemWenZhangBean>(R.layout.item_latestnew_layout, noticeBeanList) {
+        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemWenZhangBean>(R.layout.item_latestnew_layout, noticeBeanList) {
             @Override
             protected void convert(BaseViewHolder holder, final ItemWenZhangBean item) {
                 super.convert(holder, item);
@@ -78,7 +79,9 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent  = new Intent(mContext,BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkurl());
+                        startActivity(intent);
                     }
                 });
 
@@ -90,7 +93,7 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().article_list(type + "",daliang+"");
+                getPresenter().article_list(type + "", person_id + "");
             }
         });
 

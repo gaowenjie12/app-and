@@ -10,13 +10,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BottomPopupView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.XinXiBena;
+import com.zsoe.businesssharing.commonview.CustomEditTextBottomPopup;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
 import java.util.List;
@@ -93,7 +101,27 @@ public class MailFragment extends BaseFragment<MailPresenter> {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(mContext, BuZhangXinxiActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, type);
                             startActivity(intent);
+                        }
+                    });
+                } else {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            bottomPopupView = new CustomEditTextBottomPopup(mContext).setCommentListener(new CustomEditTextBottomPopup.CommentListener() {
+                                @Override
+                                public void onFinish(String str) {
+                                    DialogManager.getInstance().showNetLoadingView(mContext);
+                                    getPresenter().save_mailbox_msg(item.getId(), DApplication.getInstance().getLoginUser().getId() + "", str);
+                                }
+                            });
+
+                            new XPopup.Builder(mContext)
+                                    .autoOpenSoftInput(true)
+                                    .asCustom(bottomPopupView)
+                                    .show();
                         }
                     });
                 }
@@ -108,4 +136,12 @@ public class MailFragment extends BaseFragment<MailPresenter> {
 
 
     }
+
+    BottomPopupView bottomPopupView;
+
+    public void setMsgSuccess(RootResponse t) {
+        ToastUtils.showShort(t.getMsg());
+        bottomPopupView.dismiss();
+    }
+
 }

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
 
@@ -98,11 +99,17 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
                 break;
 
             case R.id.rl_xitonggonggao:
-                startActivity(new Intent(mContext, LatestNewsActivity.class));
+                Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, 3);
+                startActivity(intent);
+
                 break;
 
             case R.id.rl_hangyezixun:
-                startActivity(new Intent(mContext, LatestNewsActivity.class));
+
+                Intent intent2 = new Intent(mContext, LatestNewsActivity.class);
+                intent2.putExtra(Config.INTENT_PARAMS1, 4);
+                startActivity(intent2);
 
                 break;
 

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
@@ -140,7 +141,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, FinancingLoansActivity.class));
                 break;
             case R.id.ll_zixun:
-                startActivity(new Intent(mContext, LatestNewsActivity.class));
+
+                Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, 4);
+                startActivity(intent);
 
                 break;
 
@@ -184,6 +188,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_kefu:
                 break;
             case R.id.ll_bangzhu:
+                Intent intent2 = new Intent(mContext, LatestNewsActivity.class);
+                intent2.putExtra(Config.INTENT_PARAMS1, 2);
+                startActivity(intent2);
                 break;
 
         }

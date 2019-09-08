@@ -14,10 +14,38 @@ public class LoginUser {
     private String avatar;
     private int score;
     private String token;
+    private String type;//type值大于0身份为领导（恩师、主席、部长、大会长），type=0或者为空都是普通用户（普通企业）
+    private String uuid;
+    private String identify;
     private int user_id;
     private long createtime;
     private long expiretime;
     private long expires_in;
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getIdentify() {
+        return identify;
+    }
+
+    public void setIdentify(String identify) {
+        this.identify = identify;
+    }
 
     public void setId(int id) {
         this.id = id;

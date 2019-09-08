@@ -336,7 +336,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
 
                 break;
             case R.id.tv_xinwen_more:
-                startActivity(new Intent(mContext, LatestNewsActivity.class));
+
+                Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, 5);
+                startActivity(intent);
+
                 break;
 
             case R.id.tv_diqu:
