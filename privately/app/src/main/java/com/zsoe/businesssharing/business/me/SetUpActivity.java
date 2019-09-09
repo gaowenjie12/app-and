@@ -4,10 +4,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.DApplication;
+
+import java.util.Map;
 
 public class SetUpActivity extends BaseActivity implements View.OnClickListener {
 
@@ -58,7 +64,36 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
                 // 确认
                 DApplication.getInstance().exit();
                 DApplication.getInstance().startLogin();
+
+                UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.QQ, authListener);
                 break;
         }
     }
+
+
+
+    UMAuthListener authListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+//            SocializeUtils.safeShowDialog(dialog);
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+//            SocializeUtils.safeCloseDialog(dialog);
+            Toast.makeText(mContext, "成功了", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+//            SocializeUtils.safeCloseDialog(dialog);
+            Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+//            SocializeUtils.safeCloseDialog(dialog);
+            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
+        }
+    };
 }

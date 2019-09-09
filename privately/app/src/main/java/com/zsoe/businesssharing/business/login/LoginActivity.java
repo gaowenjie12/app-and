@@ -12,13 +12,16 @@ import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.FancyUtils;
@@ -28,6 +31,9 @@ import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.DrawableTextView;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.KeyboardWatcher;
+import com.zsoe.businesssharing.utils.LogUtil;
+
+import java.util.Map;
 
 
 /**
@@ -59,6 +65,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
      *
      */
     private ClearEditText mEtPassword;
+    private ImageView mLoginQq;
+    private ImageView mLoginWeixin;
+    private ImageView mLoginWeibo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +75,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         setContentView(R.layout.activity_login);
         initView();
         initListener();
-
+        umShareAPI = UMShareAPI.get(this);
         keyboardWatcher = new KeyboardWatcher(findViewById(Window.ID_ANDROID_CONTENT));
         keyboardWatcher.addSoftKeyboardStateListener(this);
 
@@ -89,6 +98,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         mEtPassword = (ClearEditText) findViewById(R.id.et_password);
 
         mEtMobile.setText(FancyUtils.getUserPhone());
+        mLoginQq = (ImageView) findViewById(R.id.login_qq);
+        mLoginQq.setOnClickListener(this);
+        mLoginWeixin = (ImageView) findViewById(R.id.login_weixin);
+        mLoginWeixin.setOnClickListener(this);
+        mLoginWeibo = (ImageView) findViewById(R.id.login_weibo);
+        mLoginWeibo.setOnClickListener(this);
     }
 
     private void initListener() {
@@ -161,6 +176,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
     }
 
+    UMShareAPI umShareAPI ;
+
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -191,9 +209,84 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
                 getPresenter().login(account, pass);
 
                 break;
+            case R.id.login_qq:
+                boolean install = umShareAPI.isInstall(this, SHARE_MEDIA.QQ);
+                if (!install) {
+                    ToastUtils.showShort("请安装QQ客户端");
+                    return;
+                }
+                umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.QQ, authListener);
+                break;
+            case R.id.login_weixin:
+                boolean install2 = umShareAPI.isInstall(this, SHARE_MEDIA.WEIXIN);
+                if (!install2) {
+                    ToastUtils.showShort("请安装微信客户端");
+                    return;
+                }
+                umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, authListener);
+                break;
+            case R.id.login_weibo:
+                boolean install3 = umShareAPI.isInstall(this, SHARE_MEDIA.WEIXIN);
+                if (!install3) {
+                    ToastUtils.showShort("请安装微博客户端");
+                    return;
+                }
+                umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.SINA, authListener);
+                break;
         }
     }
 
+
+    UMAuthListener authListener = new UMAuthListener() {
+        /**
+         * @desc 授权开始的回调
+         * @param platform 平台名称
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+                DialogManager.getInstance().showNetLoadingView(mContext,"正在等待授权");
+        }
+
+        /**
+         * @desc 授权成功的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param data 用户资料返回
+         */
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            DialogManager.getInstance().dismissNetLoadingView();
+            Toast.makeText(mContext, "成功了", Toast.LENGTH_LONG).show();
+            LogUtil.e("授权成功==="+data.toString());
+
+        }
+
+        /**
+         * @desc 授权失败的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            DialogManager.getInstance().dismissNetLoadingView();
+
+            Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
+            LogUtil.e("授权失败==="+t.getMessage());
+        }
+
+        /**
+         * @desc 授权取消的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            DialogManager.getInstance().dismissNetLoadingView();
+
+            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
+        }
+    };
 
     String account;
 
@@ -209,7 +302,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        UMShareAPI.get(this).release();
         keyboardWatcher.removeSoftKeyboardStateListener(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -237,11 +343,4 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         mAnimatorTranslateY.start();
         zoomOut(logo);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-    }
-
 }

@@ -132,6 +132,10 @@ public class DApplication extends Application {
         initImagePicker();
         initImageLoader();
 
+
+        //设置LOG开关，默认为false
+        UMConfigure.setLogEnabled(true);
+
         UMShareAPI.get(this);
         /**
          * 友盟相关平台配置。注意友盟官方新文档中没有这项配置，但是如果不配置会吊不起来相关平台的授权界面

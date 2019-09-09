@@ -7,51 +7,40 @@ package com.zsoe.businesssharing.bean;
  * @类说明:
  */
 public class MessageReturnBean {
-
-    private int id;
     private int to_uid;
-    private int from_uid;
+    private String title;
+    private String time;
     private String msg;
-    private long createtime;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
+    public int getTo_uid() {
+        return to_uid;
     }
 
     public void setTo_uid(int to_uid) {
         this.to_uid = to_uid;
     }
 
-    public int getTo_uid() {
-        return to_uid;
+    public String getTitle() {
+        return title;
     }
 
-    public void setFrom_uid(int from_uid) {
-        this.from_uid = from_uid;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getFrom_uid() {
-        return from_uid;
+    public String getTime() {
+        return time;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getMsg() {
         return msg;
     }
 
-    public void setCreatetime(long createtime) {
-        this.createtime = createtime;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
-
-    public long getCreatetime() {
-        return createtime;
-    }
-
 }

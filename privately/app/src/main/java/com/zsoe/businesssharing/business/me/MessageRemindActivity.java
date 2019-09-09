@@ -43,7 +43,7 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
 
-                getPresenter().mailbox_list(DApplication.getInstance().getLoginUser().getId()+"");
+                getPresenter().mailbox_list(DApplication.getInstance().getLoginUser().getId() + "");
 
             }
         });
@@ -60,9 +60,9 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
                 super.convert(holder, item);
 
 
-                holder.setText(R.id.tv_title, item.get);
-                holder.setText(R.id.tv_content, "这个比较简单，就是重新计算ImageView的宽高。这里可以设置宽高的比例，所以多加一个自定义view中的自定义属性。假设我们的这个控件已经写好了，那么我们会在布局文件xml中使用，我们会在xml使用我们自定义的属性来设置宽高比");
-                holder.setText(R.id.tv_time, "发布时间：2019-07-07");
+                holder.setText(R.id.tv_title, item.getTitle());
+                holder.setText(R.id.tv_content, item.getMsg());
+                holder.setText(R.id.tv_time, item.getTime());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -79,7 +79,7 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().mailbox_list(DApplication.getInstance().getLoginUser().getId()+"");
+                getPresenter().mailbox_list(DApplication.getInstance().getLoginUser().getId() + "");
             }
         });
 
