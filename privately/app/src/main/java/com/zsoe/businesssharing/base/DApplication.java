@@ -21,6 +21,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
@@ -41,6 +44,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.annotations.Nullable;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -110,7 +114,7 @@ public class DApplication extends Application {
         ImagePipelineConfig config = ImagePipelineConfigUtils.getDefaultImagePipelineConfig(this);
         Fresco.initialize(this, config);
 
-
+        initLogger();
         /**
          * 友盟统计
          注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，
@@ -140,9 +144,9 @@ public class DApplication extends Application {
         /**
          * 友盟相关平台配置。注意友盟官方新文档中没有这项配置，但是如果不配置会吊不起来相关平台的授权界面
          */
-        PlatformConfig.setWeixin("wx96c57014385a0e0c", "你的微信AppSecret");//微信APPID和AppSecret
-        PlatformConfig.setQQZone("1109739836", "jqoB2ONdjIZdsiPj");//QQAPPID和AppSecret
-        PlatformConfig.setSinaWeibo("你的微博APPID", "你的微博APPSecret", "微博的后台配置回调地址");//微博
+        PlatformConfig.setWeixin("wx96c57014385a0e0c", "64a432c883355d9a106b9f23cdfb952c");//微信APPID和AppSecret
+//        PlatformConfig.setQQZone("1109739836", "jqoB2ONdjIZdsiPj");//QQAPPID和AppSecret
+        PlatformConfig.setSinaWeibo("2335429698", "8093274847f1350cabd42fd2bd7806e2", "https://www.baidu.com");//微博
     }
 
 
@@ -478,6 +482,25 @@ public class DApplication extends Application {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+
+    private void initLogger() {
+        PrettyFormatStrategy alishan = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)  //（可选）是否显示线程信息。默认值true
+                .methodCount(1)        //（可选）要显示的方法行数。默认值2
+//                .methodOffset(7)     //（可选）隐藏内部方法调用到偏移量。默认值5
+//                .logStrategy()       //（可选）更改要打印的日志策略。默认LogCat
+                .tag("open")        //（可选）每个日志的全局标记。默认PRETTY_LOGGER
+                .build();
+
+        Logger.addLogAdapter(new AndroidLogAdapter(alishan) {
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+//                return super.isLoggable(priority, tag);
+                return !BuildConfig.DEBUG;
+            }
+        });
     }
 
 }

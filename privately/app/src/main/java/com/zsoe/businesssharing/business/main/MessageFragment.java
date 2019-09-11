@@ -108,7 +108,7 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
             case R.id.rl_hangyezixun:
 
                 Intent intent2 = new Intent(mContext, LatestNewsActivity.class);
-                intent2.putExtra(Config.INTENT_PARAMS1, 4);
+                intent2.putExtra(Config.INTENT_PARAMS1, 2);
                 startActivity(intent2);
 
                 break;

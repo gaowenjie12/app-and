@@ -242,6 +242,7 @@ dependencies {
     implementation 'com.arialyy.aria:aria-core:3.6.6'
     annotationProcessor 'com.arialyy.aria:aria-compiler:3.6.6'
     implementation 'com.lxj:xpopup:1.8.9'
+    implementation 'com.orhanobut:logger:2.2.0'
 
     implementation project(':library')
     implementation project(':easeui')

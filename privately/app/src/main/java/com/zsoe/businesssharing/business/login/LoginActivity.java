@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.orhanobut.logger.Logger;
+import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -33,6 +36,8 @@ import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.KeyboardWatcher;
 import com.zsoe.businesssharing.utils.LogUtil;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 
@@ -41,7 +46,7 @@ import java.util.Map;
  */
 
 @RequiresPresenter(LoginPresenter.class)
-public class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener, QQLoginManager.QQLoginListener {
     private DrawableTextView logo;
     private EditText et_mobile;
     private EditText et_password;
@@ -69,10 +74,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     private ImageView mLoginWeixin;
     private ImageView mLoginWeibo;
 
+    private QQLoginManager qqLoginManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        qqLoginManager = new QQLoginManager("1109739836", this);
         initView();
         initListener();
         umShareAPI = UMShareAPI.get(this);
@@ -176,7 +184,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
     }
 
-    UMShareAPI umShareAPI ;
+    UMShareAPI umShareAPI;
 
 
     @Override
@@ -210,12 +218,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
                 break;
             case R.id.login_qq:
-                boolean install = umShareAPI.isInstall(this, SHARE_MEDIA.QQ);
-                if (!install) {
-                    ToastUtils.showShort("请安装QQ客户端");
-                    return;
-                }
-                umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.QQ, authListener);
+                DialogManager.getInstance().showNetLoadingView(mContext, "正在等待授权");
+                qqLoginManager.launchQQLogin();
                 break;
             case R.id.login_weixin:
                 boolean install2 = umShareAPI.isInstall(this, SHARE_MEDIA.WEIXIN);
@@ -244,7 +248,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
          */
         @Override
         public void onStart(SHARE_MEDIA platform) {
-                DialogManager.getInstance().showNetLoadingView(mContext,"正在等待授权");
+            DialogManager.getInstance().showNetLoadingView(mContext, "正在等待授权");
         }
 
         /**
@@ -255,9 +259,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
          */
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+
+            String s = platform.toString();
+            if (s.equals(SHARE_MEDIA.QQ)) {
+
+            } else if (s.equals(SHARE_MEDIA.WEIXIN)) {
+                
+            }
+
             DialogManager.getInstance().dismissNetLoadingView();
             Toast.makeText(mContext, "成功了", Toast.LENGTH_LONG).show();
-            LogUtil.e("授权成功==="+data.toString());
+            LogUtil.e("授权成功===" + data.toString());
+            Log.e("open", "授权成功===" + data.toString());
+            Logger.e(data.toString());
 
         }
 
@@ -272,7 +286,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
             DialogManager.getInstance().dismissNetLoadingView();
 
             Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
-            LogUtil.e("授权失败==="+t.getMessage());
+            LogUtil.e("授权失败===" + t.getMessage());
         }
 
         /**
@@ -316,6 +330,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        qqLoginManager.onActivityResultData(requestCode, resultCode, data);
     }
 
     @Override
@@ -342,5 +357,26 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         mAnimatorTranslateY.setInterpolator(new AccelerateDecelerateInterpolator());
         mAnimatorTranslateY.start();
         zoomOut(logo);
+    }
+
+    @Override
+    public void onQQLoginSuccess(JSONObject jsonObject, QQLoginManager.UserAuthInfo authInfo) {
+        DialogManager.getInstance().dismissNetLoadingView();
+        ToastUtils.showShort(jsonObject.toString());
+        Logger.e(jsonObject.toString());
+    }
+
+    @Override
+    public void onQQLoginCancel() {
+        DialogManager.getInstance().dismissNetLoadingView();
+        ToastUtils.showShort("登录取消");
+
+    }
+
+    @Override
+    public void onQQLoginError(UiError uiError) {
+        ToastUtils.showShort("登录出错！");
+
+        DialogManager.getInstance().dismissNetLoadingView();
     }
 }
