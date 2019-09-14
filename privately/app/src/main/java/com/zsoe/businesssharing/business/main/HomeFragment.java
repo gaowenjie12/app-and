@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +37,6 @@ import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentDetailActivity;
 import com.zsoe.businesssharing.business.home.ProcurementAndInventoryActivity;
 import com.zsoe.businesssharing.business.home.SearchActivity;
-import com.zsoe.businesssharing.business.me.MessageRemindActivity;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.UpDownViewSwitcher;
 import com.zsoe.businesssharing.commonview.banner.BannerView;
@@ -86,7 +84,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
     private RecyclerView rv_tuiguang, rv_caigou, rv_jiazhi, rv_zhaoshang;
     private UpDownViewSwitcher home_view_switcher;
     private ClearEditText search_input;
-    private ImageView iv_xiaoxi;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -110,8 +107,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
         rv_zhaoshang = view.findViewById(R.id.rv_zhaoshang);
         tv_xinwen_more = view.findViewById(R.id.tv_xinwen_more);
         tv_diqu = view.findViewById(R.id.tv_diqu);
-        iv_xiaoxi = view.findViewById(R.id.iv_xiaoxi);
         search_input = view.findViewById(R.id.search_input);
+       view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
         search_input.setEnabled(true);
         search_input.setFocusable(false);
 
@@ -136,7 +133,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
         tv_zhaoshang_more.setOnClickListener(this);
         tv_xinwen_more.setOnClickListener(this);
         tv_diqu.setOnClickListener(this);
-        iv_xiaoxi.setOnClickListener(this);
         search_input.setOnClickListener(this);
 
         DialogManager.getInstance().showNetLoadingView(getContext());
@@ -245,7 +241,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(mContext, ProductDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkid());
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
                         startActivity(intent);
                     }
                 });
@@ -373,10 +369,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                             }
                         })
                         .show();
-                break;
-
-            case R.id.iv_xiaoxi:
-                startActivity(new Intent(mContext, MessageRemindActivity.class));
                 break;
 
             case R.id.search_input:

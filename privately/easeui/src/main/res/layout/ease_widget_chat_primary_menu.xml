@@ -26,7 +26,7 @@
             android:layout_height="32dp"
             android:layout_marginLeft="6dp"
             android:background="@drawable/ease_chatting_setmode_voice_btn"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_set_mode_keyboard"
@@ -83,7 +83,8 @@
                 android:textSize="18sp"
                 android:imeOptions="actionSend"/>
 
-            <RelativeLayout 
+            <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_face"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,7 +98,7 @@
                 android:layout_margin="1dip"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ease_chatting_biaoqing_btn_normal"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/iv_face_checked"
@@ -106,7 +107,7 @@
                 android:layout_margin="1dip"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ease_chatting_biaoqing_btn_enable"
-                android:visibility="invisible" />
+                android:visibility="gone" />
             
             </RelativeLayout>
         </RelativeLayout>

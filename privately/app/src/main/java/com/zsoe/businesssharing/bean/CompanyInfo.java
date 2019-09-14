@@ -11,6 +11,7 @@ import java.util.List;
 public class CompanyInfo {
 
     private int id;
+    private int uid;
     private String name;
     private String avatar;
     private String maincate;
@@ -18,6 +19,14 @@ public class CompanyInfo {
     private String companydes;
     private String videocoverurl;
     private List<String> photos;
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
 
     public void setId(int id) {
         this.id = id;

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.orhanobut.logger.Logger;
 import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMAuthListener;
@@ -264,7 +266,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
             if (s.equals(SHARE_MEDIA.QQ)) {
 
             } else if (s.equals(SHARE_MEDIA.WEIXIN)) {
-                
+
             }
 
             DialogManager.getInstance().dismissNetLoadingView();
@@ -306,10 +308,40 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
     public void loginSuccess(LoginUser loginUser) {
 
-        startActivity(new Intent(mContext, MainActivity.class));
-        finish();
-        FancyUtils.setLoginUser(loginUser);
-        FancyUtils.setUserPhone(account);
+        EMClient.getInstance().login("yuchangliang1", "111111", new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+
+                // ** manually load all local groups and conversation
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+
+
+                // get user's info (this should be get from App's server or 3rd party service)
+//                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
+                ToastUtils.showShort("环信登录成功");
+                startActivity(new Intent(mContext, MainActivity.class));
+                FancyUtils.setLoginUser(loginUser);
+                FancyUtils.setUserPhone(account);
+                finish();
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(final int code, final String message) {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
 

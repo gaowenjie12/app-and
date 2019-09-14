@@ -3,6 +3,7 @@ package com.zsoe.businesssharing.business.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
@@ -56,10 +58,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
 
     SimpleDraweeView user_image;
-    TextView user_name, user_gongsi, tv_sign;
-    SquareLinearLayout ll_jianzhi,ll_jiameng,ll_kunc,ll_daikuan,ll_zixun,ll_caigou,
-            ll_renzheng,ll_xinxiang,ll_tuiguang,ll_liuyanban,ll_wode,ll_shoucang,ll_kajuan,ll_shezhi
-            ,ll_kefu,ll_bangzhu;
+    TextView user_name, user_gongsi, tv_sign, tv_xinxiang, tv_liuyan;
+    SquareLinearLayout ll_jianzhi, ll_jiameng, ll_kunc, ll_daikuan, ll_zixun, ll_caigou,
+            ll_renzheng, ll_xinxiang, ll_tuiguang, ll_liuyanban, ll_wode, ll_shoucang, ll_kajuan, ll_shezhi, ll_kefu;
+
+    ImageView imgage, iamge2;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -88,7 +91,51 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_kajuan = view.findViewById(R.id.ll_kajuan);
         ll_shezhi = view.findViewById(R.id.ll_shezhi);
         ll_kefu = view.findViewById(R.id.ll_kefu);
-        ll_bangzhu = view.findViewById(R.id.ll_bangzhu);
+
+        tv_xinxiang = view.findViewById(R.id.tv_xinxiang);
+        imgage = view.findViewById(R.id.imgage);
+
+        tv_liuyan = view.findViewById(R.id.tv_liuyan);
+        iamge2 = view.findViewById(R.id.iamge2);
+
+        if (DApplication.getInstance().getLoginUser().getType() > 0) {
+            //领导身份
+
+            iamge2.setImageResource(R.mipmap.bangzhu);
+            tv_liuyan.setText("帮助中心");
+            ll_liuyanban.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //跳入帮助中心
+                }
+            });
+
+            ll_xinxiang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(mContext, MessageRemindActivity.class));
+                }
+            });
+
+        } else {
+            //普通身份
+            imgage.setImageResource(R.mipmap.bangzhu);
+            tv_xinxiang.setText("帮助中心");
+            ll_xinxiang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                //跳入帮助中心
+
+                }
+            });
+
+            ll_liuyanban.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(mContext, MessageRemindActivity.class));
+                }
+            });
+        }
 
 
         ll_jianzhi.setOnClickListener(this);
@@ -98,7 +145,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_zixun.setOnClickListener(this);
         ll_caigou.setOnClickListener(this);
         ll_renzheng.setOnClickListener(this);
-        ll_xinxiang.setOnClickListener(this);
+
         ll_tuiguang.setOnClickListener(this);
         ll_liuyanban.setOnClickListener(this);
         ll_wode.setOnClickListener(this);
@@ -106,7 +153,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_kajuan.setOnClickListener(this);
         ll_shezhi.setOnClickListener(this);
         ll_kefu.setOnClickListener(this);
-        ll_bangzhu.setOnClickListener(this);
         tv_sign.setOnClickListener(this);
 
         FrecoFactory.getInstance().disPlay(user_image, "http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
@@ -158,17 +204,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.ll_xinxiang:
-                startActivity(new Intent(mContext, MessageRemindActivity.class));
-
-                break;
             case R.id.ll_tuiguang:
                 startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
-
-                break;
-            case R.id.ll_liuyanban:
-                startActivity(new Intent(mContext, MessageRemindActivity.class));
-
                 break;
             case R.id.ll_wode:
                 startActivity(new Intent(mContext, BasicInformationActivity.class));
@@ -186,11 +223,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, SetUpActivity.class));
                 break;
             case R.id.ll_kefu:
-                break;
-            case R.id.ll_bangzhu:
-                Intent intent2 = new Intent(mContext, LatestNewsActivity.class);
-                intent2.putExtra(Config.INTENT_PARAMS1, 2);
-                startActivity(intent2);
                 break;
 
         }

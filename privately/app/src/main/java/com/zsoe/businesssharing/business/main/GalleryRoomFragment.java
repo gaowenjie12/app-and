@@ -107,6 +107,7 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
         //左右滑动时刷新控件禁止掉
         mPtrFrame.disableWhenHorizontalMove(true);
 
+        view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
 
         daka1 = view.findViewById(R.id.daka1);
         daka2 = view.findViewById(R.id.daka2);

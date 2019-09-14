@@ -17,7 +17,7 @@ import com.zsoe.businesssharing.business.main.MainActivity;
 public class ChatActivity extends EaseBaseActivity {
     public static ChatActivity activityInstance;
     private EaseChatFragment chatFragment;
-    String toChatUsername;
+    public String toChatUsername;
 
     @Override
     protected void onCreate(Bundle arg0) {

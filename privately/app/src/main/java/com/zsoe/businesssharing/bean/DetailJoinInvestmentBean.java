@@ -18,6 +18,15 @@ public class DetailJoinInvestmentBean {
     private String companyname;
     private String des;
     private String videocoverurl;
+    private int is_collect;
+
+    public int getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(int is_collect) {
+        this.is_collect = is_collect;
+    }
 
     public String getVideocoverurl() {
         return videocoverurl;

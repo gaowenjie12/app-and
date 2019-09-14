@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
@@ -35,7 +36,13 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_remind);
         initView();
-        initTitleText("消息提醒");
+
+        int type = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+        if (type == 1) {
+            initTitleText("领导回信");
+        } else {
+            initTitleText("信息");
+        }
 
         initPtrFrameLayout(new Action1<String>() {
             @Override

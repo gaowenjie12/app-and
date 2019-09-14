@@ -93,6 +93,7 @@ public class MailPresenter extends BasePresenter<MailFragment> {
         params.put("mid", mid);
         params.put("uid", uid);
         params.put("msg", msg);
+        params.put("type", "2");
 
         body = signForm(params);
         start(REQUEST_LOGIN2);

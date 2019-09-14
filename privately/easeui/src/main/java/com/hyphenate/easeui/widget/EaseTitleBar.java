@@ -47,7 +47,7 @@ public class EaseTitleBar extends RelativeLayout{
         titleView = (TextView) findViewById(R.id.title);
         titleLayout = (RelativeLayout) findViewById(R.id.root);
         
-        parseStyle(context, attrs);
+//        parseStyle(context, attrs);
     }
     
     private void parseStyle(Context context, AttributeSet attrs){

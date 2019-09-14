@@ -28,6 +28,8 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.widget.EaseConversationList;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -60,6 +62,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         return inflater.inflate(R.layout.ease_fragment_conversation_list, container, false);
     }
 
@@ -68,10 +71,13 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         if(savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
         super.onActivityCreated(savedInstanceState);
+
+        titleBar.setVisibility(View.GONE);
     }
 
     @Override
     protected void initView() {
+
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         conversationListView = (EaseConversationList) getView().findViewById(R.id.list);
         query = (EditText) getView().findViewById(R.id.query);
@@ -284,7 +290,14 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         super.onDestroy();
         EMClient.getInstance().removeConnectionListener(connectionListener);
     }
-    
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

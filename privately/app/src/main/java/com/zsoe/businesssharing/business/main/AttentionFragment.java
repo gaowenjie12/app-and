@@ -64,6 +64,7 @@ public class AttentionFragment extends BaseFragment {
         /** indicator矩形圆角 */
         mTabLayout_6 = view.findViewById(R.id.tl_6);
 
+        view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
 
         mTabEntities.add(new TabEntity("分会介绍", 0, 0));
         mTabEntities.add(new TabEntity("架构文化", 0, 0));

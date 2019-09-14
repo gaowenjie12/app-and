@@ -13,19 +13,6 @@
         android:id="@+id/dropDownMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--TODO DropDownMenu类中有个重写的onFinishInflate方法， 布局应该是com.yilaole.filter.DropDownMenu第一个的子布局id-->
-        <!--<android.support.v4.widget.SwipeRefreshLayout-->
-        <!--android:id="@+id/layout_loaddata"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-        <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@id/mFilterRecyclerView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="50dp"-->
-        <!--/>-->
-        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
         <FrameLayout
             android:id="@+id/layout_loaddata"

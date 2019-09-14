@@ -15,6 +15,7 @@ import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
+import com.zsoe.businesssharing.base.presenter.HttpResponseFunc;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
@@ -24,11 +25,16 @@ import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreHandler
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
+import com.zsoe.businesssharing.utils.android.schedulers.AndroidSchedulers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.FormBody;
+import rx.Subscriber;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * 交流会预告
@@ -96,25 +102,33 @@ public class CommunicationMeetingForeshowActivity extends BaseActivity<JiaoLiuLi
                 holder.setText(R.id.tv_zhiwei, item.getActivitytime() + "  " + item.getActivityaddress());
                 ImageView iv_shoucang = holder.getView(R.id.iv_shoucang);
 
-                if (item.getIs_collect() == 1) {
-                    iv_shoucang.setImageResource(R.mipmap.shoucang);
-                } else {
-                    iv_shoucang.setImageResource(R.mipmap.shoucang_pre);
-                }
 
-                iv_shoucang.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (item.getIs_collect() == 1) {
-                            item.setIs_collect(0);
-                            iv_shoucang.setImageResource(R.mipmap.shoucang_pre);
-                        } else {
-                            item.setIs_collect(1);
-                            iv_shoucang.setImageResource(R.mipmap.shoucang);
-                        }
+                if (type == 2) {
+                    iv_shoucang.setVisibility(View.VISIBLE);
+                    if (item.getIs_collect() == 1) {
+                        iv_shoucang.setImageResource(R.mipmap.shoucang);
+                    } else {
+                        iv_shoucang.setImageResource(R.mipmap.shoucang_pre);
                     }
-                });
 
+                    iv_shoucang.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String acttype;
+                            if (item.getIs_collect() == 1) {
+                                acttype = "2";
+                            } else {
+                                acttype = "1";
+                            }
+
+                            currentPosition = holder.getAdapterPosition();
+                            collect(item.getId() + "", acttype);
+                        }
+                    });
+
+                } else {
+                    iv_shoucang.setVisibility(View.GONE);
+                }
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -157,5 +171,55 @@ public class CommunicationMeetingForeshowActivity extends BaseActivity<JiaoLiuLi
     public void updateList() {
         mPtrFrame.refreshComplete();
         noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     *
+     */
+    private int currentPosition;
+
+    public void collect(String valueid, String acttype) {
+
+        DialogManager.getInstance().showNetLoadingView(mContext);
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
+        params.put("type", "3");
+        params.put("acttype", acttype);
+        params.put("valueid", valueid);
+
+
+        FormBody formBody = getPresenter().signForm(params);
+        DApplication.getInstance().getServerAPI().collect(formBody).map(new HttpResponseFunc())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+
+            @Override
+            public void onNext(Object o) {
+                DialogManager.getInstance().dismissNetLoadingView();
+
+                List<JiaoLiuBean> noticeBeanList = noticeBeanOnionRecycleAdapter.getData();
+                JiaoLiuBean itemCompany = noticeBeanList.get(currentPosition);
+                //1收藏 2 取消收藏
+                if (acttype.equals("1")) {
+                    itemCompany.setIs_collect(1);
+                } else {
+                    itemCompany.setIs_collect(0);
+                }
+                noticeBeanOnionRecycleAdapter.notifyItemChanged(currentPosition, 0);//
+
+            }
+
+            @Override
+            public void onCompleted() {
+                DialogManager.getInstance().dismissNetLoadingView();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                DialogManager.getInstance().dismissNetLoadingView();
+
+            }
+        });
     }
 }

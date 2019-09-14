@@ -9,6 +9,7 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
+import com.zsoe.businesssharing.base.presenter.NetCompleteBack;
 import com.zsoe.businesssharing.bean.CompanyInfo;
 
 import java.util.HashMap;
@@ -20,6 +21,8 @@ import rx.functions.Func0;
 
 public class CompanyInfoPresenter extends BasePresenter<CompanyProfilesActivity> {
     final public int REQUEST_LOGIN = 1;
+    final public int REQUEST_LOGIN2 = 2;
+
     FormBody body;
 
     @Override
@@ -51,6 +54,28 @@ public class CompanyInfoPresenter extends BasePresenter<CompanyProfilesActivity>
                 });
 
 
+        restartableFirst(REQUEST_LOGIN2,
+                new Func0<Observable<RootResponse>>() {
+                    @Override
+                    public Observable<RootResponse> call() {
+
+                        return DApplication.getServerAPI().save_mailbox_msg(body);
+                    }
+                },
+                new NetCompleteBack<CompanyProfilesActivity>() {
+                    @Override
+                    public void onComplete(CompanyProfilesActivity v, RootResponse t) {
+                        v.setMsgSuccess(t);
+                    }
+                }
+                , new BaseToastNetError<CompanyProfilesActivity>() {
+                    @Override
+                    public void call(CompanyProfilesActivity v, Throwable throwable) {
+                        super.call(v, throwable);
+                        ToastUtils.showShort(throwable.getMessage());
+                    }
+                });
+
     }
 
     public void company_info(String id) {
@@ -61,5 +86,19 @@ public class CompanyInfoPresenter extends BasePresenter<CompanyProfilesActivity>
 
     }
 
+    public void save_mailbox_msg(String name, String tel, String mid,String uid, String msg) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uid", uid);
+        params.put("msg", msg);
+        params.put("type", "1");
+        params.put("tel", tel);
+        params.put("name", name);
+        params.put("mid", mid);
+
+        body = signForm(params);
+        start(REQUEST_LOGIN2);
+
+    }
 
 }

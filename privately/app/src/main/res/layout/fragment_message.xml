@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/main_bg"
     android:orientation="vertical">
 
@@ -23,50 +24,6 @@
             android:textColor="@color/text_b6"
             android:textSize="@dimen/text_one_five" />
 
-        <RelativeLayout
-            android:id="@+id/rl_xiaoxitixing"
-            style="@style/me_layout_style"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:id="@+id/left_tv"
-                style="@style/me_text_style"
-                android:drawableLeft="@mipmap/tongzhi_xiaoxi"
-                android:drawablePadding="5dp"
-                android:text="消息提醒" />
-
-            <TextView
-                android:id="@+id/tv_xiaoxi_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/left_tv"
-                android:background="@drawable/btn_redpoint_storke"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="1dp"
-                android:text="122"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_one_two" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/btn_white_blue_storke"
-                android:paddingLeft="13dp"
-                android:paddingTop="3dp"
-                android:paddingRight="13dp"
-                android:paddingBottom="3dp"
-                android:text="查看"
-                android:textColor="@color/AC9472"
-                android:textSize="13dp" />
-
-        </RelativeLayout>
 
         <View style="@style/line_style" />
 
@@ -154,6 +111,7 @@
                 android:paddingRight="6dp"
                 android:paddingBottom="1dp"
                 android:text="122"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_one_two" />
 
@@ -217,7 +175,8 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="6dp"
                 android:paddingBottom="1dp"
-                android:text="122"
+                tools:text="122"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_one_two" />
 

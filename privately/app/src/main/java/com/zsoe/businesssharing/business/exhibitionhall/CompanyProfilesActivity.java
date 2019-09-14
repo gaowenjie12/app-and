@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.business.exhibitionhall;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,10 +14,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.CompanyInfo;
@@ -61,6 +65,7 @@ public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> 
      * 提交
      */
     private Button mBtnLogin;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +74,7 @@ public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> 
         initView();
 
         initTitleText("企业简介");
-        int id = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+        id = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
         DialogManager.getInstance().showNetLoadingView(this);
         getPresenter().company_info("" + id);
     }
@@ -90,8 +95,10 @@ public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> 
         mBtnLogin.setOnClickListener(this);
     }
 
+    CompanyInfo companyInfo;
 
     public void setData(CompanyInfo companyInfo) {
+        this.companyInfo = companyInfo;
         // 将列表中的每个视频设置为默认16:9的比例
         ViewGroup.LayoutParams params = mJzVideo.getLayoutParams();
         // 宽度为屏幕宽度
@@ -120,7 +127,7 @@ public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> 
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.image);
-                FrecoFactory.getInstance().disPlay(simpleDraweeView,item);
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item);
             }
         };
 
@@ -144,6 +151,32 @@ public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> 
                 startActivity(new Intent(mContext, ProductListActivity.class));
                 break;
             case R.id.btn_login:
+
+                String s = mEtName.getText().toString();
+                if (TextUtils.isEmpty(s)) {
+                    ToastUtils.showShort("请输入姓名");
+                    return;
+                }
+
+                String s2 = mEtPhone.getText().toString();
+                if (TextUtils.isEmpty(s2)) {
+                    ToastUtils.showShort("请输入手机号");
+                    return;
+                }
+
+                String s3 = mEtContent.getText().toString();
+                if (TextUtils.isEmpty(s3)) {
+                    ToastUtils.showShort("请输入内容");
+                    return;
+                }
+
+                if (null == companyInfo) {
+                    ToastUtils.showShort("公司数据为空");
+                    return;
+                }
+
+                DialogManager.getInstance().showNetLoadingView(mContext);
+                getPresenter().save_mailbox_msg(s, s2, companyInfo.getUid() + "", DApplication.getInstance().getLoginUser().getId() + "", s3);
                 break;
         }
     }
@@ -160,5 +193,9 @@ public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> 
     protected void onPause() {
         super.onPause();
         Jzvd.releaseAllVideos();
+    }
+
+    public void setMsgSuccess(RootResponse t) {
+        ToastUtils.showShort(t.getMsg());
     }
 }

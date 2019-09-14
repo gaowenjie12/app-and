@@ -39,7 +39,7 @@ public class BasePresenter<View> extends MPresenter<View> {
     }
 
 
-    protected FormBody signForm(HashMap<String, String> params) {
+    public FormBody signForm(HashMap<String, String> params) {
         if (params == null)
             params = new HashMap<>();
         FormBody.Builder builder = new FormBody.Builder();

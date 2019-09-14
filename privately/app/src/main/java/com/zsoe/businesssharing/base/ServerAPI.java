@@ -236,4 +236,10 @@ public interface ServerAPI {
     @POST("msg/mailbox_list")
     Observable<RootResponse<List<MessageReturnBean>>> mailbox_list(@Body FormBody body);
 
+    /**
+     * 收藏 or 取消收藏 /api/v1/my/collect 可以使用
+     */
+    @POST("my/collect")
+    Observable<RootResponse> collect(@Body FormBody body);
+
 }

@@ -9,13 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hyphenate.chat.EMClient;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
+import com.zsoe.businesssharing.business.message.ConversationListActivity;
+import com.zsoe.businesssharing.business.message.MessageEvent;
 
-import rx.functions.Action1;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 消息
@@ -44,8 +49,8 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
     }
 
 
-    private RelativeLayout rl_xiaoxitixing, rl_xitonggonggao, rl_hangyezixun, rl_lingdaohuixin, rl_liaotianliebiao;
-    private TextView tv_xiaoxi_count, tv_lingdao_count, tv_huanxin_count;
+    private RelativeLayout rl_xitonggonggao, rl_hangyezixun, rl_lingdaohuixin, rl_liaotianliebiao;
+    private TextView tv_lingdao_count, tv_huanxin_count;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -63,41 +68,31 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
             }
         });
 
-        setTitleRightSecondIcon(R.mipmap.tongxunlu, new Action1<View>() {
-            @Override
-            public void call(View view) {
-
-            }
-        });
-
-        rl_xiaoxitixing = view.findViewById(R.id.rl_xiaoxitixing);
         rl_xitonggonggao = view.findViewById(R.id.rl_xitonggonggao);
         rl_hangyezixun = view.findViewById(R.id.rl_hangyezixun);
         rl_lingdaohuixin = view.findViewById(R.id.rl_lingdaohuixin);
         rl_liaotianliebiao = view.findViewById(R.id.rl_liaotianliebiao);
 
-        tv_xiaoxi_count = view.findViewById(R.id.tv_xiaoxi_count);
         tv_lingdao_count = view.findViewById(R.id.tv_lingdao_count);
         tv_huanxin_count = view.findViewById(R.id.tv_huanxin_count);
 
 
-        rl_xiaoxitixing.setOnClickListener(this);
         rl_xitonggonggao.setOnClickListener(this);
         rl_hangyezixun.setOnClickListener(this);
         rl_lingdaohuixin.setOnClickListener(this);
         rl_liaotianliebiao.setOnClickListener(this);
+
+        if (DApplication.getInstance().getLoginUser().getType() > 0) {
+            rl_lingdaohuixin.setVisibility(View.GONE);
+        } else {
+            rl_lingdaohuixin.setVisibility(View.VISIBLE);
+        }
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.rl_xiaoxitixing:
-                startActivity(new Intent(mContext, MessageRemindActivity.class));
-
-
-                break;
-
             case R.id.rl_xitonggonggao:
                 Intent intent = new Intent(mContext, LatestNewsActivity.class);
                 intent.putExtra(Config.INTENT_PARAMS1, 3);
@@ -114,10 +109,48 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
                 break;
 
             case R.id.rl_lingdaohuixin:
+                Intent intent1 = new Intent(mContext, MessageRemindActivity.class);
+                intent1.putExtra(Config.INTENT_PARAMS1,1);
+                startActivity(intent1);
                 break;
 
             case R.id.rl_liaotianliebiao:
+                Intent intent3 = new Intent(mContext, ConversationListActivity.class);
+                startActivity(intent3);
                 break;
         }
     }
+
+    /**
+     * update unread message count
+     */
+    public void updateUnreadLabel() {
+        int count = getUnreadMsgCountTotal();
+        if (count > 0) {
+            tv_huanxin_count.setText(String.valueOf(count));
+            tv_huanxin_count.setVisibility(View.VISIBLE);
+        } else {
+            tv_huanxin_count.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    /**
+     * get unread message count
+     *
+     * @return
+     */
+    public int getUnreadMsgCountTotal() {
+        return EMClient.getInstance().chatManager().getUnreadMessageCount();
+    }
+
+    /**
+     * 通知“我的”显示小红点
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent messageEvent) {
+
+        updateUnreadLabel();
+
+    }
+
 }
