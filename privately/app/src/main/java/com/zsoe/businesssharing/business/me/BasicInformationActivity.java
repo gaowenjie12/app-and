@@ -25,6 +25,8 @@ import com.yuyh.library.imgsel.config.ISCameraConfig;
 import com.yuyh.library.imgsel.config.ISListConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.ItemInsdustry;
 import com.zsoe.businesssharing.bean.JsonBean;
 import com.zsoe.businesssharing.business.exhibitionhall.IndustryClassificationActivity;
 import com.zsoe.businesssharing.commonview.PhotoTypePopup;
@@ -45,7 +47,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class BasicInformationActivity extends BaseActivity implements View.OnClickListener {
+import rx.functions.Action1;
+
+@RequiresPresenter(BasicInformationPresenter.class)
+public class BasicInformationActivity extends BaseActivity<BasicInformationPresenter> implements View.OnClickListener {
 
     private SimpleDraweeView mUserImage;
     /**
@@ -106,6 +111,14 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
         xingBieList.add("男");
         xingBieList.add("女");
 
+        setTitleRightText("保存", new Action1<View>() {
+            @Override
+            public void call(View view) {
+
+            }
+        });
+
+        getPresenter().service_station();
 
         ISNav.getInstance().init(new ImageLoader() {
             @Override
@@ -142,8 +155,19 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
     }
 
 
-    OptionsPickerView xingBiePic;
+    OptionsPickerView xingBiePic, fuWuZhang;
     ArrayList<String> xingBieList = new ArrayList<>();
+    ArrayList<String> fuwuzhangList = new ArrayList<>();
+    List<ItemInsdustry> itemInsdustryList;
+    ItemInsdustry itemInsdustry;
+
+    public void serviceStation(List<ItemInsdustry> itemInsdustryList) {
+        fuwuzhangList = new ArrayList<>();
+        this.itemInsdustryList = itemInsdustryList;
+        for (ItemInsdustry itemInsdustry : itemInsdustryList) {
+            fuwuzhangList.add(itemInsdustry.getName());
+        }
+    }
 
 
     @Override
@@ -220,6 +244,38 @@ public class BasicInformationActivity extends BaseActivity implements View.OnCli
                 showPickerView();
                 break;
             case R.id.rl_fuwuzhan:
+
+                KeyboardUtils.hideSoftInput(this);
+
+                if (null == fuWuZhang) {
+                    //条件选择器
+                    fuWuZhang = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+                        @Override
+                        public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                            //返回的分别是三个级别的选中位置
+                            itemInsdustry = itemInsdustryList.get(options1);
+                            String tx = fuwuzhangList.get(options1);
+                            mTvFuwuzhan.setText(tx);
+                        }
+                    }).setTitleText("请选择性别")
+                            .setDividerColor(getResources().getColor(R.color.line))
+                            .setTextColorCenter(getResources().getColor(R.color.text_3)) //设置选中项文字颜色
+                            .setContentTextSize(17)
+
+                            .setCancelColor(getResources().getColor(R.color.text_9))
+                            .setSubmitColor(getResources().getColor(R.color.AC9472))
+                            .setSubmitText("确认")
+                            .setSubCalSize(15)
+                            .setTitleSize(15)
+                            .setLineSpacingMultiplier(3f)
+                            .setTitleColor(getResources().getColor(R.color.text_3))
+                            .setTitleBgColor(getResources().getColor(R.color.white))
+                            .build();
+                    fuWuZhang.setPicker(fuwuzhangList);
+
+                }
+                fuWuZhang.show();
+
                 break;
             case R.id.rl_suozaidi:
                 startActivity(new Intent(mContext, EnterpriseLocationActivity.class));

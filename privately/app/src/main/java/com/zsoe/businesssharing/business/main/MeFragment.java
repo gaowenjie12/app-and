@@ -124,7 +124,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             ll_xinxiang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                //跳入帮助中心
+                    //跳入帮助中心
 
                 }
             });
@@ -180,7 +180,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.ll_kunc:
-                startActivity(new Intent(mContext, ProcurementManagementActivity.class));
+                Intent intent1 = new Intent(mContext, ProcurementManagementActivity.class);
+                intent1.putExtra(Config.INTENT_PARAMS1, 1);
+                startActivity(intent1);
 
                 break;
             case R.id.ll_daikuan:
@@ -195,7 +197,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.ll_caigou:
-                startActivity(new Intent(mContext, ProcurementManagementActivity.class));
+                Intent intent2 = new Intent(mContext, ProcurementManagementActivity.class);
+                intent2.putExtra(Config.INTENT_PARAMS1, 2);
+                startActivity(intent2);
 
                 break;
             case R.id.ll_renzheng:

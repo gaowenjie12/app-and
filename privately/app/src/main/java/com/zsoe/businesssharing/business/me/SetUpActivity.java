@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.me;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,7 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
             case R.id.rl_qingchuhuanc:
                 break;
             case R.id.rl_guanyuwomen:
+                startActivity(new Intent(mContext,AboutUsActivity.class));
                 break;
             case R.id.rl_jianchagengxin:
                 break;

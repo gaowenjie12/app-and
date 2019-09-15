@@ -297,6 +297,19 @@
 
             <View style="@style/line_style" />
 
+
+            <Button
+                android:layout_marginBottom="@dimen/adaptive_20dp"
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@color/main_c"
+                android:text="提交审核   (审核已通过)"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

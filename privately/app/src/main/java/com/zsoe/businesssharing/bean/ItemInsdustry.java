@@ -11,6 +11,42 @@ public class ItemInsdustry {
     private int id;
     private String name;
     private String thumb;
+    private String des;
+    private String linkurl;
+    private String type;
+    private int is_collect;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(int is_collect) {
+        this.is_collect = is_collect;
+    }
+
+    public String getLinkurl() {
+        return linkurl;
+    }
+
+    public void setLinkurl(String linkurl) {
+        this.linkurl = linkurl;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
 
     public void setId(int id) {
         this.id = id;

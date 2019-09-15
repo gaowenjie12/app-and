@@ -22,6 +22,7 @@
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_qiye"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -74,6 +75,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_chanpin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -126,6 +128,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_jiaoliu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -150,7 +153,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/left3"
-                        android:text="咨询"
+                        android:text="交流"
                         android:textColor="@color/text_3"
                         android:textSize="@dimen/text_one_five" />
 
@@ -178,6 +181,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_zhaoshang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -222,6 +226,59 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_zhaoshang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_yinhang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/left5"
+                        android:layout_width="3dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:background="@color/text_3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/left5"
+                        android:text="银行信贷"
+                        android:textColor="@color/text_3"
+                        android:textSize="@dimen/text_one_five" />
+
+
+                    <TextView
+                        android:id="@+id/tv_yinhang_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:padding="12dp"
+                        android:text="查看全部"
+                        android:textColor="@color/AC9472"
+                        android:textSize="@dimen/text_one_four" />
+
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_yinhang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

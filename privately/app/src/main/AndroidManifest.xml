@@ -54,8 +54,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-        <activity android:name=".business.message.ConversationListActivity"></activity>
-        <activity android:name=".business.attention.BuZhangXinxiActivity" />
+        <activity android:name=".business.me.AboutUsActivity"></activity>
+        <activity
+            android:name=".business.message.ConversationListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.attention.BuZhangXinxiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.exhibitionhall.CollectAllLookListActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="android.max_aspect"
@@ -70,19 +78,13 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 适配全面屏 -->
-
-
         <!-- 企业所在地 -->
         <activity
             android:name=".business.me.EnterpriseLocationActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 企业所在地 -->
+            android:screenOrientation="portrait" /> <!-- 企业所在地 -->
         <activity
             android:name=".easechat.ChatActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 认证公司 -->
+            android:screenOrientation="portrait" /> <!-- 认证公司 -->
         <activity
             android:name=".business.me.CertificationCompanyActivity"
             android:screenOrientation="portrait" /> <!-- 我的签到 -->
@@ -279,15 +281,11 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-
-        <!-- 显示下载大图页面 -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 显示下载大图页面 -->
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
-
     </application>
 
 </manifest>

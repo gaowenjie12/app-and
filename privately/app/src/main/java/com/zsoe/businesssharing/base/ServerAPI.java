@@ -15,14 +15,17 @@ import com.zsoe.businesssharing.bean.HomeBean;
 import com.zsoe.businesssharing.bean.IndustryRoot;
 import com.zsoe.businesssharing.bean.ItemBankBean;
 import com.zsoe.businesssharing.bean.ItemBuZhangXinxBean;
+import com.zsoe.businesssharing.bean.ItemCollectBean;
 import com.zsoe.businesssharing.bean.ItemCompany;
 import com.zsoe.businesssharing.bean.ItemFinancBean;
+import com.zsoe.businesssharing.bean.ItemInsdustry;
 import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
 import com.zsoe.businesssharing.bean.ItemWenZhangBean;
 import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.bean.MasterBean;
 import com.zsoe.businesssharing.bean.MessageReturnBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
+import com.zsoe.businesssharing.bean.RenCompanyBean;
 import com.zsoe.businesssharing.bean.RootEventBean;
 import com.zsoe.businesssharing.bean.StockBean;
 import com.zsoe.businesssharing.bean.XinXiBena;
@@ -167,10 +170,16 @@ public interface ServerAPI {
     Observable<RootResponse<GongYouBean>> industry_allcate(@Body FormBody body);
 
     /**
-     * POST 全部行业分类
+     * POST
      */
     @POST("index/stock_purchase_list")
     Observable<RootResponse<List<StockBean>>> stock_purchase_list(@Body FormBody body);
+
+    /**
+     * 采购/库存删除 /api/v1/my/stockpurchase_del 可以使用
+     */
+    @POST("my/stockpurchase_del")
+    Observable<RootResponse> stockpurchase_del(@Body FormBody body);
 
     /**
      * POST 交流会列表 /api/v1/hall/communication_list
@@ -241,5 +250,44 @@ public interface ServerAPI {
      */
     @POST("my/collect")
     Observable<RootResponse> collect(@Body FormBody body);
+
+    /**
+     * 我的收藏列表 /api/v1/my/collect_list 可以使用
+     */
+    @POST("my/collect_list")
+    Observable<RootResponse<ItemCollectBean>> collect_list(@Body FormBody body);
+
+    /**
+     * 获取认证公司信息 /api/v1/my/auth_companyinfo 可以使用
+     */
+    @POST("my/auth_companyinfo")
+    Observable<RootResponse<RenCompanyBean>> auth_companyinfo(@Body FormBody body);
+
+
+    /**
+     * 我的认证公司提交 /api/v1/my/auth_company 可以使用
+     */
+    @POST("my/auth_company")
+    Observable<RootResponse> auth_company(@Body FormBody body);
+
+    /**
+     * 我的收藏列表 -》查看全部 /api/v1/my/collect_infolist 可以使用
+     */
+    @POST("my/collect_infolist")
+    Observable<RootResponse<List<ItemInsdustry>>> collect_infolist(@Body FormBody body);
+
+
+    /**
+     * 关于我们 /api/v1/my/about_us 可以使用
+     */
+    @POST("my/about_us")
+    Observable<RootResponse<String>> about_us(@Body FormBody body);
+
+
+    /**
+     * my/service_station 可以使用
+     */
+    @POST("my/service_station")
+    Observable<RootResponse<List<ItemInsdustry>>> service_station(@Body FormBody body);
 
 }

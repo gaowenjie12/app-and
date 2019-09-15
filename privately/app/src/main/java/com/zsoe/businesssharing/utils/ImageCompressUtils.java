@@ -9,6 +9,9 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.utils.android.schedulers.AndroidSchedulers;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,10 +19,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import okio.BufferedSink;
 import okio.BufferedSource;
 import okio.Okio;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class ImageCompressUtils {
     //---------------图片压缩与图片旋转处理
@@ -450,5 +459,49 @@ public class ImageCompressUtils {
                 }
             }
         }
+    }
+
+
+    public static void compress(final List<String> selectFileList, final CompressListener compressListener) {
+
+        final List<File> fileList = new ArrayList<>();
+        if (EmptyUtil.isEmpty(selectFileList)) {
+            compressListener.compress(fileList);
+            return;
+        }
+
+        Observable.from(selectFileList)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, File>() {
+                    @Override
+                    public File call(String imageItem) {
+
+                        String imagePath = ImageCompressUtils.getScaledImage(DApplication.getInstance().getApplicationContext(), imageItem, 820, 960);
+                        return new File(imagePath);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<File>() {
+                    @Override
+                    public void onCompleted() {
+                        compressListener.compress(fileList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        DialogManager.getInstance().dismissNetLoadingView();
+
+                    }
+
+                    @Override
+                    public void onNext(File pictureFile) {
+                        DialogManager.getInstance().dismissNetLoadingView();
+                        fileList.add(pictureFile);
+                    }
+                });
+
+    }
+    public interface CompressListener {
+        void compress(List<File> fileList);
     }
 }

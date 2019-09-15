@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".business.me.AboutUsActivity">
+
+    <include layout="@layout/comm_title_bar" />
+
+    <TextView
+        android:padding="@dimen/adaptive_15dp"
+        android:background="@color/white"
+        android:id="@+id/textView"
+        android:textColor="@color/text_3"
+        android:textSize="@dimen/text_one_eight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</androidx.appcompat.widget.LinearLayoutCompat>

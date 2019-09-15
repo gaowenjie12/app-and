@@ -16,6 +16,15 @@ public class StockBean {
     private String productname;
     private String companyname;
     private String typetext;
+    private String des;
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
 
     public void setId(int id) {
         this.id = id;
