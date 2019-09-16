@@ -290,4 +290,31 @@ public interface ServerAPI {
     @POST("my/service_station")
     Observable<RootResponse<List<ItemInsdustry>>> service_station(@Body FormBody body);
 
+
+    /**
+     * my/cardticket_list 可以使用
+     */
+    @POST("my/cardticket_list")
+    Observable<RootResponse<List<ItemInsdustry>>> cardticket_list(@Body FormBody body);
+
+
+    /**
+     * 领取卡券 /api/v1/my/getcardticket 可以使用
+     */
+    @POST("my/getcardticket")
+    Observable<RootResponse> getcardticket(@Body FormBody body);
+
+
+    /**
+     * 我领取的卡券列表 /api/v1/my/mycardticket_list 可以使用
+     */
+    @POST("my/mycardticket_list")
+    Observable<RootResponse<List<ItemInsdustry>>> mycardticket_list(@Body FormBody body);
+
+    /**
+     * 删除我领取的卡券 /api/v1/my/mycardticket_del 可以使用
+     */
+    @POST("my/mycardticket_del")
+    Observable<RootResponse> mycardticket_del(@Body FormBody body);
+
 }

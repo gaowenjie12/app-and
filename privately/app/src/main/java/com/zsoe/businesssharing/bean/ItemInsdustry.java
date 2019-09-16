@@ -9,11 +9,39 @@ package com.zsoe.businesssharing.bean;
 public class ItemInsdustry {
 
     private int id;
+    private int is_has;
     private String name;
     private String thumb;
     private String des;
     private String linkurl;
     private String type;
+    private String companyname;
+    private String avatar;
+
+    public int getIs_has() {
+        return is_has;
+    }
+
+    public void setIs_has(int is_has) {
+        this.is_has = is_has;
+    }
+
+    public String getCompanyname() {
+        return companyname;
+    }
+
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     private int is_collect;
 
     public String getType() {

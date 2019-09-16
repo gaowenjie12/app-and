@@ -170,7 +170,13 @@
             android:screenOrientation="portrait" /> <!-- 卡卷包 -->
         <activity
             android:name=".business.me.CardVolumeListActivity"
-            android:screenOrientation="portrait" /> <!-- 基本信息 -->
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business.me.ALLCardVolumeListActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 基本信息 -->
         <activity
             android:name=".business.me.BasicInformationActivity"
             android:screenOrientation="portrait" /> <!-- 设置 -->

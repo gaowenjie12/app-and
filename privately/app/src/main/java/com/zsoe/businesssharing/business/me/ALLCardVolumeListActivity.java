@@ -1,8 +1,8 @@
 package com.zsoe.businesssharing.business.me;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,8 +28,8 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-@RequiresPresenter(CardVolumePresenter.class)
-public class CardVolumeListActivity extends BaseActivity<CardVolumePresenter> {
+@RequiresPresenter(ALLCardVolumePresenter.class)
+public class ALLCardVolumeListActivity extends BaseActivity<ALLCardVolumePresenter> {
 
     private RecyclerView mRvNotice;
 
@@ -45,23 +45,21 @@ public class CardVolumeListActivity extends BaseActivity<CardVolumePresenter> {
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().mycardticket_list(DApplication.getInstance().getLoginUser().getId() + "");
+                getPresenter().cardticket_list(DApplication.getInstance().getLoginUser().getId() + "");
             }
         });
 
         setTitleRightText("卡卷列表", new Action1<View>() {
             @Override
             public void call(View view) {
-                startActivity(new Intent(mContext, ALLCardVolumeListActivity.class));
+
             }
         });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         mPtrFrame.autoRefresh();
     }
+
+    int currentPosition;
 
     private void initView() {
 
@@ -80,14 +78,21 @@ public class CardVolumeListActivity extends BaseActivity<CardVolumePresenter> {
                 holder.setText(R.id.tv_company_name, item.getCompanyname());
                 holder.setText(R.id.tv_note, item.getDes());
 
-                holder.getView(R.id.tv_delete).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        DialogManager.getInstance().showNetLoadingView(mContext);
-                        getPresenter().mycardticket_del(DApplication.getInstance().getLoginUser().getId() + "", item.getId() + "");
-                    }
-                });
 
+                TextView tv_delete = holder.getView(R.id.tv_delete);
+                if (item.getIs_has() == 1) {
+                    tv_delete.setText("已领取");
+                } else {
+                    tv_delete.setText("领取");
+                    holder.getView(R.id.tv_delete).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            currentPosition = holder.getAdapterPosition();
+                            DialogManager.getInstance().showNetLoadingView(mContext);
+                            getPresenter().getcardticket(DApplication.getInstance().getLoginUser().getId() + "", item.getId() + "");
+                        }
+                    });
+                }
             }
         };
 
@@ -96,7 +101,7 @@ public class CardVolumeListActivity extends BaseActivity<CardVolumePresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().mycardticket_list(DApplication.getInstance().getLoginUser().getId() + "");
+                getPresenter().cardticket_list(DApplication.getInstance().getLoginUser().getId() + "");
             }
         });
 
@@ -127,7 +132,10 @@ public class CardVolumeListActivity extends BaseActivity<CardVolumePresenter> {
     }
 
     public void delSuccess() {
-        mPtrFrame.autoRefresh();
+        List<ItemInsdustry> noticeBeanList = noticeBeanOnionRecycleAdapter.getData();
+        ItemInsdustry itemInsdustry = noticeBeanList.get(currentPosition);
+        itemInsdustry.setIs_has(1);
+        noticeBeanOnionRecycleAdapter.notifyItemChanged(currentPosition, 0);
     }
 
 }
