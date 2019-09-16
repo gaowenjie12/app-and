@@ -38,7 +38,7 @@ public class ALLCardVolumeListActivity extends BaseActivity<ALLCardVolumePresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_volume_list);
         initView();
-        initTitleText("我的卡卷列表");
+        initTitleText("卡卷列表");
 
         initPtrFrameLayout(new Action1<String>() {
             @Override

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_geiwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_xiaox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/adaptive_15dp"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_five"
+            tools:text="只有自己知道，光鲜靓丽的背后付出了多少不被认知的辛苦，但是，所有的累，只能一笑而过。
+
+你给上半年的自己打多少分？计划的书读了几本？拖延症改掉了吗？说走就走的旅行实现了吗？在静静的回忆里，我们又要感叹时光的流逝了。但是没有谁能留住时间，它一直向前，催促着你去做出选择，做出改变，重拾追寻梦想的勇气。从此刻起，莫负时光，大声地说一句：你好，下半年！
+                        " />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/adaptive_15dp"
+            android:layout_marginTop="@dimen/adaptive_5dp">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="时间：2019-06-06 15:00" />
+
+            <TextView
+                android:id="@+id/tv_huifu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/adaptive_10dp"
+                android:background="@drawable/btn_white_blue_storke"
+                android:paddingLeft="13dp"
+                android:paddingTop="2dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="2dp"
+                android:text="回复"
+                android:textColor="@color/AC9472" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_huifu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/adaptive_15dp"
+        android:background="@drawable/huifupressed_shape"
+        android:padding="@dimen/adaptive_15dp">
+
+        <TextView
+            android:id="@+id/tv_myhuifu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_3"
+            tools:text="只有自己知道，光鲜靓丽的背后付出了多少不被认知的辛苦，但是，所有的累，只能一笑而过。
+
+你给上半年的自己打多少分？计划的书读了几本？拖延症改掉了吗？说走就走的旅行实现了吗？在静静的回忆里，我们又要感叹时光的流逝了。但是没有谁能留住时间，它一直向前，催促着你去做出选择，做出改变，重拾追寻梦想的勇气。从此刻起，莫负时光，大声地说一句：你好，下半年！
+                        " />
+
+
+        <TextView
+            android:id="@+id/tv_huifu_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_myhuifu"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/adaptive_10dp"
+            tools:text="2019-06-06 15:00" />
+    </RelativeLayout>
+
+
+</LinearLayout>

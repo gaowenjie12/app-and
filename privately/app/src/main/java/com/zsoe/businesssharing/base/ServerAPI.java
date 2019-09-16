@@ -20,6 +20,7 @@ import com.zsoe.businesssharing.bean.ItemCompany;
 import com.zsoe.businesssharing.bean.ItemFinancBean;
 import com.zsoe.businesssharing.bean.ItemInsdustry;
 import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
+import com.zsoe.businesssharing.bean.ItemMailBox;
 import com.zsoe.businesssharing.bean.ItemWenZhangBean;
 import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.bean.MasterBean;
@@ -244,6 +245,12 @@ public interface ServerAPI {
      */
     @POST("msg/mailbox_list")
     Observable<RootResponse<List<MessageReturnBean>>> mailbox_list(@Body FormBody body);
+
+    /**
+     * 普通用户 身份 领导回信列表 查看 or 领导身份 信箱页面 列表-》查看 /api/v1/msg/mailbox_infolist 可以使用
+     */
+    @POST("msg/mailbox_infolist")
+    Observable<RootResponse<List<ItemMailBox>>> mailbox_infolist(@Body FormBody body);
 
     /**
      * 收藏 or 取消收藏 /api/v1/my/collect 可以使用

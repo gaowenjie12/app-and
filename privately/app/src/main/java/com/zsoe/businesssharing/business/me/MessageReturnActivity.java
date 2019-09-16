@@ -1,8 +1,10 @@
 package com.zsoe.businesssharing.business.me;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +16,7 @@ import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
-import com.zsoe.businesssharing.bean.MessageReturnBean;
+import com.zsoe.businesssharing.bean.ItemMailBox;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
@@ -27,31 +29,27 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-@RequiresPresenter(MessageRemindListPresenter.class)
-public class MessageRemindActivity extends BaseActivity<MessageRemindListPresenter> {
+@RequiresPresenter(MessageReturnListPresenter.class)
+public class MessageReturnActivity extends BaseActivity<MessageReturnListPresenter> {
 
     private RecyclerView mRvJoinList;
+    private String toId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_remind);
+        setContentView(R.layout.activity_message_return);
         initView();
+        initTitleText("回信");
 
-        int type = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
-        if (type == 1) {
-            initTitleText("领导回信");
-        } else {
-            initTitleText("信箱");
-        }
-
+        toId = getIntent().getStringExtra(Config.INTENT_PARAMS1);
         initPtrFrameLayout(new Action1<String>() {
             @Override
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
 
-                getPresenter().mailbox_list(DApplication.getInstance().getLoginUser().getId() + "");
+                getPresenter().mailbox_infolist(DApplication.getInstance().getLoginUser().getId() + "", toId);
 
             }
         });
@@ -62,24 +60,52 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
 
     private void initView() {
         mRvJoinList = (RecyclerView) findViewById(R.id.rv_join_list);
-        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<MessageReturnBean>(R.layout.item_huixin_layout, noticeBeanList) {
+        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemMailBox>(R.layout.item_from_layout, noticeBeanList) {
             @Override
-            protected void convert(BaseViewHolder holder, final MessageReturnBean item) {
+            protected void convert(BaseViewHolder holder, final ItemMailBox item) {
                 super.convert(holder, item);
 
 
-                holder.setText(R.id.tv_title, item.getTitle());
-                holder.setText(R.id.tv_content, item.getMsg());
-                holder.setText(R.id.tv_time, item.getTime());
+                TextView tv_xiaox = holder.getView(R.id.tv_xiaox);
+                TextView tv_time = holder.getView(R.id.tv_time);
+                TextView tv_huifu = holder.getView(R.id.tv_huifu);
+                TextView tv_myhuifu = holder.getView(R.id.tv_myhuifu);
+                TextView tv_huifu_time = holder.getView(R.id.tv_huifu_time);
+                RelativeLayout rl_huifu = holder.getView(R.id.rl_huifu);
+                LinearLayout ll_geiwo = holder.getView(R.id.ll_geiwo);
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(mContext, MessageReturnActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1,item.getTo_uid()+"");
-                        startActivity(intent);
+                //目标id == uid，代表是别人发给我的
+                if (item.getTo_uid() == DApplication.getInstance().getLoginUser().getId()) {
+
+                    tv_xiaox.setText(item.getMsg());
+                    tv_time.setText(item.getCreatetime());
+
+                    if (item.getIs_showbut() != 1) {
+                        tv_huifu.setVisibility(View.VISIBLE);
+                        tv_huifu.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        });
+                    } else {
+                        tv_huifu.setVisibility(View.GONE);
+
                     }
-                });
+
+                    ll_geiwo.setVisibility(View.VISIBLE);
+                    rl_huifu.setVisibility(View.GONE);
+
+                } else if (item.getFrom_uid() == DApplication.getInstance().getLoginUser().getId()) {
+                    //from_uid 代表发信息的用户,如果等于当前用户，代表是我发的
+                    ll_geiwo.setVisibility(View.GONE);
+                    rl_huifu.setVisibility(View.VISIBLE);
+                    tv_myhuifu.setText(item.getMsg());
+                    tv_huifu_time.setText(item.getCreatetime());
+
+
+                }
+
 
             }
         };
@@ -89,7 +115,8 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().mailbox_list(DApplication.getInstance().getLoginUser().getId() + "");
+                getPresenter().mailbox_infolist(DApplication.getInstance().getLoginUser().getId() + "", toId);
+
             }
         });
 
@@ -106,7 +133,7 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
 
 
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
-    private List<MessageReturnBean> noticeBeanList = new ArrayList<>();
+    private List<ItemMailBox> noticeBeanList = new ArrayList<>();
 
 
     /**
@@ -116,5 +143,4 @@ public class MessageRemindActivity extends BaseActivity<MessageRemindListPresent
         mPtrFrame.refreshComplete();
         noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
     }
-
 }

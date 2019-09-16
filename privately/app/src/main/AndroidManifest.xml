@@ -54,7 +54,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-        <activity android:name=".business.me.AboutUsActivity"></activity>
+        <activity android:name=".business.me.MessageReturnActivity"></activity>
+        <activity android:name=".business.me.AboutUsActivity" />
         <activity
             android:name=".business.message.ConversationListActivity"
             android:screenOrientation="portrait" />
@@ -171,12 +172,9 @@
         <activity
             android:name=".business.me.CardVolumeListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".business.me.ALLCardVolumeListActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 基本信息 -->
+            android:screenOrientation="portrait" /> <!-- 基本信息 -->
         <activity
             android:name=".business.me.BasicInformationActivity"
             android:screenOrientation="portrait" /> <!-- 设置 -->
