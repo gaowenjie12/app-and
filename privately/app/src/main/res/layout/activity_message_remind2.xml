@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".business.me.MessageReturnActivity">
-
-    <include layout="@layout/comm_title_bar" />
-
+    tools:context=".business.me.MessageRemindActivity">
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ptr_layout"

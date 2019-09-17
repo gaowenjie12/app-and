@@ -14,9 +14,18 @@ public class ItemMailBox {
     private int is_showbut;
     private String msg;
     private int msg_id;
+    private boolean is_me;
     private String createtime;
     private String username;
 
+
+    public boolean isIs_me() {
+        return is_me;
+    }
+
+    public void setIs_me(boolean is_me) {
+        this.is_me = is_me;
+    }
 
     public int getIs_showbut() {
         return is_showbut;

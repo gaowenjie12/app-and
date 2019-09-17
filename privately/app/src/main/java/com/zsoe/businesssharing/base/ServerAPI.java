@@ -252,6 +252,33 @@ public interface ServerAPI {
     @POST("msg/mailbox_infolist")
     Observable<RootResponse<List<ItemMailBox>>> mailbox_infolist(@Body FormBody body);
 
+
+    /**
+     * 我收到的留言列表-》查看 or 我收到的回复列表-》查看 /api/v1/msg/user_companymsg_infolist 可以使用
+     */
+    @POST("msg/user_companymsg_infolist")
+    Observable<RootResponse<List<ItemMailBox>>> user_companymsg_infolist(@Body FormBody body);
+
+    /**
+     * 普通用户 身份 领导回信 列表 查看-》 回复 or 领导身份 领信箱页面 列表-》查看-》 回复 /api/v1/msg/mailbox_inforeply 可以使
+     */
+    @POST("msg/mailbox_inforeply")
+    Observable<RootResponse> mailbox_inforeply(@Body FormBody body);
+
+    /**
+     * 我收到的留言列表 列表-》查看-》 回复 or 我收到的回复列表 列表-》查看-》 留言 /api/v1/msg/user_companymsg_inforeply 可以使用
+     */
+    @POST("msg/user_companymsg_inforeply")
+    Observable<RootResponse> user_companymsg_inforeply(@Body FormBody body);
+
+
+    /**
+     * 我收到的留言列表 or 我收到的回复列表 /api/v1/msg/user_companymsg_list 可以使用
+     */
+    @POST("msg/user_companymsg_list")
+    Observable<RootResponse<List<MessageReturnBean>>> user_companymsg_list(@Body FormBody body);
+
+
     /**
      * 收藏 or 取消收藏 /api/v1/my/collect 可以使用
      */

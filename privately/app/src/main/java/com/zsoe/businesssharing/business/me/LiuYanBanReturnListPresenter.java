@@ -20,7 +20,7 @@ import rx.Observable;
 import rx.functions.Func0;
 
 
-public class MessageReturnListPresenter extends BasePresenter<MessageReturnActivity> {
+public class LiuYanBanReturnListPresenter extends BasePresenter<LiuYanBanReturnActivity> {
     final public int REQUEST_LOGIN = 1;
     final public int REQUEST_LOGIN2 = 2;
     FormBody body;
@@ -38,19 +38,19 @@ public class MessageReturnListPresenter extends BasePresenter<MessageReturnActiv
                     @Override
                     public Observable<RootResponse<List<ItemMailBox>>> call() {
 
-                        return DApplication.getServerAPI().mailbox_infolist(body);
+                        return DApplication.getServerAPI().user_companymsg_infolist(body);
                     }
                 },
-                new NetCallBack<MessageReturnActivity, List<ItemMailBox>>() {
+                new NetCallBack<LiuYanBanReturnActivity, List<ItemMailBox>>() {
                     @Override
-                    public void callBack(MessageReturnActivity v, List<ItemMailBox> noticeBeanList) {
+                    public void callBack(LiuYanBanReturnActivity v, List<ItemMailBox> noticeBeanList) {
 
                         loadMoreDefault.fixNumAndClear();
                         loadMoreDefault.loadMoreFinish(noticeBeanList);
                         v.updateList();
                     }
                 },
-                new BaseToastNetError<MessageReturnActivity>());
+                new BaseToastNetError<LiuYanBanReturnActivity>());
 
 
         restartableFirst(REQUEST_LOGIN2,
@@ -58,31 +58,33 @@ public class MessageReturnListPresenter extends BasePresenter<MessageReturnActiv
                     @Override
                     public Observable<RootResponse> call() {
 
-                        return DApplication.getServerAPI().mailbox_inforeply(body);
+                        return DApplication.getServerAPI().user_companymsg_inforeply(body);
                     }
                 },
-                new NetCompleteBack<MessageReturnActivity>() {
+                new NetCompleteBack<LiuYanBanReturnActivity>() {
                     @Override
-                    public void onComplete(MessageReturnActivity v, RootResponse t) {
+                    public void onComplete(LiuYanBanReturnActivity v, RootResponse t) {
                         v.setMsgSuccess(t);
                     }
                 },
-                new BaseToastNetError<MessageReturnActivity>());
+                new BaseToastNetError<LiuYanBanReturnActivity>());
 
 
     }
 
-    public void mailbox_infolist(String uid, String to_uid) {
+    public void user_companymsg_infolist(String uid,String type, String to_uid) {
         loadMoreDefault.pagerAble.put("uid", uid);
+        loadMoreDefault.pagerAble.put("type", type);
         loadMoreDefault.pagerAble.put("to_uid", to_uid);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 
     }
 
-    public void mailbox_inforeply(String uid, String to_uid, String msg_id, String msg) {
+    public void user_companymsg_inforeply(String uid,String type, String to_uid, String msg_id, String msg) {
         HashMap<String, String> map = new HashMap<>();
         map.put("uid", uid);
+        map.put("type", type);
         map.put("to_uid", to_uid);
         map.put("msg_id", msg_id);
         map.put("msg", msg);

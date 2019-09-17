@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -27,6 +27,7 @@
                         " />
 
         <RelativeLayout
+            android:layout_marginBottom="@dimen/adaptive_10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/adaptive_15dp"
@@ -50,7 +51,8 @@
                 android:paddingRight="13dp"
                 android:paddingBottom="2dp"
                 android:text="回复"
-                android:textColor="@color/AC9472" />
+                android:textColor="@color/AC9472"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

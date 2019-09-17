@@ -34,11 +34,11 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-@RequiresPresenter(MessageReturnListPresenter.class)
-public class MessageReturnActivity extends BaseActivity<MessageReturnListPresenter> {
+@RequiresPresenter(LiuYanBanReturnListPresenter.class)
+public class LiuYanBanReturnActivity extends BaseActivity<LiuYanBanReturnListPresenter> {
 
     private RecyclerView mRvJoinList;
-    private String toId;
+    private String toId, type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +46,18 @@ public class MessageReturnActivity extends BaseActivity<MessageReturnListPresent
         setContentView(R.layout.activity_message_return);
         initView();
 
-
         toId = getIntent().getStringExtra(Config.INTENT_PARAMS1);
-        String title = getIntent().getStringExtra(Config.INTENT_PARAMS2);
-
+        type = getIntent().getStringExtra(Config.INTENT_PARAMS2);
+        String title = getIntent().getStringExtra(Config.INTENT_PARAMS3);
         initTitleText(title);
 
-        
         initPtrFrameLayout(new Action1<String>() {
             @Override
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
 
-                getPresenter().mailbox_infolist(DApplication.getInstance().getLoginUser().getId() + "", toId);
+                getPresenter().user_companymsg_infolist(DApplication.getInstance().getLoginUser().getId() + "", type, toId);
 
             }
         });
@@ -89,7 +87,7 @@ public class MessageReturnActivity extends BaseActivity<MessageReturnListPresent
 
                     tv_xiaox.setText(item.getMsg());
                     tv_time.setText(item.getCreatetime());
-
+//is_showbut 是是否显示按钮的意思 1 是显示 0 不显示
                     if (item.getIs_showbut() == 1) {
                         tv_huifu.setVisibility(View.VISIBLE);
                         tv_huifu.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +99,7 @@ public class MessageReturnActivity extends BaseActivity<MessageReturnListPresent
                                     @Override
                                     public void onFinish(String str) {
                                         DialogManager.getInstance().showNetLoadingView(mContext);
-                                        getPresenter().mailbox_inforeply(DApplication.getInstance().getLoginUser().getId() + "", toId, item.getMsg_id() + "", str);
+                                        getPresenter().user_companymsg_inforeply(DApplication.getInstance().getLoginUser().getId() + "", type, toId, item.getMsg_id() + "", str);
                                     }
                                 });
 
@@ -138,7 +136,7 @@ public class MessageReturnActivity extends BaseActivity<MessageReturnListPresent
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().mailbox_infolist(DApplication.getInstance().getLoginUser().getId() + "", toId);
+                getPresenter().user_companymsg_infolist(DApplication.getInstance().getLoginUser().getId() + "", type, toId);
 
             }
         });

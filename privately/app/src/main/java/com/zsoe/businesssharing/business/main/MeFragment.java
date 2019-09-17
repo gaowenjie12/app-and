@@ -22,6 +22,7 @@ import com.zsoe.businesssharing.business.me.BasicInformationActivity;
 import com.zsoe.businesssharing.business.me.CardVolumeListActivity;
 import com.zsoe.businesssharing.business.me.CertificationCompanyActivity;
 import com.zsoe.businesssharing.business.me.CollectionListActivity;
+import com.zsoe.businesssharing.business.me.LiuYanRootActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
 import com.zsoe.businesssharing.business.me.MySignActivity;
 import com.zsoe.businesssharing.business.me.ProcurementManagementActivity;
@@ -132,7 +133,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             ll_liuyanban.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(mContext, MessageRemindActivity.class));
+                    startActivity(new Intent(mContext, LiuYanRootActivity.class));
                 }
             });
         }
@@ -147,7 +148,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_renzheng.setOnClickListener(this);
 
         ll_tuiguang.setOnClickListener(this);
-        ll_liuyanban.setOnClickListener(this);
         ll_wode.setOnClickListener(this);
         ll_shoucang.setOnClickListener(this);
         ll_kajuan.setOnClickListener(this);
