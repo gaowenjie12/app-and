@@ -38,16 +38,16 @@ import rx.functions.Action1;
 public class LiuYanBanReturnActivity extends BaseActivity<LiuYanBanReturnListPresenter> {
 
     private RecyclerView mRvJoinList;
-    private String toId, type;
+    private String toId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_return);
         initView();
+        initTitleText("留言板");
 
         toId = getIntent().getStringExtra(Config.INTENT_PARAMS1);
-        type = getIntent().getStringExtra(Config.INTENT_PARAMS2);
         String title = getIntent().getStringExtra(Config.INTENT_PARAMS3);
         initTitleText(title);
 
@@ -57,7 +57,7 @@ public class LiuYanBanReturnActivity extends BaseActivity<LiuYanBanReturnListPre
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
 
-                getPresenter().user_companymsg_infolist(DApplication.getInstance().getLoginUser().getId() + "", type, toId);
+                getPresenter().user_companymsg_infolist(DApplication.getInstance().getLoginUser().getId() + "", toId);
 
             }
         });
@@ -99,7 +99,7 @@ public class LiuYanBanReturnActivity extends BaseActivity<LiuYanBanReturnListPre
                                     @Override
                                     public void onFinish(String str) {
                                         DialogManager.getInstance().showNetLoadingView(mContext);
-                                        getPresenter().user_companymsg_inforeply(DApplication.getInstance().getLoginUser().getId() + "", type, toId, item.getMsg_id() + "", str);
+                                        getPresenter().user_companymsg_inforeply(DApplication.getInstance().getLoginUser().getId() + "", toId, item.getMsg_id() + "", str);
                                     }
                                 });
 
@@ -136,7 +136,7 @@ public class LiuYanBanReturnActivity extends BaseActivity<LiuYanBanReturnListPre
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().user_companymsg_infolist(DApplication.getInstance().getLoginUser().getId() + "", type, toId);
+                getPresenter().user_companymsg_infolist(DApplication.getInstance().getLoginUser().getId() + "", toId);
 
             }
         });

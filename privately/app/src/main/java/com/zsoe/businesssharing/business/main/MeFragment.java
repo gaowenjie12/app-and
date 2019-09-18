@@ -22,7 +22,7 @@ import com.zsoe.businesssharing.business.me.BasicInformationActivity;
 import com.zsoe.businesssharing.business.me.CardVolumeListActivity;
 import com.zsoe.businesssharing.business.me.CertificationCompanyActivity;
 import com.zsoe.businesssharing.business.me.CollectionListActivity;
-import com.zsoe.businesssharing.business.me.LiuYanRootActivity;
+import com.zsoe.businesssharing.business.me.LiuYanBanActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
 import com.zsoe.businesssharing.business.me.MySignActivity;
 import com.zsoe.businesssharing.business.me.ProcurementManagementActivity;
@@ -133,7 +133,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             ll_liuyanban.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(mContext, LiuYanRootActivity.class));
+                    startActivity(new Intent(mContext, LiuYanBanActivity.class));
                 }
             });
         }
@@ -155,9 +155,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_kefu.setOnClickListener(this);
         tv_sign.setOnClickListener(this);
 
-        FrecoFactory.getInstance().disPlay(user_image, "http://hbimg.b0.upaiyun.com/3e14d836d89498b116834b2987dbaa1c8f2e85a418a9fc-nLVWsW_fw658");
-        user_name.setText("马云");
-        user_gongsi.setText("阿里山楼宇清洁服务有限公司");
+        FrecoFactory.getInstance().disPlay(user_image, DApplication.getInstance().getLoginUser().getAvatar());
+        user_name.setText(DApplication.getInstance().getLoginUser().getUsername());
+        user_gongsi.setText(DApplication.getInstance().getLoginUser().getIdentify());
 
     }
 

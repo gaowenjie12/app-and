@@ -16,8 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.BrowserActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.DrawableTextView;
@@ -86,6 +89,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
         keyboardWatcher = new KeyboardWatcher(findViewById(Window.ID_ANDROID_CONTENT));
         keyboardWatcher.addSoftKeyboardStateListener(this);
+
+        findViewById(R.id.tv_xieyi).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, BrowserActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, BuildConfig.ENDPOINT + "article/agreement");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -18,7 +18,7 @@ import rx.Observable;
 import rx.functions.Func0;
 
 
-public class LiuYanBanListPresenter extends BasePresenter<LiuYanBanFragment> {
+public class LiuYanBanListPresenter extends BasePresenter<LiuYanBanActivity> {
     final public int REQUEST_LOGIN = 1;
     FormBody body;
 
@@ -38,23 +38,22 @@ public class LiuYanBanListPresenter extends BasePresenter<LiuYanBanFragment> {
                         return DApplication.getServerAPI().user_companymsg_list(body);
                     }
                 },
-                new NetCallBack<LiuYanBanFragment, List<MessageReturnBean>>() {
+                new NetCallBack<LiuYanBanActivity, List<MessageReturnBean>>() {
                     @Override
-                    public void callBack(LiuYanBanFragment v, List<MessageReturnBean> noticeBeanList) {
+                    public void callBack(LiuYanBanActivity v, List<MessageReturnBean> noticeBeanList) {
 
                         loadMoreDefault.fixNumAndClear();
                         loadMoreDefault.loadMoreFinish(noticeBeanList);
                         v.updateList();
                     }
                 },
-                new BaseToastNetError<LiuYanBanFragment>());
+                new BaseToastNetError<LiuYanBanActivity>());
 
 
     }
 
-    public void user_companymsg_list(String uid, String type) {
+    public void user_companymsg_list(String uid) {
         loadMoreDefault.pagerAble.put("uid", uid);
-        loadMoreDefault.pagerAble.put("type", type);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 

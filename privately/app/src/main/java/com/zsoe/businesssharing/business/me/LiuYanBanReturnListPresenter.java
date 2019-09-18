@@ -72,19 +72,17 @@ public class LiuYanBanReturnListPresenter extends BasePresenter<LiuYanBanReturnA
 
     }
 
-    public void user_companymsg_infolist(String uid,String type, String to_uid) {
+    public void user_companymsg_infolist(String uid, String to_uid) {
         loadMoreDefault.pagerAble.put("uid", uid);
-        loadMoreDefault.pagerAble.put("type", type);
         loadMoreDefault.pagerAble.put("to_uid", to_uid);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 
     }
 
-    public void user_companymsg_inforeply(String uid,String type, String to_uid, String msg_id, String msg) {
+    public void user_companymsg_inforeply(String uid, String to_uid, String msg_id, String msg) {
         HashMap<String, String> map = new HashMap<>();
         map.put("uid", uid);
-        map.put("type", type);
         map.put("to_uid", to_uid);
         map.put("msg_id", msg_id);
         map.put("msg", msg);

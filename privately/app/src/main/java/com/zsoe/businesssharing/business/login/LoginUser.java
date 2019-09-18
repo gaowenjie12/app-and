@@ -10,42 +10,26 @@ public class LoginUser {
     private int id;
     private String username;
     private String nickname;
+    private String email;
     private String mobile;
     private String avatar;
+    private int gender;
+    private String birthday;
     private int score;
-    private String token;
-    private int type;//type值大于0身份为领导（恩师、主席、部长、大会长），type=0或者为空都是普通用户（普通企业）
+    private int type;
+    private String realname;
     private String uuid;
-    private String identify;
+    private String district;
+    private int serviceid;
+    private String token;
     private int user_id;
     private long createtime;
     private long expiretime;
     private long expires_in;
-
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getIdentify() {
-        return identify;
-    }
-
-    public void setIdentify(String identify) {
-        this.identify = identify;
-    }
+    private String identify;
+    private String companylocation;
+    private int industry_pcate;
+    private int industry_ccate;
 
     public void setId(int id) {
         this.id = id;
@@ -71,6 +55,14 @@ public class LoginUser {
         return nickname;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
@@ -87,12 +79,68 @@ public class LoginUser {
         return avatar;
     }
 
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
 
     public int getScore() {
         return score;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setServiceid(int serviceid) {
+        this.serviceid = serviceid;
+    }
+
+    public int getServiceid() {
+        return serviceid;
     }
 
     public void setToken(String token) {
@@ -135,20 +183,64 @@ public class LoginUser {
         return expires_in;
     }
 
+    public void setIdentify(String identify) {
+        this.identify = identify;
+    }
+
+    public String getIdentify() {
+        return identify;
+    }
+
+    public void setCompanylocation(String companylocation) {
+        this.companylocation = companylocation;
+    }
+
+    public String getCompanylocation() {
+        return companylocation;
+    }
+
+    public void setIndustry_pcate(int industry_pcate) {
+        this.industry_pcate = industry_pcate;
+    }
+
+    public int getIndustry_pcate() {
+        return industry_pcate;
+    }
+
+    public void setIndustry_ccate(int industry_ccate) {
+        this.industry_ccate = industry_ccate;
+    }
+
+    public int getIndustry_ccate() {
+        return industry_ccate;
+    }
+
     @Override
     public String toString() {
         return "LoginUser{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", gender=" + gender +
+                ", birthday='" + birthday + '\'' +
                 ", score=" + score +
+                ", type=" + type +
+                ", realname='" + realname + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", district='" + district + '\'' +
+                ", serviceid=" + serviceid +
                 ", token='" + token + '\'' +
                 ", user_id=" + user_id +
                 ", createtime=" + createtime +
                 ", expiretime=" + expiretime +
                 ", expires_in=" + expires_in +
+                ", identify='" + identify + '\'' +
+                ", companylocation='" + companylocation + '\'' +
+                ", industry_pcate=" + industry_pcate +
+                ", industry_ccate=" + industry_ccate +
                 '}';
     }
 }

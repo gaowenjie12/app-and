@@ -25,6 +25,7 @@ import com.zsoe.businesssharing.bean.ItemWenZhangBean;
 import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.bean.MasterBean;
 import com.zsoe.businesssharing.bean.MessageReturnBean;
+import com.zsoe.businesssharing.bean.MySignBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
 import com.zsoe.businesssharing.bean.RenCompanyBean;
 import com.zsoe.businesssharing.bean.RootEventBean;
@@ -350,5 +351,25 @@ public interface ServerAPI {
      */
     @POST("my/mycardticket_del")
     Observable<RootResponse> mycardticket_del(@Body FormBody body);
+
+
+    /**
+     * my/mysign 可以使用
+     */
+    @POST("my/mysign")
+    Observable<RootResponse<MySignBean>> mysign(@Body FormBody body);
+
+    /**
+     * 排名券立即使用 /api/v1/my/use_rankticket 可以使用
+     */
+    @POST("my/mysign")
+    Observable<RootResponse> use_rankticket(@Body FormBody body);
+
+
+    /**
+     * 签到 /api/v1/my/sign 可以使用
+     */
+    @POST("my/sign")
+    Observable<RootResponse> sign(@Body FormBody body);
 
 }

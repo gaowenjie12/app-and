@@ -4,15 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.MessageReturnBean;
@@ -28,46 +27,40 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-/**
- * 银行信贷
- */
-
-
 @RequiresPresenter(LiuYanBanListPresenter.class)
-public class LiuYanBanFragment extends BaseFragment<LiuYanBanListPresenter> {
-
-    private static final String TAG = "HomeFragment";
-
-    public static LiuYanBanFragment newInstance(String title) {
-        LiuYanBanFragment f = new LiuYanBanFragment();
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        f.setArguments(args);
-        return f;
-    }
-
-    @Override
-    protected void lazyLoadData() {
-        super.lazyLoadData();
-    }
-
-    @Override
-    protected int createViewByLayoutId() {
-        return R.layout.activity_message_remind2;
-    }
+public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> {
 
     private RecyclerView mRvJoinList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_liu_yan_ban);
+        initView();
+
+        initTitleText("留言板");
+
+        initPtrFrameLayout(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                //刷新
+                getPresenter().loadMoreDefault.refresh();
+                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "");
+
+            }
+        });
+
+        DialogManager.getInstance().showNetLoadingView(mContext);
+        mPtrFrame.autoRefresh();
+
+    }
+
 
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
     private List<MessageReturnBean> noticeBeanList = new ArrayList<>();
 
-    private String type;
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        type = getArguments().getString("title");
-        mRvJoinList = (RecyclerView) view.findViewById(R.id.rv_join_list);
+    private void initView() {
+        mRvJoinList = (RecyclerView) findViewById(R.id.rv_join_list);
         noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<MessageReturnBean>(R.layout.item_huixin_layout, noticeBeanList) {
             @Override
             protected void convert(BaseViewHolder holder, final MessageReturnBean item) {
@@ -84,7 +77,6 @@ public class LiuYanBanFragment extends BaseFragment<LiuYanBanListPresenter> {
 
                         Intent intent = new Intent(mContext, LiuYanBanReturnActivity.class);
                         intent.putExtra(Config.INTENT_PARAMS1, item.getTo_uid() + "");
-                        intent.putExtra(Config.INTENT_PARAMS2, type);
                         intent.putExtra(Config.INTENT_PARAMS3, item.getTitle());
 
                         startActivity(intent);
@@ -99,7 +91,7 @@ public class LiuYanBanFragment extends BaseFragment<LiuYanBanListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-//                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "", type);
+                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "");
             }
         });
 
@@ -113,20 +105,6 @@ public class LiuYanBanFragment extends BaseFragment<LiuYanBanListPresenter> {
         mRvJoinList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvJoinList.setAdapter(noticeBeanOnionRecycleAdapter);
 
-
-        initPtrFrameLayout(new Action1<String>() {
-            @Override
-            public void call(String s) {
-                //刷新
-                getPresenter().loadMoreDefault.refresh();
-
-//                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "", type);
-
-            }
-        });
-
-        DialogManager.getInstance().showNetLoadingView(mContext);
-        mPtrFrame.autoRefresh();
     }
 
 

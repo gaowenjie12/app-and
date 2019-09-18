@@ -54,10 +54,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-
-        <activity android:name=".business.me.LiuYanRootActivity"></activity>
-        <activity android:name=".business.me.LiuYanBanReturnActivity"></activity>
-        <activity android:name=".business.me.MessageReturnActivity"></activity>
+        <activity android:name=".business.me.LiuYanBanActivity"></activity>
+        <activity android:name=".business.me.LiuYanRootActivity" />
+        <activity android:name=".business.me.LiuYanBanReturnActivity" />
+        <activity android:name=".business.me.MessageReturnActivity" />
         <activity android:name=".business.me.AboutUsActivity" />
         <activity
             android:name=".business.message.ConversationListActivity"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -99,6 +101,10 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
 
     private static final int REQUEST_LIST_CODE = 0;
     private static final int REQUEST_CAMERA_CODE = 1;
+    /**
+     * 请输入真实姓名
+     */
+    private AppCompatEditText mEdZhenshi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +120,19 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         setTitleRightText("保存", new Action1<View>() {
             @Override
             public void call(View view) {
+
+                String mEdZhenshiStr = mEdZhenshi.getText().toString();
+                if (TextUtils.isEmpty(mEdZhenshiStr)) {
+                    ToastUtils.showShort("请填写真实姓名");
+                    return;
+                }
+
+                String mEdShoujihaoStr = mEdShoujihao.getText().toString();
+                if (TextUtils.isEmpty(mEdShoujihaoStr)) {
+                    ToastUtils.showShort("请填写手机号");
+                    return;
+                }
+
 
             }
         });
@@ -152,6 +171,7 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         mTvHangye = (TextView) findViewById(R.id.tv_hangye);
         mRlHangye = (RelativeLayout) findViewById(R.id.rl_hangye);
         mRlHangye.setOnClickListener(this);
+        mEdZhenshi = (AppCompatEditText) findViewById(R.id.ed_zhenshi);
     }
 
 

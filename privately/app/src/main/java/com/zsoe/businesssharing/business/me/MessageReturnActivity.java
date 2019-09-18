@@ -52,7 +52,7 @@ public class MessageReturnActivity extends BaseActivity<MessageReturnListPresent
 
         initTitleText(title);
 
-        
+
         initPtrFrameLayout(new Action1<String>() {
             @Override
             public void call(String s) {
