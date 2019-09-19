@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @version:
  * @类说明:
  */
-public class RootHangYe {
+public class RootHangYe implements Serializable {
     /*"id": 22,
       "name": "IT/通信/互联网",
       */

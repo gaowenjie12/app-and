@@ -30,6 +30,33 @@ public class LoginUser {
     private String companylocation;
     private int industry_pcate;
     private int industry_ccate;
+    private String industry_pname;
+    private String industry_cname;
+    private String servicename;
+
+    public String getIndustry_pname() {
+        return industry_pname;
+    }
+
+    public void setIndustry_pname(String industry_pname) {
+        this.industry_pname = industry_pname;
+    }
+
+    public String getIndustry_cname() {
+        return industry_cname;
+    }
+
+    public void setIndustry_cname(String industry_cname) {
+        this.industry_cname = industry_cname;
+    }
+
+    public String getServicename() {
+        return servicename;
+    }
+
+    public void setServicename(String servicename) {
+        this.servicename = servicename;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -215,6 +242,7 @@ public class LoginUser {
         return industry_ccate;
     }
 
+
     @Override
     public String toString() {
         return "LoginUser{" +
@@ -241,6 +269,9 @@ public class LoginUser {
                 ", companylocation='" + companylocation + '\'' +
                 ", industry_pcate=" + industry_pcate +
                 ", industry_ccate=" + industry_ccate +
+                ", industry_pname='" + industry_pname + '\'' +
+                ", industry_cname='" + industry_cname + '\'' +
+                ", servicename='" + servicename + '\'' +
                 '}';
     }
 }

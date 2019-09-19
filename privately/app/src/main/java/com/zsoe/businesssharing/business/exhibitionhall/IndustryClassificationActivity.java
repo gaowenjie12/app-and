@@ -13,6 +13,7 @@ import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.bean.ChildHangYe;
 import com.zsoe.businesssharing.bean.GongYouBean;
 import com.zsoe.businesssharing.bean.RootHangYe;
+import com.zsoe.businesssharing.business.me.BasicInformationActivity;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.BaseBaseAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.adapter.SimpleTextAdapter;
 import com.zsoe.businesssharing.commonview.dropfilter.util.DpUtils;
@@ -115,11 +116,19 @@ public class IndustryClassificationActivity extends BaseActivity {
                 ChildHangYe cityBean = selectCityBeans.get(position);
 //                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
 
-                Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, 0);
-                intent.putExtra(Config.INTENT_PARAMS2, cityBean.getId());
-                startActivity(intent);
-
+                int intExtra = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+                if (intExtra == 1) {
+                    Intent intent = new Intent(mContext, BasicInformationActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, currentProvinceBean);
+                    intent.putExtra(Config.INTENT_PARAMS2, cityBean);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, 0);
+                    intent.putExtra(Config.INTENT_PARAMS2, cityBean.getId());
+                    startActivity(intent);
+                }
             }
         });
 

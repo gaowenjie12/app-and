@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.me;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.bean.JsonBean;
 import com.zsoe.businesssharing.commonview.wheelview.builder.OptionsPickerBuilder;
 import com.zsoe.businesssharing.commonview.wheelview.listener.OnOptionsSelectListener;
@@ -58,6 +60,10 @@ public class EnterpriseLocationActivity extends BaseActivity implements View.OnC
                     return;
                 }
 
+                Intent intent = new Intent(mContext, BasicInformationActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, s1 + "," + s);
+                setResult(RESULT_OK, intent);
+                finish();
 
             }
         });

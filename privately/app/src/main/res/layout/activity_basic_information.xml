@@ -65,6 +65,7 @@
                 android:paddingRight="15dp">
 
                 <TextView
+                    android:id="@+id/tv_left1"
                     style="@style/me_text_style"
                     android:text="我的昵称" />
 
@@ -74,7 +75,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/right_arrow2"
+                    android:layout_toRightOf="@+id/tv_left1"
                     android:background="@null"
+                    android:gravity="right"
                     android:hint="取一个好的昵称吧"
                     android:padding="15dp"
                     android:textSize="@dimen/text_one_five" />
@@ -99,6 +102,7 @@
                 android:paddingRight="15dp">
 
                 <TextView
+                    android:id="@+id/left2"
                     style="@style/me_text_style"
                     android:text="真实姓名" />
 
@@ -106,11 +110,15 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/ed_zhenshi"
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/right_arrow23"
+                    android:layout_toRightOf="@+id/left2"
                     android:background="@null"
+                    android:gravity="right"
                     android:hint="请输入真实姓名"
                     android:padding="15dp"
+
                     android:textSize="@dimen/text_one_five" />
 
                 <ImageView
@@ -196,19 +204,23 @@
                 android:paddingRight="15dp">
 
                 <TextView
+                    android:id="@+id/left3"
                     style="@style/me_text_style"
                     android:text="手机号" />
 
 
                 <androidx.appcompat.widget.AppCompatEditText
-
                     android:id="@+id/ed_shoujihao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/right_arrow5"
+                    android:layout_toRightOf="@+id/left3"
                     android:background="@null"
+                    android:gravity="right"
                     android:hint="请输入手机号"
+                    android:inputType="number"
                     android:padding="15dp"
+
                     android:textSize="@dimen/text_one_five" />
 
                 <ImageView
@@ -232,18 +244,21 @@
                 android:paddingRight="15dp">
 
                 <TextView
+                    android:id="@+id/left4"
                     style="@style/me_text_style"
                     android:text="邮箱" />
 
 
                 <androidx.appcompat.widget.AppCompatEditText
-
                     android:id="@+id/ed_youxiang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/right_arrow6"
+                    android:layout_toRightOf="@+id/left4"
                     android:background="@null"
+                    android:gravity="right"
                     android:hint="未绑定"
+                    android:inputType="textEmailAddress"
                     android:padding="15dp"
                     android:textSize="@dimen/text_one_five" />
 
@@ -321,6 +336,7 @@
                 style="@style/me_layout_style">
 
                 <TextView
+                    android:id="@+id/tv_left"
                     style="@style/me_text_style"
                     android:text="企业所在地" />
 
@@ -329,8 +345,13 @@
                     android:id="@+id/tv_suozaidi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/adaptive_5dp"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/right_arrow9"
+                    android:layout_toRightOf="@+id/tv_left"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"
                     android:text="请选择企业所在地" />
 
                 <ImageView
@@ -350,6 +371,7 @@
                 style="@style/me_layout_style">
 
                 <TextView
+                    android:id="@+id/left7"
                     style="@style/me_text_style"
                     android:text="企业所属行业" />
 
@@ -358,8 +380,12 @@
                     android:id="@+id/tv_hangye"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/adaptive_5dp"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/right_arrow10"
+                    android:layout_toRightOf="@+id/left7"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="请选择企业所属行业" />
 
                 <ImageView

@@ -57,6 +57,12 @@ public interface ServerAPI {
     Observable<RootResponse> register(@Body FormBody body);
 
     /**
+     * 重置密码 /api/v1/user/resetpwd
+     */
+    @POST("user/resetpwd")
+    Observable<RootResponse> resetpwd(@Body FormBody body);
+
+    /**
      * 注册会员
      */
     @POST("user/login")
@@ -320,7 +326,7 @@ public interface ServerAPI {
 
 
     /**
-     * my/service_station 可以使用
+     * 服务站列表 /api/v1/my/service_station 可以使用
      */
     @POST("my/service_station")
     Observable<RootResponse<List<ItemInsdustry>>> service_station(@Body FormBody body);
@@ -371,5 +377,11 @@ public interface ServerAPI {
      */
     @POST("my/sign")
     Observable<RootResponse> sign(@Body FormBody body);
+
+    /**
+     * 修改会员个人信息 /api/v1/user/profile 可以使用
+     */
+    @POST("user/profile")
+    Observable<RootResponse<LoginUser>> userProfile(@Body FormBody body);
 
 }

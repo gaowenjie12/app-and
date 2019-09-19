@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -27,10 +29,19 @@ import com.yuyh.library.imgsel.config.ISCameraConfig;
 import com.yuyh.library.imgsel.config.ISListConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.base.FancyUtils;
+import com.zsoe.businesssharing.base.RootResponse;
+import com.zsoe.businesssharing.base.ServerAPI;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.CallBean;
+import com.zsoe.businesssharing.bean.ChildHangYe;
 import com.zsoe.businesssharing.bean.ItemInsdustry;
 import com.zsoe.businesssharing.bean.JsonBean;
+import com.zsoe.businesssharing.bean.RootHangYe;
 import com.zsoe.businesssharing.business.exhibitionhall.IndustryClassificationActivity;
+import com.zsoe.businesssharing.business.login.LoginUser;
 import com.zsoe.businesssharing.commonview.PhotoTypePopup;
 import com.zsoe.businesssharing.commonview.wheelview.builder.OptionsPickerBuilder;
 import com.zsoe.businesssharing.commonview.wheelview.builder.TimePickerBuilder;
@@ -40,15 +51,26 @@ import com.zsoe.businesssharing.commonview.wheelview.listener.OnTimeSelectListen
 import com.zsoe.businesssharing.commonview.wheelview.view.OptionsPickerView;
 import com.zsoe.businesssharing.commonview.wheelview.view.TimePickerView;
 import com.zsoe.businesssharing.utils.DateUtil;
+import com.zsoe.businesssharing.utils.DialogManager;
+import com.zsoe.businesssharing.utils.FrecoFactory;
 import com.zsoe.businesssharing.utils.GlideUtils;
+import com.zsoe.businesssharing.utils.ImageCompressUtils;
 import com.zsoe.businesssharing.utils.StrUtils;
+import com.zsoe.businesssharing.utils.UpLoadFileUtils;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 import rx.functions.Action1;
 
 @RequiresPresenter(BasicInformationPresenter.class)
@@ -106,13 +128,15 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
      */
     private AppCompatEditText mEdZhenshi;
 
+    private LoginUser loginUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_information);
         initView();
         initTitleText("基本信息");
-
+        loginUser = DApplication.getInstance().getLoginUser();
         initData();
         xingBieList.add("男");
         xingBieList.add("女");
@@ -134,6 +158,16 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
                 }
 
 
+                String nickname = mEdNicheng.getText().toString();
+                String email = mEdYouxiang.getText().toString();
+                String district = mTvDiqu.getText().toString();
+                String companylocation = mTvSuozaidi.getText().toString();
+
+                DialogManager.getInstance().showNetLoadingView(mContext);
+                getPresenter().userProfile(mEdZhenshiStr, picPath, nickname, gender, startDateStr,
+                        mEdShoujihaoStr, email, district, itemInsdustry.getId() + "",
+                        companylocation, rootHangYe.getId() + "",
+                        cityBean.getId() + "");
             }
         });
 
@@ -145,6 +179,20 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
                 GlideUtils.loadImage(context, path, imageView);
             }
         });
+
+
+        FrecoFactory.getInstance().disPlay(mUserImage, loginUser.getAvatar());
+        mEdNicheng.setText(loginUser.getNickname());
+        mEdZhenshi.setText(loginUser.getRealname());
+        mTvXingbie.setText(loginUser.getGender() == 1 ? "男" : "女");
+        mTvNianling.setText(loginUser.getBirthday());
+        mEdShoujihao.setText(loginUser.getMobile());
+        mEdYouxiang.setText(loginUser.getEmail());
+        mTvDiqu.setText(loginUser.getDistrict());
+        mTvSuozaidi.setText(loginUser.getCompanylocation());
+
+        mTvFuwuzhan.setText(loginUser.getServicename());
+        mTvHangye.setText(loginUser.getIndustry_pname()+"--"+loginUser.getIndustry_cname());
     }
 
     private void initView() {
@@ -190,6 +238,9 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
     }
 
 
+    String gender;
+    String startDateStr;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -229,6 +280,11 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
                         @Override
                         public void onOptionsSelect(int options1, int option2, int options3, View v) {
                             //返回的分别是三个级别的选中位置
+                            if (options1 == 0) {
+                                gender = "1";
+                            } else {
+                                gender = "2";
+                            }
                             String tx = xingBieList.get(options1);
                             mTvXingbie.setText(tx);
                         }
@@ -298,10 +354,12 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
 
                 break;
             case R.id.rl_suozaidi:
-                startActivity(new Intent(mContext, EnterpriseLocationActivity.class));
+                startActivityForResult(new Intent(mContext, EnterpriseLocationActivity.class), 3);
                 break;
             case R.id.rl_hangye:
-                startActivity(new Intent(mContext, IndustryClassificationActivity.class));
+                Intent intent = new Intent(mContext, IndustryClassificationActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, 1);
+                startActivityForResult(intent, 4);
 
                 break;
         }
@@ -456,7 +514,7 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         startDatePicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-                String startDateStr = DateUtil.getYyyyMmDd(date);
+                startDateStr = DateUtil.getYyyyMmDd(date);
                 mTvNianling.setText(startDateStr);
             }
         })
@@ -542,6 +600,8 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         ISNav.getInstance().toCameraActivity(this, config, REQUEST_CAMERA_CODE);
     }
 
+    private RootHangYe rootHangYe;
+    private ChildHangYe cityBean;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -550,9 +610,93 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
             List<String> pathList = data.getStringArrayListExtra("result");
             // 测试Fresco
             mUserImage.setImageURI(Uri.parse("file://" + pathList.get(0)));
+
+            final String path = pathList.get(0);
+            ArrayList<String> arrayList = new ArrayList<>();
+            if (!TextUtils.isEmpty(path)) {
+                arrayList.add(path);
+            }
+            sendImg(arrayList);
+
         } else if (requestCode == REQUEST_CAMERA_CODE && resultCode == RESULT_OK && data != null) {
             String path = data.getStringExtra("result");
             mUserImage.setImageURI(Uri.parse("file://" + path));
+
+            ArrayList<String> arrayList = new ArrayList<>();
+            if (!TextUtils.isEmpty(path)) {
+                arrayList.add(path);
+            }
+            sendImg(arrayList);
+
+        } else if (requestCode == 3 && resultCode == RESULT_OK && data != null) {
+            String stringExtra = data.getStringExtra(Config.INTENT_PARAMS1);
+            mTvSuozaidi.setText(stringExtra);
+        } else if (requestCode == 4 && resultCode == RESULT_OK && data != null) {
+            rootHangYe = (RootHangYe) data.getSerializableExtra(Config.INTENT_PARAMS1);
+            cityBean = (ChildHangYe) data.getSerializableExtra(Config.INTENT_PARAMS2);
+            mTvHangye.setText(rootHangYe.getName() + "-" + cityBean.getName());
         }
     }
+
+    public void userProfileSuccess(LoginUser loginUser) {
+        ToastUtils.showShort("修改成功");
+        FancyUtils.setLoginUser(loginUser);
+        finish();
+    }
+
+    String picPath;
+
+    public void sendImg(ArrayList<String> arrayList) {
+        final HashMap<String, String> map = new HashMap<>();
+        ImageCompressUtils.compress(arrayList, new ImageCompressUtils.CompressListener() {
+            @Override
+            public void compress(List<File> fileList) {
+                Request filesRequest = UpLoadFileUtils.getFilesRequest("file", ServerAPI.ENDPOINT + "common/upload", fileList, map);
+
+                DApplication.getInstance().okHttpClient.newCall(filesRequest).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                DialogManager.getInstance().dismissNetLoadingView();
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, final Response response) throws IOException {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                DialogManager.getInstance().dismissNetLoadingView();
+
+                                String bodyString = null;
+                                try {
+                                    bodyString = response.body().string();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                TypeToken<RootResponse<CallBean>> typeToken = new TypeToken<RootResponse<CallBean>>() {
+                                };
+                                RootResponse<CallBean> rootResponse = new Gson().fromJson(bodyString, typeToken.getType());
+
+                                if (rootResponse.getCode() == 1) {
+                                    ToastUtils.showShort(rootResponse.getMsg());
+                                    CallBean data = rootResponse.getData();
+                                    picPath = data.getUrl();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
 }

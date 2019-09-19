@@ -9,6 +9,7 @@ import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
 import com.zsoe.businesssharing.bean.ItemInsdustry;
+import com.zsoe.businesssharing.business.login.LoginUser;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import rx.functions.Func0;
 
 public class BasicInformationPresenter extends BasePresenter<BasicInformationActivity> {
     final public int REQUEST_LOGIN = 1;
+    final public int REQUEST_LOGIN2 = 2;
     FormBody body;
 
     @Override
@@ -44,12 +46,51 @@ public class BasicInformationPresenter extends BasePresenter<BasicInformationAct
                 new BaseToastNetError<BasicInformationActivity>());
 
 
+        restartableFirst(REQUEST_LOGIN2,
+                new Func0<Observable<RootResponse<LoginUser>>>() {
+                    @Override
+                    public Observable<RootResponse<LoginUser>> call() {
+
+                        return DApplication.getServerAPI().userProfile(body);
+                    }
+                },
+
+                new NetCallBack<BasicInformationActivity, LoginUser>() {
+                    @Override
+                    public void callBack(BasicInformationActivity v, LoginUser loginUser) {
+                        v.userProfileSuccess(loginUser);
+                    }
+                },
+                new BaseToastNetError<BasicInformationActivity>());
+
+
     }
 
     public void service_station() {
         HashMap<String, String> map = new HashMap<>();
         body = signForm(map);
         start(REQUEST_LOGIN);
+
+    }
+
+    public void userProfile(String realname, String avatar, String nickname, String gender, String birthday, String mobile, String email, String district
+            , String serviceid, String companylocation, String industry_pcate, String industry_ccate) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
+        map.put("realname", realname);
+        map.put("avatar", avatar);
+        map.put("nickname", nickname);
+        map.put("gender", gender);
+        map.put("birthday", birthday);
+        map.put("mobile", mobile);
+        map.put("email", email);
+        map.put("district", district);
+        map.put("serviceid", serviceid);
+        map.put("companylocation", companylocation);
+        map.put("industry_pcate", industry_pcate);
+        map.put("industry_ccate", industry_ccate);
+        body = signForm(map);
+        start(REQUEST_LOGIN2);
 
     }
 

@@ -279,7 +279,7 @@ public class CertificationCompanyActivity extends BaseActivity<RenzhengPresenter
     }
 
     public void getSuccess(RenCompanyBean renCompanyBean) {
-
+        ToastUtils.showShort("提交成功，等待审核");
         mEtQuancheng.setText(renCompanyBean.getCompanyname());
         mEtLeimu.setText(renCompanyBean.getMaincate());
         mEtShenfenzheng.setText(renCompanyBean.getIdcardnum());

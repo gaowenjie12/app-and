@@ -155,10 +155,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_kefu.setOnClickListener(this);
         tv_sign.setOnClickListener(this);
 
+        initUser();
+
+    }
+
+    private void initUser() {
         FrecoFactory.getInstance().disPlay(user_image, DApplication.getInstance().getLoginUser().getAvatar());
         user_name.setText(DApplication.getInstance().getLoginUser().getUsername());
         user_gongsi.setText(DApplication.getInstance().getLoginUser().getIdentify());
-
     }
 
     @Override
@@ -212,7 +216,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
                 break;
             case R.id.ll_wode:
-                startActivity(new Intent(mContext, BasicInformationActivity.class));
+                startActivityForResult(new Intent(mContext, BasicInformationActivity.class), 2);
 
                 break;
             case R.id.ll_shoucang:
@@ -229,6 +233,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_kefu:
                 break;
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            initUser();
         }
     }
 }
