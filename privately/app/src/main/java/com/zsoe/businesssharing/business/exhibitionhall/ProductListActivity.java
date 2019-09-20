@@ -52,11 +52,17 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
      * 搜索
      */
     private TextView mTvSousuo;
+    //    private RecyclerView mRvSearchProductList;
+    private String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
+
+        mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
+//        mRvSearchProductList = (RecyclerView) findViewById(R.id.rv_search_product_list);
+
         initView();
         initTitleText("产品列表");
 
@@ -64,8 +70,12 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
             @Override
             public void call(String s) {
                 //刷新
-                getPresenter().loadMoreDefault.refresh();
-                getPresenter().product_list("");
+                if(TextUtils.isEmpty(keyword)){
+                    getPresenter().loadMoreDefault.refresh();
+                }else{
+                    getPresenter().loadMoreDefault2.refresh();
+                }
+                getPresenter().product_list(keyword);
             }
         });
 
@@ -77,9 +87,11 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
     private List<ChanPinBeanItem> noticeBeanList = new ArrayList<>();
 
+    OnionRecycleAdapter noticeBeanOnionRecycleAdapter2;
+    private List<ChanPinBeanItem> noticeBeanList2 = new ArrayList<>();
+
 
     private void initView() {
-        mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
 
 
         noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ChanPinBeanItem>(R.layout.item_product_list_layout, noticeBeanList) {
@@ -147,7 +159,78 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
         mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
         mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
+
+
+        noticeBeanOnionRecycleAdapter2 = new OnionRecycleAdapter<ChanPinBeanItem>(R.layout.item_product_list_layout, noticeBeanList2) {
+            @Override
+            protected void convert(BaseViewHolder holder, final ChanPinBeanItem item) {
+                super.convert(holder, item);
+
+                SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
+
+                holder.setText(R.id.tv_name, item.getProductname());
+                holder.setText(R.id.tv_zhiwei, item.getContent());
+
+
+                ImageView iv_shoucang = holder.getView(R.id.iv_shoucang);
+
+                if (item.getIs_collect() == 1) {
+                    iv_shoucang.setImageResource(R.mipmap.shoucang);
+                } else {
+                    iv_shoucang.setImageResource(R.mipmap.shoucang_pre);
+                }
+
+                iv_shoucang.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String acttype;
+                        if (item.getIs_collect() == 1) {
+                            acttype = "2";
+                        } else {
+                            acttype = "1";
+                        }
+
+                        currentPosition = holder.getAdapterPosition();
+                        collect(item.getId() + "", acttype);
+                    }
+                });
+
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getId());
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        };
+
+
+        getPresenter().loadMoreDefault2 = new OpenLoadMoreDefault(mContext, noticeBeanList2);
+        getPresenter().loadMoreDefault2.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+                getPresenter().product_list(keyword);
+            }
+        });
+
+
+        LoadMoreDefaultFooterRecyclerView defaultFooterRecyclerView2 = (LoadMoreDefaultFooterRecyclerView) getPresenter().loadMoreDefault2.getFooterView();
+        noticeBeanOnionRecycleAdapter2.setLoadMoreContainer(getPresenter().loadMoreDefault2);
+
+
         mSearchInput = (ClearEditText) findViewById(R.id.search_input);
+        mSearchInput.setClearClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keyword = "";
+                mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
+            }
+        });
         mTvSousuo = (TextView) findViewById(R.id.tv_sousuo);
         mTvSousuo.setOnClickListener(this);
     }
@@ -161,17 +244,35 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
         noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 关闭刷新/更新数据
+     */
+    public void updateList2() {
+        if (isFirstSearch) {
+            mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter2);
+        }
+        mPtrFrame.refreshComplete();
+        noticeBeanOnionRecycleAdapter2.notifyDataSetChanged();
+        isFirstSearch = false;
+    }
+
+
+    boolean isFirstSearch = false;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             default:
                 break;
             case R.id.tv_sousuo:
-                String s = mSearchInput.getText().toString();
-                if (TextUtils.isEmpty(s)) {
+                keyword = mSearchInput.getText().toString();
+                if (TextUtils.isEmpty(keyword)) {
                     ToastUtils.showShort("请输入关键字");
                     return;
                 }
+
+                mPtrFrame.autoRefresh();
+                isFirstSearch = true;
                 break;
         }
     }

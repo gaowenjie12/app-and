@@ -10,17 +10,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
-import com.zsoe.businesssharing.base.BrowserActivity;
-import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.DrawableTextView;
@@ -69,7 +65,7 @@ public class ChangePwActivity extends BaseActivity<ChangePwPresenter> implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_changepw);
         initView();
 
 
@@ -89,15 +85,6 @@ public class ChangePwActivity extends BaseActivity<ChangePwPresenter> implements
 
         keyboardWatcher = new KeyboardWatcher(findViewById(Window.ID_ANDROID_CONTENT));
         keyboardWatcher.addSoftKeyboardStateListener(this);
-
-        findViewById(R.id.tv_xieyi).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, BrowserActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, BuildConfig.ENDPOINT + "article/agreement");
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -127,12 +114,6 @@ public class ChangePwActivity extends BaseActivity<ChangePwPresenter> implements
                     return;
                 }
 
-                boolean checked = checkBox.isChecked();
-                if (!checked) {
-                    ToastUtils.showShort("请勾选用户服务协议");
-                    return;
-                }
-
 
                 DialogManager.getInstance().showNetLoadingView(mContext);
                 getPresenter().resetpwd(s, s3, pass);
@@ -148,7 +129,7 @@ public class ChangePwActivity extends BaseActivity<ChangePwPresenter> implements
 
 
                 DialogManager.getInstance().showNetLoadingView(mContext);
-                getPresenter().getSms(s4, "register");
+                getPresenter().getSms(s4, "changepwd");
                 break;
         }
 
@@ -246,7 +227,6 @@ public class ChangePwActivity extends BaseActivity<ChangePwPresenter> implements
         zoomOut(mLogo);
     }
 
-    CheckBox checkBox;
 
     private void initView() {
         mClose = (ImageView) findViewById(R.id.close);
@@ -260,7 +240,6 @@ public class ChangePwActivity extends BaseActivity<ChangePwPresenter> implements
         mBtnRegister = (Button) findViewById(R.id.btn_register);
         mBtnRegister.setOnClickListener(this);
         mBody = (LinearLayout) findViewById(R.id.body);
-        checkBox = (CheckBox) findViewById(R.id.checkbox);
 
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
 

@@ -72,11 +72,20 @@ public class ClearEditText extends AppCompatEditText implements
                         && (event.getX() < ((getWidth() - getPaddingRight())));
                 if (touchable) {
                     this.setText("");
+                    if(null!=onClickListener){
+                        onClickListener.onClick(null);
+                    }
                 }
             }
         }
 
         return super.onTouchEvent(event);
+    }
+
+    View.OnClickListener onClickListener;
+
+    public void setClearClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     /**

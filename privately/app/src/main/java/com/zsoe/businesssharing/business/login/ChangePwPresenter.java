@@ -37,7 +37,7 @@ public class ChangePwPresenter extends BasePresenter<ChangePwActivity> {
                 new NetCompleteBack<ChangePwActivity>() {
                     @Override
                     public void onComplete(ChangePwActivity v, RootResponse t) {
-                            v.chenggong();
+                        v.chenggong();
                     }
                 },
                 new BaseToastNetError<ChangePwActivity>());
@@ -74,9 +74,10 @@ public class ChangePwPresenter extends BasePresenter<ChangePwActivity> {
 
     }
 
-    public void resetpwd(String mobile, String newpassword) {
+    public void resetpwd(String mobile, String captcha, String newpassword) {
         HashMap<String, String> params = new HashMap<>();
         params.put("mobile", mobile);
+        params.put("captcha", captcha);
         params.put("newpassword", newpassword);
         body = signForm(params);
         start(REQUEST_LOGIN2);

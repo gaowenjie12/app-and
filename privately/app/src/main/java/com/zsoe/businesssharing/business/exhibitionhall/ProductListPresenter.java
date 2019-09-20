@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.business.exhibitionhall;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.RootResponse;
@@ -24,6 +25,7 @@ public class ProductListPresenter extends BasePresenter<ProductListActivity> {
 
     //用来维持页码
     public OpenLoadMoreDefault<ChanPinBeanItem> loadMoreDefault;
+    public OpenLoadMoreDefault<ChanPinBeanItem> loadMoreDefault2;
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -42,9 +44,15 @@ public class ProductListPresenter extends BasePresenter<ProductListActivity> {
                     @Override
                     public void callBack(ProductListActivity v, List<ChanPinBeanItem> noticeBeanList) {
 
-                        loadMoreDefault.fixNumAndClear();
-                        loadMoreDefault.loadMoreFinish(noticeBeanList);
-                        v.updateList();
+                        if (TextUtils.isEmpty(keyword)) {
+                            loadMoreDefault.fixNumAndClear();
+                            loadMoreDefault.loadMoreFinish(noticeBeanList);
+                            v.updateList();
+                        } else {
+                            loadMoreDefault2.fixNumAndClear();
+                            loadMoreDefault2.loadMoreFinish(noticeBeanList);
+                            v.updateList2();
+                        }
                     }
                 },
                 new BaseToastNetError<ProductListActivity>());
@@ -52,9 +60,17 @@ public class ProductListPresenter extends BasePresenter<ProductListActivity> {
 
     }
 
+    String keyword;
+
     public void product_list(String keyword) {
-        loadMoreDefault.pagerAble.put("keyword", keyword);
-        body = signForm(loadMoreDefault.pagerAble);
+        this.keyword = keyword;
+        if (TextUtils.isEmpty(keyword)) {
+            body = signForm(loadMoreDefault.pagerAble);
+        } else {
+            loadMoreDefault2.pagerAble.put("keyword", keyword);
+            body = signForm(loadMoreDefault2.pagerAble);
+        }
+
         start(REQUEST_LOGIN);
 
     }

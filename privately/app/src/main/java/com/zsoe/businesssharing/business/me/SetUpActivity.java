@@ -13,6 +13,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.business.login.ChangePwActivity;
 
 import java.util.Map;
 
@@ -54,6 +55,7 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
             default:
                 break;
             case R.id.rl_zhanghaoguanli:
+                startActivity(new Intent(mContext, ChangePwActivity.class));
                 break;
             case R.id.rl_qingchuhuanc:
                 break;

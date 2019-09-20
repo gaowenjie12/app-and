@@ -24,7 +24,7 @@
         android:layout_marginTop="70dp"
         android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:text="账号注册"
+        android:text="重置密码"
         android:textColor="@color/main_c"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -156,7 +156,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginBottom="5dp"
             android:background="@color/main_c"
-            android:text="立即注册"
+            android:text="重置"
             android:textColor="@color/white"
             android:textSize="18dp" />
 
@@ -167,37 +167,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/service"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <CheckBox
-                android:id="@+id/checkbox"
-                android:checked="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textColor="@color/text_9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我已阅读并接受"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/tv_xieyi"
-                android:padding="@dimen/adaptive_3dp"
-                android:textColor="@color/main_c"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="《用户服务协议》"
-                android:textSize="14dp" />
-        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
