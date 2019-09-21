@@ -3,6 +3,7 @@ package com.zsoe.businesssharing.business.exhibitionhall;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
@@ -30,6 +31,8 @@ public class EventDetailsActivity extends BaseActivity<JiaoLiuPresenter> {
     private ExpandableTextView mTvHuodong;
     private ExpandableTextView mTvChenguo;
 
+    private String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +42,21 @@ public class EventDetailsActivity extends BaseActivity<JiaoLiuPresenter> {
         initTitleText("活动详情");
 
         int id = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+        type = getIntent().getStringExtra(Config.INTENT_PARAMS2);
+        if (null == type) {
+            type = "";
+        }
 
         DialogManager.getInstance().showNetLoadingView(mContext);
-        getPresenter().communication_info(id + "", DApplication.getInstance().getLoginUser().getId() + "");
+        getPresenter().communication_info(id + "", DApplication.getInstance().getLoginUser().getId() + "",type);
     }
 
     public void setData(DetailJiaoLiuBean detailJiaoLiuBean) {
-
+        if (null == detailJiaoLiuBean) {
+            ToastUtils.showShort("对象为空");
+            finish();
+            return;
+        }
         mTvTitle.setText(detailJiaoLiuBean.getTitle());
         mTvTime.setText("发布时间：" + detailJiaoLiuBean.getPubdate());
         mTvEventAddress.setText(detailJiaoLiuBean.getActivityaddress());

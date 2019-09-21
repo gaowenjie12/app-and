@@ -13,6 +13,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.Config;
 
 
 /**
@@ -29,10 +30,19 @@ public class FinancingLoansActivity extends BaseActivity {
     private RongZiXiangMuFragment rongZiXiangMuFragment;
     private ImageView title_left_iv;
 
+
+    private String shopId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_financing_loans);
+
+        shopId = getIntent().getStringExtra(Config.INTENT_PARAMS1);
+        if (null == shopId) {
+            shopId = "";
+        }
+
         initView();
         initData();
     }
@@ -56,12 +66,12 @@ public class FinancingLoansActivity extends BaseActivity {
 
                 if (position == 0) {
                     if (yinHangXinDaiFragment == null) {
-                        yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(getString(R.string.tab_1));
+                        yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(shopId);
                     }
                     addOrShowFragment(getSupportFragmentManager().beginTransaction(), yinHangXinDaiFragment);
                 } else if (position == 1) {
                     if (rongZiXiangMuFragment == null) {
-                        rongZiXiangMuFragment = RongZiXiangMuFragment.newInstance(getString(R.string.tab_1));
+                        rongZiXiangMuFragment = RongZiXiangMuFragment.newInstance(shopId);
                     }
                     addOrShowFragment(getSupportFragmentManager().beginTransaction(), rongZiXiangMuFragment);
                 }
@@ -80,7 +90,7 @@ public class FinancingLoansActivity extends BaseActivity {
      */
     private void initData() {
         if (yinHangXinDaiFragment == null) {
-            yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(getString(R.string.tab_1));
+            yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(shopId);
         }
         if (!yinHangXinDaiFragment.isAdded()) {
 

@@ -1,4 +1,4 @@
-package com.zsoe.businesssharing.business.exhibitionhall;
+package com.zsoe.businesssharing.business.home;
 
 
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
-import com.zsoe.businesssharing.bean.DetailJiaoLiuBean;
+import com.zsoe.businesssharing.bean.CaiGouDetail;
 
 import java.util.HashMap;
 
@@ -18,7 +18,7 @@ import rx.Observable;
 import rx.functions.Func0;
 
 
-public class JiaoLiuPresenter extends BasePresenter<EventDetailsActivity> {
+public class CaiGouPresenter extends BasePresenter<ProcurementAndInventoryDetailActivity> {
     final public int REQUEST_LOGIN = 1;
     FormBody body;
 
@@ -28,23 +28,23 @@ public class JiaoLiuPresenter extends BasePresenter<EventDetailsActivity> {
 
 
         restartableFirst(REQUEST_LOGIN,
-                new Func0<Observable<RootResponse<DetailJiaoLiuBean>>>() {
+                new Func0<Observable<RootResponse<CaiGouDetail>>>() {
                     @Override
-                    public Observable<RootResponse<DetailJiaoLiuBean>> call() {
+                    public Observable<RootResponse<CaiGouDetail>> call() {
 
-                        return DApplication.getServerAPI().communication_info(body);
+                        return DApplication.getServerAPI().stock_purchase_info(body);
                     }
                 },
 
-                new NetCallBack<EventDetailsActivity, DetailJiaoLiuBean>() {
+                new NetCallBack<ProcurementAndInventoryDetailActivity, CaiGouDetail>() {
                     @Override
-                    public void callBack(EventDetailsActivity v, DetailJiaoLiuBean homeBean) {
-                        v.setData(homeBean);
+                    public void callBack(ProcurementAndInventoryDetailActivity v, CaiGouDetail homeBean) {
+                        v.setDate(homeBean);
                     }
                 }
-                , new BaseToastNetError<EventDetailsActivity>() {
+                , new BaseToastNetError<ProcurementAndInventoryDetailActivity>() {
                     @Override
-                    public void call(EventDetailsActivity v, Throwable throwable) {
+                    public void call(ProcurementAndInventoryDetailActivity v, Throwable throwable) {
                         super.call(v, throwable);
                         ToastUtils.showShort(throwable.getMessage());
                     }
@@ -53,11 +53,9 @@ public class JiaoLiuPresenter extends BasePresenter<EventDetailsActivity> {
 
     }
 
-    public void communication_info(String id,String uid,String type) {
+    public void stock_purchase_info(String id) {
         HashMap<String, String> params = new HashMap<>();
         params.put("id", id);
-        params.put("uid", uid);
-        params.put("type", type);
         body = signForm(params);
         start(REQUEST_LOGIN);
 

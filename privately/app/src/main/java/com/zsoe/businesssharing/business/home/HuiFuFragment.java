@@ -99,7 +99,7 @@ public class HuiFuFragment extends BaseFragment<FanancListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().finance_list();
+//                getPresenter().finance_list();
 
             }
         });
@@ -125,7 +125,7 @@ public class HuiFuFragment extends BaseFragment<FanancListPresenter> {
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().finance_list();
+//                getPresenter().finance_list();
 
             }
         });

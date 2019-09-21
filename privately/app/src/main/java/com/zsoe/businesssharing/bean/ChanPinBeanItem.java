@@ -12,6 +12,15 @@ public class ChanPinBeanItem {
     private String thumb;
     private String content;
     private int is_collect;
+    private int readnum;
+
+    public int getReadnum() {
+        return readnum;
+    }
+
+    public void setReadnum(int readnum) {
+        this.readnum = readnum;
+    }
 
     public int getIs_collect() {
         return is_collect;

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
@@ -215,7 +216,9 @@ public class ProcurementAndInventoryActivity extends BaseActivity<ProcurementAnd
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, ProcurementAndInventoryDetailActivity.class));
+                        Intent intent = new Intent(mContext, ProcurementAndInventoryDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getId());
+                        startActivity(intent);
 
                     }
                 });

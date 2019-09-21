@@ -42,10 +42,10 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
 
     private static final String TAG = "HomeFragment";
 
-    public static RongZiXiangMuFragment newInstance(String title) {
+    public static RongZiXiangMuFragment newInstance(String shopId) {
         RongZiXiangMuFragment f = new RongZiXiangMuFragment();
         Bundle args = new Bundle();
-        args.putString("title", title);
+        args.putString("shopId", shopId);
         f.setArguments(args);
         return f;
     }
@@ -65,9 +65,16 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
     private List<ItemFinancBean> noticeBeanList = new ArrayList<>();
 
+    private String shopId;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        shopId = getArguments().getString("shopId");
+        if (null == shopId) {
+            shopId = "";
+        }
+
 
         mRvProductList = view.findViewById(R.id.rv_product_list);
 
@@ -99,7 +106,7 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().finance_list();
+                getPresenter().finance_list(shopId);
 
             }
         });
@@ -125,7 +132,7 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().finance_list();
+                getPresenter().finance_list(shopId);
 
             }
         });

@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.business.exhibitionhall;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.RootResponse;
@@ -24,6 +25,7 @@ public class CompanyListPresenter extends BasePresenter<CompaniesListActivity> {
 
     //用来维持页码
     public OpenLoadMoreDefault<ItemCompany> loadMoreDefault;
+    public OpenLoadMoreDefault<ItemCompany> loadMoreDefault2;
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -42,9 +44,15 @@ public class CompanyListPresenter extends BasePresenter<CompaniesListActivity> {
                     @Override
                     public void callBack(CompaniesListActivity v, List<ItemCompany> noticeBeanList) {
 
-                        loadMoreDefault.fixNumAndClear();
-                        loadMoreDefault.loadMoreFinish(noticeBeanList);
-                        v.updateList();
+                        if (TextUtils.isEmpty(keyword)) {
+                            loadMoreDefault.fixNumAndClear();
+                            loadMoreDefault.loadMoreFinish(noticeBeanList);
+                            v.updateList();
+                        } else {
+                            loadMoreDefault2.fixNumAndClear();
+                            loadMoreDefault2.loadMoreFinish(noticeBeanList);
+                            v.updateList2();
+                        }
                     }
                 },
                 new BaseToastNetError<CompaniesListActivity>());
@@ -52,9 +60,24 @@ public class CompanyListPresenter extends BasePresenter<CompaniesListActivity> {
 
     }
 
-    public void company_list(String keyword) {
-        loadMoreDefault.pagerAble.put("keyword", keyword);
-        body = signForm(loadMoreDefault.pagerAble);
+
+    String keyword;
+    public void company_list(String keyword,String ccateid) {
+        this.keyword = keyword;
+        if (TextUtils.isEmpty(keyword)) {
+            loadMoreDefault.pagerAble.put("ccateid",ccateid);
+            loadMoreDefault.pagerAble.put("uid", DApplication.getInstance().getLoginUser().getId()+"");
+
+            body = signForm(loadMoreDefault.pagerAble);
+        } else {
+            loadMoreDefault2.pagerAble.put("keyword", keyword);
+            loadMoreDefault.pagerAble.put("uid", DApplication.getInstance().getLoginUser().getId()+"");
+
+            loadMoreDefault.pagerAble.put("ccateid",ccateid);
+
+            body = signForm(loadMoreDefault2.pagerAble);
+        }
+
         start(REQUEST_LOGIN);
 
     }

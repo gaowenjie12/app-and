@@ -17,6 +17,7 @@ public class LoginUser {
     private String birthday;
     private int score;
     private int type;
+    private int shopid;
     private String realname;
     private String uuid;
     private String district;
@@ -33,6 +34,23 @@ public class LoginUser {
     private String industry_pname;
     private String industry_cname;
     private String servicename;
+    private String customerurl;
+
+    public String getCustomerurl() {
+        return customerurl;
+    }
+
+    public void setCustomerurl(String customerurl) {
+        this.customerurl = customerurl;
+    }
+
+    public int getShopid() {
+        return shopid;
+    }
+
+    public void setShopid(int shopid) {
+        this.shopid = shopid;
+    }
 
     public String getIndustry_pname() {
         return industry_pname;

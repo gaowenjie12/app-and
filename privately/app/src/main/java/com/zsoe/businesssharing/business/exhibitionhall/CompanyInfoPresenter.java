@@ -81,6 +81,7 @@ public class CompanyInfoPresenter extends BasePresenter<CompanyProfilesActivity>
     public void company_info(String id) {
         HashMap<String, String> params = new HashMap<>();
         params.put("id", id);
+        params.put("uid", DApplication.getInstance().getLoginUser().getId()+"");
         body = signForm(params);
         start(REQUEST_LOGIN);
 

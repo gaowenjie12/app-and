@@ -117,7 +117,9 @@ public class JoinInvestmentDetailActivity extends BaseActivity<DetailJoinInvestm
         mTvTuiguangMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, CompanyProfilesActivity.class));
+                Intent intent = new Intent(mContext, CompanyProfilesActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1,detailJoinInvestmentBean.getShopid());
+                startActivity(intent);
             }
         });
     }

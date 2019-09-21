@@ -55,12 +55,27 @@
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
 
-        <activity android:name=".business.login.ChangePwActivity"></activity>
-        <activity android:name=".business.me.LiuYanBanActivity"></activity>
-        <activity android:name=".business.me.LiuYanRootActivity" />
-        <activity android:name=".business.me.LiuYanBanReturnActivity" />
-        <activity android:name=".business.me.MessageReturnActivity" />
-        <activity android:name=".business.me.AboutUsActivity" />
+        <activity
+            android:name=".business.exhibitionhall.TuiGuangActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".business.login.ChangePwActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".business.me.LiuYanBanActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".business.me.LiuYanRootActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.LiuYanBanReturnActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.MessageReturnActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.AboutUsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.message.ConversationListActivity"
             android:screenOrientation="portrait" />

@@ -62,11 +62,21 @@ public class ProductListPresenter extends BasePresenter<ProductListActivity> {
 
     String keyword;
 
-    public void product_list(String keyword) {
+    public void product_list(String keyword, String type,String industryId,String shopid,String uid) {
         this.keyword = keyword;
+
+
         if (TextUtils.isEmpty(keyword)) {
+            loadMoreDefault.pagerAble.put("type", type);
+            loadMoreDefault.pagerAble.put("ccateid", industryId);
+            loadMoreDefault.pagerAble.put("shopid", shopid);
+            loadMoreDefault.pagerAble.put("uid", DApplication.getInstance().getLoginUser().getId()+"");
             body = signForm(loadMoreDefault.pagerAble);
         } else {
+            loadMoreDefault2.pagerAble.put("type", type);
+            loadMoreDefault2.pagerAble.put("ccateid", industryId);
+            loadMoreDefault2.pagerAble.put("shopid", shopid);
+            loadMoreDefault2.pagerAble.put("uid", DApplication.getInstance().getLoginUser().getId()+"");
             loadMoreDefault2.pagerAble.put("keyword", keyword);
             body = signForm(loadMoreDefault2.pagerAble);
         }

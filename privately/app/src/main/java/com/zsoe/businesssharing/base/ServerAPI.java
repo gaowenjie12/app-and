@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.base;
 
 
 import com.zsoe.businesssharing.BuildConfig;
+import com.zsoe.businesssharing.bean.CaiGouDetail;
 import com.zsoe.businesssharing.bean.ChanPinBeanItem;
 import com.zsoe.businesssharing.bean.CompanyInfo;
 import com.zsoe.businesssharing.bean.DetailFinanceBean;
@@ -383,5 +384,17 @@ public interface ServerAPI {
      */
     @POST("user/profile")
     Observable<RootResponse<LoginUser>> userProfile(@Body FormBody body);
+
+    /**
+     *  采购&需求-详情 /api/v1/index/stock_purchase_info
+     */
+    @POST("index/stock_purchase_info")
+    Observable<RootResponse<CaiGouDetail>> stock_purchase_info(@Body FormBody body);
+
+    /**
+     *  我的-》推广 /api/v1/my/extenactivity_list 可以使用
+     */
+    @POST("my/extenactivity_list")
+    Observable<RootResponse<List<JiaoLiuBean>>> extenactivity_list(@Body FormBody body);
 
 }

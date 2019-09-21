@@ -52,7 +52,8 @@ public class BankListPresenter extends BasePresenter<YinHangXinDaiFragment> {
 
     }
 
-    public void loan_list() {
+    public void loan_list(String shopId) {
+        loadMoreDefault.pagerAble.put("shopid",shopId);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 

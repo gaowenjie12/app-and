@@ -19,6 +19,15 @@ public class CompanyInfo {
     private String companydes;
     private String videocoverurl;
     private List<String> photos;
+    private int is_collect;
+
+    public int getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(int is_collect) {
+        this.is_collect = is_collect;
+    }
 
     public int getUid() {
         return uid;

@@ -46,10 +46,10 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
 
     private static final String TAG = "HomeFragment";
 
-    public static YinHangXinDaiFragment newInstance(String title) {
+    public static YinHangXinDaiFragment newInstance(String shopId) {
         YinHangXinDaiFragment f = new YinHangXinDaiFragment();
         Bundle args = new Bundle();
-        args.putString("title", title);
+        args.putString("shopId", shopId);
         f.setArguments(args);
         return f;
     }
@@ -66,6 +66,9 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
 
     private RecyclerView mRvProductList;
 
+    private String shopId;
+
+
 
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
     private List<ItemBankBean> noticeBeanList = new ArrayList<>();
@@ -73,6 +76,12 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        shopId = getArguments().getString("shopId");
+        if (null == shopId) {
+            shopId = "";
+        }
+
         mRvProductList = view.findViewById(R.id.rv_product_list);
 
         noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemBankBean>(R.layout.item_bank_list_layout, noticeBeanList) {
@@ -117,7 +126,7 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().loan_list();
+                getPresenter().loan_list(shopId);
 
             }
         });
@@ -138,7 +147,7 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().loan_list();
+                getPresenter().loan_list(shopId);
 
             }
         });

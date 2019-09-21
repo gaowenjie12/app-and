@@ -53,13 +53,33 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
      */
     private TextView mTvSousuo;
     //    private RecyclerView mRvSearchProductList;
-    private String keyword;
+    private String keyword = "";
+    private String type = "";
+    private String industryId;
+    private String companyId;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
+        type = getIntent().getStringExtra(Config.INTENT_PARAMS1);
+        industryId = getIntent().getStringExtra(Config.INTENT_PARAMS2);
+        companyId = getIntent().getStringExtra(Config.INTENT_PARAMS3);
+        userId = getIntent().getStringExtra(Config.INTENT_PARAMS4);
+        if (null == type) {
+            type = "";
+        }
+        if (null == industryId) {
+            industryId = "";
+        }
 
+        if (null == companyId) {
+            companyId = "";
+        }
+        if (null == userId) {
+            userId = "";
+        }
         mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
 //        mRvSearchProductList = (RecyclerView) findViewById(R.id.rv_search_product_list);
 
@@ -70,12 +90,12 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
             @Override
             public void call(String s) {
                 //刷新
-                if(TextUtils.isEmpty(keyword)){
+                if (TextUtils.isEmpty(keyword)) {
                     getPresenter().loadMoreDefault.refresh();
-                }else{
+                } else {
                     getPresenter().loadMoreDefault2.refresh();
                 }
-                getPresenter().product_list(keyword);
+                getPresenter().product_list(keyword, type,industryId,companyId,userId);
             }
         });
 
@@ -147,7 +167,7 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().product_list("");
+                getPresenter().product_list(keyword, type,industryId,companyId,userId);
             }
         });
 
@@ -214,7 +234,7 @@ public class ProductListActivity extends BaseActivity<ProductListPresenter> impl
         getPresenter().loadMoreDefault2.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().product_list(keyword);
+                getPresenter().product_list(keyword, type,industryId,companyId,userId);
             }
         });
 

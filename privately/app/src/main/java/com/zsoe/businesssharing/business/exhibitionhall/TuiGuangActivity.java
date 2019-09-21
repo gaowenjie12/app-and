@@ -1,8 +1,9 @@
-package com.zsoe.businesssharing.business.home;
+package com.zsoe.businesssharing.business.exhibitionhall;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +15,7 @@ import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
-import com.zsoe.businesssharing.bean.ItemJoinInvestmentBean;
+import com.zsoe.businesssharing.bean.JiaoLiuBean;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
@@ -28,17 +29,20 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-@RequiresPresenter(JoinInvestmentPresenter.class)
-public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter> {
+/**
+ * 推广
+ */
 
-    private RecyclerView mRvJoinList;
+@RequiresPresenter(TuiGuangListPresenter.class)
+public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
 
+    private RecyclerView mRvProductList;
     private String shopId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join_investment);
+        setContentView(R.layout.activity_communication_meeting_foreshow);
         initView();
 
         shopId = getIntent().getStringExtra(Config.INTENT_PARAMS1);
@@ -46,16 +50,20 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
             shopId = "";
         }
 
-        initTitleText("招商加盟列表");
+        initTitleText("推广活动");
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
             public void call(String s) {
                 //刷新
+                //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().join_merchant_list(shopId);
+                getPresenter().extenactivity_list(shopId);
             }
         });
+
+        //左右滑动时刷新控件禁止掉
+        mPtrFrame.disableWhenHorizontalMove(true);
 
         DialogManager.getInstance().showNetLoadingView(mContext);
         mPtrFrame.autoRefresh();
@@ -64,32 +72,30 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
 
 
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
-    private List<ItemJoinInvestmentBean> noticeBeanList = new ArrayList<>();
-
+    private List<JiaoLiuBean> noticeBeanList = new ArrayList<>();
 
     private void initView() {
-        mRvJoinList = (RecyclerView) findViewById(R.id.rv_join_list);
-
-        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<ItemJoinInvestmentBean>(R.layout.item_tuiguang_list_layout, noticeBeanList) {
+        mRvProductList = (RecyclerView) findViewById(R.id.rv_product_list);
+        noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<JiaoLiuBean>(R.layout.item_foreshow_list_layout, noticeBeanList) {
             @Override
-            protected void convert(BaseViewHolder holder, final ItemJoinInvestmentBean item) {
+            protected void convert(BaseViewHolder holder, final JiaoLiuBean item) {
                 super.convert(holder, item);
 
                 SimpleDraweeView simpleDraweeView = holder.getView(R.id.product_image);
                 FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
 
                 holder.setText(R.id.tv_name, item.getTitle());
-                holder.setText(R.id.tv_zhiwei, item.getJoindate());
-                holder.setText(R.id.tv_p_c, item.getReadnum() + "人看过");
+                holder.setText(R.id.tv_jianshao, "到场嘉宾：" + item.getGuester());
+                holder.setText(R.id.tv_zhiwei, item.getActivitytime() + "  " + item.getActivityaddress());
+                ImageView iv_shoucang = holder.getView(R.id.iv_shoucang);
+                iv_shoucang.setVisibility(View.GONE);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        Intent intent = new Intent(mContext, JoinInvestmentDetailActivity.class);
+                        Intent intent = new Intent(mContext, EventDetailsActivity.class);
                         intent.putExtra(Config.INTENT_PARAMS1, item.getId());
                         startActivity(intent);
-
                     }
                 });
 
@@ -101,7 +107,7 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().join_merchant_list(shopId);
+                getPresenter().extenactivity_list(shopId);
             }
         });
 
@@ -110,10 +116,12 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
         noticeBeanOnionRecycleAdapter.setLoadMoreContainer(getPresenter().loadMoreDefault);
 
 
-        mRvJoinList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
-        mRvJoinList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
-        mRvJoinList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
-        mRvJoinList.setAdapter(noticeBeanOnionRecycleAdapter);
+        mRvProductList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
+        mRvProductList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
+        mRvProductList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
+        mRvProductList.setAdapter(noticeBeanOnionRecycleAdapter);
+
+
     }
 
 

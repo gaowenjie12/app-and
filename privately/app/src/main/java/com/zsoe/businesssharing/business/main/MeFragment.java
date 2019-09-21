@@ -12,10 +12,11 @@ import androidx.annotation.Nullable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
-import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
+import com.zsoe.businesssharing.business.exhibitionhall.TuiGuangActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.me.BasicInformationActivity;
@@ -179,7 +180,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.ll_jiameng:
-                startActivity(new Intent(mContext, JoinInvestmentActivity.class));
+
+                Intent intent3 = new Intent(mContext, JoinInvestmentActivity.class);
+                intent3.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                startActivity(intent3);
 
                 break;
 
@@ -190,7 +194,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.ll_daikuan:
-                startActivity(new Intent(mContext, FinancingLoansActivity.class));
+                Intent intent4 = new Intent(mContext, FinancingLoansActivity.class);
+                intent4.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                startActivity(intent4);
                 break;
             case R.id.ll_zixun:
 
@@ -213,7 +219,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.ll_tuiguang:
-                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+
+                Intent intent5 = new Intent(mContext, TuiGuangActivity.class);
+                intent5.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                startActivity(intent5);
+
                 break;
             case R.id.ll_wode:
                 startActivityForResult(new Intent(mContext, BasicInformationActivity.class), 2);
@@ -231,6 +241,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, SetUpActivity.class));
                 break;
             case R.id.ll_kefu:
+                Intent intent6 = new Intent(mContext, BrowserActivity.class);
+                intent6.putExtra(Config.INTENT_PARAMS1,DApplication.getInstance().getLoginUser().getCustomerurl());
+                startActivity(intent6);
                 break;
 
         }

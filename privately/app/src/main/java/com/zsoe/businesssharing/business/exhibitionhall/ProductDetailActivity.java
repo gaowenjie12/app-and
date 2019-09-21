@@ -17,7 +17,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
+import com.zsoe.businesssharing.base.presenter.HttpResponseFunc;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ProductDetail;
 import com.zsoe.businesssharing.commonview.ExpandableTextView;
@@ -25,13 +27,18 @@ import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 import com.zsoe.businesssharing.utils.GlideUtils;
+import com.zsoe.businesssharing.utils.android.schedulers.AndroidSchedulers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import okhttp3.FormBody;
+import rx.Subscriber;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 @RequiresPresenter(ProductInfoPresenter.class)
 public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
@@ -53,14 +60,9 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
         setTitleRightSecondIcon(R.mipmap.liebiao, new Action1<View>() {
             @Override
             public void call(View view) {
-                startActivity(new Intent(mContext, ProductListActivity.class));
-            }
-        });
-
-        setTitleRigthIcon(R.mipmap.shoucang, new Action1<View>() {
-            @Override
-            public void call(View view) {
-
+                Intent intent = new Intent(mContext, ProductListActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS3,productDetail.getShopid()+"");
+                startActivity(intent);
             }
         });
 
@@ -83,7 +85,12 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
         mRlChakan = (RelativeLayout) findViewById(R.id.rl_chakan);
     }
 
+    private ProductDetail productDetail;
+
     public void setData(ProductDetail productDetail) {
+        this.productDetail = productDetail;
+        initRightIcon();
+
         // 将列表中的每个视频设置为默认16:9的比例
         ViewGroup.LayoutParams params = mJzVideo.getLayoutParams();
         // 宽度为屏幕宽度
@@ -107,7 +114,9 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
         mRlChakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, CompanyProfilesActivity.class));
+                Intent intent = new Intent(mContext, CompanyProfilesActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1,productDetail.getShopid());
+                startActivity(intent);
             }
         });
 
@@ -133,6 +142,68 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
         mRvPic.setAdapter(jiazhiAdapter);
 
     }
+
+
+    private void initRightIcon() {
+        if (productDetail.getIs_collect() == 1) {
+            setTitleRigthIcon(R.mipmap.shoucang, new Action1<View>() {
+                @Override
+                public void call(View view) {
+                    collect(productDetail.getId() + "", "2");
+                }
+            });
+        } else {
+            setTitleRigthIcon(R.mipmap.shoucang_pre, new Action1<View>() {
+                @Override
+                public void call(View view) {
+                    collect(productDetail.getId() + "", "1");
+                }
+            });
+        }
+    }
+
+
+    public void collect(String valueid, String acttype) {
+
+        DialogManager.getInstance().showNetLoadingView(mContext);
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
+        params.put("type", "2");
+        params.put("acttype", acttype);
+        params.put("valueid", valueid);
+
+
+        FormBody formBody = getPresenter().signForm(params);
+        DApplication.getInstance().getServerAPI().collect(formBody).map(new HttpResponseFunc())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+
+            @Override
+            public void onNext(Object o) {
+                DialogManager.getInstance().dismissNetLoadingView();
+                //1收藏 2 取消收藏
+                if (acttype.equals("1")) {
+                    productDetail.setIs_collect(1);
+                } else {
+                    productDetail.setIs_collect(0);
+                }
+                initRightIcon();
+            }
+
+            @Override
+            public void onCompleted() {
+                DialogManager.getInstance().dismissNetLoadingView();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                DialogManager.getInstance().dismissNetLoadingView();
+
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {

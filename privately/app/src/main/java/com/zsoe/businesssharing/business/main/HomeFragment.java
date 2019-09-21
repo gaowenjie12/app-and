@@ -25,17 +25,17 @@ import com.zsoe.businesssharing.bean.JoinmerchantBean;
 import com.zsoe.businesssharing.bean.ProductBean;
 import com.zsoe.businesssharing.bean.SlideBean;
 import com.zsoe.businesssharing.bean.StockpurchaseBean;
-import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
-import com.zsoe.businesssharing.business.exhibitionhall.CompanyProfilesActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.EventDetailsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
+import com.zsoe.businesssharing.business.exhibitionhall.TuiGuangActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
 import com.zsoe.businesssharing.business.home.HomePresenter;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentDetailActivity;
 import com.zsoe.businesssharing.business.home.ProcurementAndInventoryActivity;
+import com.zsoe.businesssharing.business.home.ProcurementAndInventoryDetailActivity;
 import com.zsoe.businesssharing.business.home.SearchActivity;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.UpDownViewSwitcher;
@@ -180,7 +180,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, EventDetailsActivity.class));
+                        Intent intent = new Intent(mContext, EventDetailsActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
+                        intent.putExtra(Config.INTENT_PARAMS2, "1");
+                        startActivity(intent);
                     }
                 });
 
@@ -208,7 +211,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, CompanyProfilesActivity.class));
+                        Intent intent = new Intent(mContext, ProcurementAndInventoryDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkid());
+                        startActivity(intent);
                     }
                 });
 
@@ -305,7 +310,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 break;
 
             case R.id.jianzhi:
-                startActivity(new Intent(mContext, ProductListActivity.class));
+                Intent intent1 = new Intent(mContext, ProductListActivity.class);
+                intent1.putExtra(Config.INTENT_PARAMS1,"1");
+                startActivity(intent1);
 
                 break;
 
@@ -318,14 +325,18 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
 
                 break;
             case R.id.tv_tuiguang_more:
-                startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
+                Intent intent5 = new Intent(mContext, TuiGuangActivity.class);
+                startActivity(intent5);
                 break;
             case R.id.tv_caigou_more:
                 startActivity(new Intent(mContext, ProcurementAndInventoryActivity.class));
 
                 break;
             case R.id.tv_jiazhi_more:
-                startActivity(new Intent(mContext, ProductListActivity.class));
+                Intent intent2 = new Intent(mContext, ProductListActivity.class);
+                intent2.putExtra(Config.INTENT_PARAMS1,"1");
+                startActivity(intent2);
+
                 break;
             case R.id.tv_zhaoshang_more:
                 startActivity(new Intent(mContext, JoinInvestmentActivity.class));

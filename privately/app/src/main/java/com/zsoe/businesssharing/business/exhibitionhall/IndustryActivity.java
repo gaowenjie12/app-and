@@ -86,14 +86,18 @@ public class IndustryActivity extends BaseActivity<IndustryPresenter> implements
         mTvHangyeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, CompaniesListActivity.class));
+                Intent intent = new Intent(mContext, CompaniesListActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1,industryRoot.getIndustry_info().getId()+"");
+                startActivity(intent);
             }
         });
 
         mTvChanpinMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, ProductListActivity.class));
+                Intent intent = new Intent(mContext, ProductListActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS2,industryRoot.getIndustry_info().getId()+"");
+                startActivity(intent);
             }
         });
 
