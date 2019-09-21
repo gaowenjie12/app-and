@@ -53,7 +53,7 @@ public class OpenPermission2 {
 
     private Context mContext;
     //在SplashActivity调用的存储权限和电话状态权限
-    public static final String[] INIT_PERMISSION = new String[]{Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
+    public static final String[] INIT_PERMISSION = new String[]{Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE,Permission.WRITE_EXTERNAL_STORAGE,Permission.ACCESS_FINE_LOCATION,Permission.ACCESS_COARSE_LOCATION};
 
     public OpenPermission2(Context mContext) {
         this.mContext = mContext;

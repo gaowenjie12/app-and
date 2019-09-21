@@ -1,8 +1,11 @@
 package com.zsoe.businesssharing.business.main;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,11 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yayandroid.locationmanager.configuration.Configurations;
+import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
-import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ExtenactivityBean;
 import com.zsoe.businesssharing.bean.HeadNews;
 import com.zsoe.businesssharing.bean.HomeBean;
@@ -31,7 +35,6 @@ import com.zsoe.businesssharing.business.exhibitionhall.ProductDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.TuiGuangActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
-import com.zsoe.businesssharing.business.home.HomePresenter;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentDetailActivity;
 import com.zsoe.businesssharing.business.home.ProcurementAndInventoryActivity;
@@ -46,9 +49,12 @@ import com.zsoe.businesssharing.commonview.citypicker.model.City;
 import com.zsoe.businesssharing.commonview.citypicker.model.LocateState;
 import com.zsoe.businesssharing.commonview.citypicker.model.LocatedCity;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
+import com.zsoe.businesssharing.utils.CoordinateTransform;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
+import com.zsoe.businesssharing.utils.LogUtil;
 
+import java.io.IOException;
 import java.util.List;
 
 import rx.functions.Action1;
@@ -57,8 +63,7 @@ import rx.functions.Action1;
  * 首页
  */
 
-@RequiresPresenter(HomePresenter.class)
-public class HomeFragment extends BaseFragment<HomePresenter> implements View.OnClickListener {
+public class HomeFragment extends LocationBaseFragment implements View.OnClickListener {
 
     public static HomeFragment newInstance(String title) {
         HomeFragment f = new HomeFragment();
@@ -85,6 +90,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
     private UpDownViewSwitcher home_view_switcher;
     private ClearEditText search_input;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -108,7 +119,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
         tv_xinwen_more = view.findViewById(R.id.tv_xinwen_more);
         tv_diqu = view.findViewById(R.id.tv_diqu);
         search_input = view.findViewById(R.id.search_input);
-       view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
+        view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
         search_input.setEnabled(true);
         search_input.setFocusable(false);
 
@@ -137,6 +148,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
 
         DialogManager.getInstance().showNetLoadingView(getContext());
         getPresenter().home();
+
+        String city = DApplication.getInstance().getCity();
+        if (TextUtils.isEmpty(city)) {
+            tv_diqu.setText("全国");
+        } else {
+            tv_diqu.setText(city);
+        }
     }
 
     public void setDate(HomeBean homeBean) {
@@ -212,7 +230,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(mContext, ProcurementAndInventoryDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkid());
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
                         startActivity(intent);
                     }
                 });
@@ -311,7 +329,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
 
             case R.id.jianzhi:
                 Intent intent1 = new Intent(mContext, ProductListActivity.class);
-                intent1.putExtra(Config.INTENT_PARAMS1,"1");
+                intent1.putExtra(Config.INTENT_PARAMS1, "1");
                 startActivity(intent1);
 
                 break;
@@ -334,7 +352,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 break;
             case R.id.tv_jiazhi_more:
                 Intent intent2 = new Intent(mContext, ProductListActivity.class);
-                intent2.putExtra(Config.INTENT_PARAMS1,"1");
+                intent2.putExtra(Config.INTENT_PARAMS1, "1");
                 startActivity(intent2);
 
                 break;
@@ -351,7 +369,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 break;
 
             case R.id.tv_diqu:
-
+                getLocation();
                 CityPicker.from(getActivity())
                         .enableAnimation(true)
 //                        .setAnimationStyle(R.style.CustomAnim)
@@ -361,6 +379,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                             @Override
                             public void onPick(int position, City data) {
                                 tv_diqu.setText(data.getName());
+                                DApplication.getInstance().setCity(data.getName());
                             }
 
                             @Override
@@ -370,13 +389,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
 
                             @Override
                             public void onLocate() {
-                                //开始定位，这里模拟一下定位
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        CityPicker.from(getActivity()).locateComplete(new LocatedCity("深圳", "广东", "101280601"), LocateState.SUCCESS);
-                                    }
-                                }, 3000);
                             }
                         })
                         .show();
@@ -386,5 +398,48 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements View.On
                 startActivity(new Intent(mContext, SearchActivity.class));
                 break;
         }
+    }
+
+
+    //更新location  return cityName
+    private String updateWithNewLocation(double[] lngLat_gcj02) {
+        String mcityName = "";
+        List<Address> addList = null;
+        try {
+            addList = new Geocoder(getActivity()).getFromLocation(lngLat_gcj02[1], lngLat_gcj02[0], 1);    //解析经纬度
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addList != null && addList.size() > 0) {
+            for (int i = 0; i < addList.size(); i++) {
+                Address add = addList.get(i);
+                mcityName += add.getLocality();
+            }
+        }
+        if (mcityName.length() != 0) {
+            return mcityName.substring(0, (mcityName.length() - 1));
+        } else {
+            return mcityName;
+        }
+    }
+
+    @Override
+    public LocationConfiguration getLocationConfiguration() {
+        return Configurations.defaultConfiguration("Gimme the permission!", "Would you mind to turn GPS on?");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //WGS84 转  火星坐标（GCJ02）
+        double[] lngLat_gcj02 = CoordinateTransform.transformWGS84ToGCJ02(location.getLongitude(), location.getLatitude());
+        LogUtil.e("经度==" + lngLat_gcj02[0] + "==维度==" + lngLat_gcj02[1]);
+        String temp = updateWithNewLocation(lngLat_gcj02);
+        CityPicker.from(getActivity()).locateComplete(new LocatedCity(temp, "广东", "101280601"), LocateState.SUCCESS);
+
+    }
+
+    @Override
+    public void onLocationFailed(int type) {
+
     }
 }

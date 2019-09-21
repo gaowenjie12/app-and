@@ -397,4 +397,11 @@ public interface ServerAPI {
     @POST("my/extenactivity_list")
     Observable<RootResponse<List<JiaoLiuBean>>> extenactivity_list(@Body FormBody body);
 
+
+    /**
+     *  搜索页面 /api/v1/index/searchpage 可以使用
+     */
+    @POST("index/searchpage")
+    Observable<RootResponse<List<JiaoLiuBean>>> searchpage(@Body FormBody body);
+
 }

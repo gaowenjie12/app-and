@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import androidx.multidex.MultiDex;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.google.gson.Gson;
@@ -28,6 +29,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.yayandroid.locationmanager.LocationManager;
 import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.business.login.LoginActivity;
@@ -41,6 +43,7 @@ import com.zsoe.businesssharing.utils.LogUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -73,6 +76,7 @@ public class DApplication extends Application {
         super.onCreate();
         instance = this;
 
+        LocationManager.enableLog(true);
 
         //init demo helper
         DemoHelper.getInstance().init(this);
@@ -191,6 +195,14 @@ public class DApplication extends Application {
 
         ImageLoader.getInstance().init(configuration);
 
+    }
+
+    public String getCity() {
+        return SPUtils.getInstance().getString("city");
+    }
+
+    public void setCity(String city) {
+        SPUtils.getInstance().put("city", city);
     }
 
 
@@ -340,6 +352,7 @@ public class DApplication extends Application {
                         .addHeader("charset", "UTF-8")
                         .addHeader("appVersion", String.valueOf(getVersionCode()))
                         .addHeader("token", getToken())
+                        .addHeader("city", URLEncoder.encode(getCity()))
 //                        .method(originalRequest.method(), gzip(originalRequest.body()))
                         .build();
                 return chain.proceed(compressedRequest);

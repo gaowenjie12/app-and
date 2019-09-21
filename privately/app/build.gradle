@@ -243,6 +243,7 @@ dependencies {
     annotationProcessor 'com.arialyy.aria:aria-compiler:3.6.6'
     implementation 'com.lxj:xpopup:1.8.9'
     implementation 'com.orhanobut:logger:2.2.0'
+    implementation 'com.yayandroid:LocationManager:2.0.4'
 
     implementation project(':library')
     implementation project(':easeui')
