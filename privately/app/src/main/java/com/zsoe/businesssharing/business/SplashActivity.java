@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.hyphenate.chat.EMClient;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.business.login.LoginActivity;
 import com.zsoe.businesssharing.business.main.MainActivity;
+import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
 
@@ -95,5 +97,21 @@ public class SplashActivity extends BaseActivity {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            public void run() {
+                if (DemoHelper.getInstance().isLoggedIn()) {
+                    // auto login mode, make sure all group and conversation is loaed before enter the main screen
+                    long start = System.currentTimeMillis();
+                    EMClient.getInstance().chatManager().loadAllConversations();
+                    EMClient.getInstance().groupManager().loadAllGroups();
+                }
+            }
+        }).start();
+
     }
 }

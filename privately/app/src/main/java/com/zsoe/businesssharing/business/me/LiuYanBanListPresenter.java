@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.business.me;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.RootResponse;
@@ -24,6 +25,7 @@ public class LiuYanBanListPresenter extends BasePresenter<LiuYanBanActivity> {
 
     //用来维持页码
     public OpenLoadMoreDefault<MessageReturnBean> loadMoreDefault;
+    public OpenLoadMoreDefault<MessageReturnBean> loadMoreDefault2;
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -42,9 +44,15 @@ public class LiuYanBanListPresenter extends BasePresenter<LiuYanBanActivity> {
                     @Override
                     public void callBack(LiuYanBanActivity v, List<MessageReturnBean> noticeBeanList) {
 
-                        loadMoreDefault.fixNumAndClear();
-                        loadMoreDefault.loadMoreFinish(noticeBeanList);
-                        v.updateList();
+                        if (TextUtils.isEmpty(keyword)) {
+                            loadMoreDefault.fixNumAndClear();
+                            loadMoreDefault.loadMoreFinish(noticeBeanList);
+                            v.updateList();
+                        } else {
+                            loadMoreDefault2.fixNumAndClear();
+                            loadMoreDefault2.loadMoreFinish(noticeBeanList);
+                            v.updateList2();
+                        }
                     }
                 },
                 new BaseToastNetError<LiuYanBanActivity>());
@@ -52,9 +60,21 @@ public class LiuYanBanListPresenter extends BasePresenter<LiuYanBanActivity> {
 
     }
 
-    public void user_companymsg_list(String uid) {
-        loadMoreDefault.pagerAble.put("uid", uid);
-        body = signForm(loadMoreDefault.pagerAble);
+
+    String keyword;
+
+    public void user_companymsg_list(String uid,String keyword) {
+        this.keyword = keyword;
+
+
+        if (TextUtils.isEmpty(keyword)) {
+            loadMoreDefault.pagerAble.put("uid", uid);
+            body = signForm(loadMoreDefault.pagerAble);
+        } else {
+            loadMoreDefault2.pagerAble.put("uid", uid);
+            loadMoreDefault2.pagerAble.put("keywords", keyword);
+            body = signForm(loadMoreDefault2.pagerAble);
+        }
         start(REQUEST_LOGIN);
 
     }

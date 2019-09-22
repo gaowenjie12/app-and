@@ -15,6 +15,7 @@ import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
+import com.zsoe.businesssharing.business.me.AddFriendActivity;
 import com.zsoe.businesssharing.business.me.MessageRemindActivity;
 import com.zsoe.businesssharing.business.message.ConversationListActivity;
 import com.zsoe.businesssharing.business.message.MessageEvent;
@@ -64,7 +65,7 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         setTitleRigthIcon(true, R.mipmap.tianjia, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(mContext, AddFriendActivity.class));
             }
         });
 

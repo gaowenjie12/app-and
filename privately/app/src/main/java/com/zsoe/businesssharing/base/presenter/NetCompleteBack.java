@@ -50,7 +50,7 @@ public abstract class NetCompleteBack<View> extends CacheAble<View, RootResponse
                     }
                 }
 
-                Toast.makeText(DApplication.getInstance(), tRootResponse.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DApplication.getInstance(), tRootResponse.getMsg(), Toast.LENGTH_SHORT).show();
                 callBackServerError(v, tRootResponse);
                 break;
         }

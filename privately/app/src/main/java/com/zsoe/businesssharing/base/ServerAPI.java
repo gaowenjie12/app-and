@@ -12,6 +12,7 @@ import com.zsoe.businesssharing.bean.FenHuiBean;
 import com.zsoe.businesssharing.bean.FileDownBean;
 import com.zsoe.businesssharing.bean.GalleryRoomBean;
 import com.zsoe.businesssharing.bean.GongYouBean;
+import com.zsoe.businesssharing.bean.HaoYouBean;
 import com.zsoe.businesssharing.bean.HomeBean;
 import com.zsoe.businesssharing.bean.IndustryRoot;
 import com.zsoe.businesssharing.bean.ItemBankBean;
@@ -386,22 +387,40 @@ public interface ServerAPI {
     Observable<RootResponse<LoginUser>> userProfile(@Body FormBody body);
 
     /**
-     *  采购&需求-详情 /api/v1/index/stock_purchase_info
+     * 采购&需求-详情 /api/v1/index/stock_purchase_info
      */
     @POST("index/stock_purchase_info")
     Observable<RootResponse<CaiGouDetail>> stock_purchase_info(@Body FormBody body);
 
     /**
-     *  我的-》推广 /api/v1/my/extenactivity_list 可以使用
+     * 我的-》推广 /api/v1/my/extenactivity_list 可以使用
      */
     @POST("my/extenactivity_list")
     Observable<RootResponse<List<JiaoLiuBean>>> extenactivity_list(@Body FormBody body);
 
 
     /**
-     *  搜索页面 /api/v1/index/searchpage 可以使用
+     * 搜索页面 /api/v1/index/searchpage 可以使用
      */
     @POST("index/searchpage")
     Observable<RootResponse<List<JiaoLiuBean>>> searchpage(@Body FormBody body);
+
+    /**
+     * 注销登录 /api/v1/user/logout
+     */
+    @POST("user/logout")
+    Observable<RootResponse> logout(@Body FormBody body);
+
+    /**
+     * 添加好友 /api/v1/msg/add_friend 可以使用
+     */
+    @POST("msg/add_friend")
+    Observable<RootResponse> add_friend(@Body FormBody body);
+
+    /**
+     *我的好友列表 /api/v1/msg/myfriend_list 可以使用
+     */
+    @POST("msg/myfriend_list")
+    Observable<RootResponse<List<HaoYouBean>>> myfriend_list(@Body FormBody body);
 
 }

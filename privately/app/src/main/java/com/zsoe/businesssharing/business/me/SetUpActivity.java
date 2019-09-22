@@ -7,17 +7,22 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.business.login.ChangePwActivity;
+import com.zsoe.businesssharing.easechat.DemoHelper;
+import com.zsoe.businesssharing.utils.DialogManager;
 
 import java.util.Map;
 
-public class SetUpActivity extends BaseActivity implements View.OnClickListener {
+@RequiresPresenter(LoginOutPresenter.class)
+public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements View.OnClickListener {
 
     private RelativeLayout mRlZhanghaoguanli;
     private RelativeLayout mRlQingchuhuanc;
@@ -60,20 +65,17 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
             case R.id.rl_qingchuhuanc:
                 break;
             case R.id.rl_guanyuwomen:
-                startActivity(new Intent(mContext,AboutUsActivity.class));
+                startActivity(new Intent(mContext, AboutUsActivity.class));
                 break;
             case R.id.rl_jianchagengxin:
                 break;
             case R.id.btn_login:
                 // 确认
-                DApplication.getInstance().exit();
-                DApplication.getInstance().startLogin();
-
-                UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.QQ, authListener);
+                DialogManager.getInstance().showNetLoadingView(mContext);
+                getPresenter().logout();
                 break;
         }
     }
-
 
 
     UMAuthListener authListener = new UMAuthListener() {
@@ -100,4 +102,41 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
             Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
         }
     };
+
+    public void loginOut() {
+
+        DApplication.getInstance().exit();
+        DApplication.getInstance().startLogin();
+        UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.QQ, authListener);
+
+
+        DemoHelper.getInstance().logout(true, new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+
+
+                    }
+                });
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "unbind devicetokens failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
 }

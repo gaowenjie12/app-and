@@ -54,16 +54,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-
+        <activity android:name=".business.message.HaoYouActivity"></activity>
+        <activity android:name=".business.me.AddFriendActivity" />
         <activity
             android:name=".business.exhibitionhall.TuiGuangActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.login.ChangePwActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.me.LiuYanBanActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.me.LiuYanRootActivity"
             android:screenOrientation="portrait" />

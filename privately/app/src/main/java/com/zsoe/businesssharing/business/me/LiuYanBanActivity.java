@@ -2,12 +2,15 @@ package com.zsoe.businesssharing.business.me;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
@@ -15,6 +18,7 @@ import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.MessageReturnBean;
+import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreDefaultFooterRecyclerView;
@@ -28,9 +32,17 @@ import java.util.List;
 import rx.functions.Action1;
 
 @RequiresPresenter(LiuYanBanListPresenter.class)
-public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> {
+public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> implements View.OnClickListener {
 
     private RecyclerView mRvJoinList;
+    /**
+     * 请输入要搜索的内容
+     */
+    private ClearEditText mSearchInput;
+    /**
+     * 搜索
+     */
+    private TextView mTvSousuo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +56,28 @@ public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> {
             @Override
             public void call(String s) {
                 //刷新
-                getPresenter().loadMoreDefault.refresh();
-                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "");
+                if (TextUtils.isEmpty(keyword)) {
+                    getPresenter().loadMoreDefault.refresh();
+                } else {
+                    getPresenter().loadMoreDefault2.refresh();
+                }
+                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "", keyword);
 
             }
         });
 
         DialogManager.getInstance().showNetLoadingView(mContext);
         mPtrFrame.autoRefresh();
+
+
+        mSearchInput = (ClearEditText) findViewById(R.id.search_input);
+        mSearchInput.setClearClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keyword = "";
+                mRvJoinList.setAdapter(noticeBeanOnionRecycleAdapter);
+            }
+        });
 
     }
 
@@ -61,6 +87,8 @@ public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> {
 
     private void initView() {
         mRvJoinList = (RecyclerView) findViewById(R.id.rv_join_list);
+
+
         noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<MessageReturnBean>(R.layout.item_huixin_layout, noticeBeanList) {
             @Override
             protected void convert(BaseViewHolder holder, final MessageReturnBean item) {
@@ -91,7 +119,7 @@ public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "");
+                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "", keyword);
             }
         });
 
@@ -100,13 +128,60 @@ public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> {
         noticeBeanOnionRecycleAdapter.setLoadMoreContainer(getPresenter().loadMoreDefault);
 
 
+        noticeBeanOnionRecycleAdapter2 = new OnionRecycleAdapter<MessageReturnBean>(R.layout.item_huixin_layout, noticeBeanList2) {
+            @Override
+            protected void convert(BaseViewHolder holder, final MessageReturnBean item) {
+                super.convert(holder, item);
+
+
+                holder.setText(R.id.tv_title, item.getTitle());
+                holder.setText(R.id.tv_content, item.getMsg());
+                holder.setText(R.id.tv_time, item.getTime());
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(mContext, LiuYanBanReturnActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getTo_uid() + "");
+                        intent.putExtra(Config.INTENT_PARAMS3, item.getTitle());
+
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        };
+
+
+        getPresenter().loadMoreDefault2 = new OpenLoadMoreDefault(mContext, noticeBeanList2);
+        getPresenter().loadMoreDefault2.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+                getPresenter().user_companymsg_list(DApplication.getInstance().getLoginUser().getId() + "", keyword);
+            }
+        });
+
+
+        LoadMoreDefaultFooterRecyclerView defaultFooterRecyclerView2 = (LoadMoreDefaultFooterRecyclerView) getPresenter().loadMoreDefault2.getFooterView();
+        noticeBeanOnionRecycleAdapter2.setLoadMoreContainer(getPresenter().loadMoreDefault2);
+
+
         mRvJoinList.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
         mRvJoinList.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
         mRvJoinList.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvJoinList.setAdapter(noticeBeanOnionRecycleAdapter);
 
+        mSearchInput = (ClearEditText) findViewById(R.id.search_input);
+        mTvSousuo = (TextView) findViewById(R.id.tv_sousuo);
+        mTvSousuo.setOnClickListener(this);
     }
 
+    private String keyword = "";
+
+
+    OnionRecycleAdapter noticeBeanOnionRecycleAdapter2;
+    private List<MessageReturnBean> noticeBeanList2 = new ArrayList<>();
 
     /**
      * 关闭刷新/更新数据
@@ -114,5 +189,38 @@ public class LiuYanBanActivity extends BaseActivity<LiuYanBanListPresenter> {
     public void updateList() {
         mPtrFrame.refreshComplete();
         noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
+    }
+
+
+    boolean isFirstSearch = false;
+
+    /**
+     * 关闭刷新/更新数据
+     */
+    public void updateList2() {
+        if (isFirstSearch) {
+            mRvJoinList.setAdapter(noticeBeanOnionRecycleAdapter2);
+        }
+        mPtrFrame.refreshComplete();
+        noticeBeanOnionRecycleAdapter2.notifyDataSetChanged();
+        isFirstSearch = false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            default:
+                break;
+            case R.id.tv_sousuo:
+                keyword = mSearchInput.getText().toString();
+                if (TextUtils.isEmpty(keyword)) {
+                    ToastUtils.showShort("请输入关键字");
+                    return;
+                }
+
+                mPtrFrame.autoRefresh();
+                isFirstSearch = true;
+                break;
+        }
     }
 }

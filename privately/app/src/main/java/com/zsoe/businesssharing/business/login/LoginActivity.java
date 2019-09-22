@@ -34,6 +34,7 @@ import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.business.main.MainActivity;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.DrawableTextView;
+import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.KeyboardWatcher;
 import com.zsoe.businesssharing.utils.LogUtil;
@@ -209,7 +210,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
                 }
 
 
-                String pass = mEtPassword.getText().toString();
+                pass = mEtPassword.getText().toString();
                 if (TextUtils.isEmpty(pass)) {
                     ToastUtils.showShort("请填写密码");
                     return;
@@ -305,10 +306,26 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     };
 
     String account;
+    String pass;
 
     public void loginSuccess(LoginUser loginUser) {
 
-        EMClient.getInstance().login("yuchangliang1", "111111", new EMCallBack() {
+        if (DemoHelper.getInstance().isLoggedIn()) {
+            // ** manually load all local groups and conversation
+            EMClient.getInstance().groupManager().loadAllGroups();
+            EMClient.getInstance().chatManager().loadAllConversations();
+
+
+            // get user's info (this should be get from App's server or 3rd party service)
+//                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
+            startActivity(new Intent(mContext, MainActivity.class));
+            FancyUtils.setLoginUser(loginUser);
+            FancyUtils.setUserPhone(account);
+            finish();
+            return;
+        }
+
+        EMClient.getInstance().login(account, pass, new EMCallBack() {
 
             @Override
             public void onSuccess() {
@@ -320,7 +337,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
                 // get user's info (this should be get from App's server or 3rd party service)
 //                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
-                ToastUtils.showShort("环信登录成功");
                 startActivity(new Intent(mContext, MainActivity.class));
                 FancyUtils.setLoginUser(loginUser);
                 FancyUtils.setUserPhone(account);
