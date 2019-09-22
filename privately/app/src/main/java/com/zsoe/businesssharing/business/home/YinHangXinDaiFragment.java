@@ -46,10 +46,11 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
 
     private static final String TAG = "HomeFragment";
 
-    public static YinHangXinDaiFragment newInstance(String shopId) {
+    public static YinHangXinDaiFragment newInstance(String shopId,String sourcepage) {
         YinHangXinDaiFragment f = new YinHangXinDaiFragment();
         Bundle args = new Bundle();
         args.putString("shopId", shopId);
+        args.putString("sourcepage", sourcepage);
         f.setArguments(args);
         return f;
     }
@@ -66,7 +67,7 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
 
     private RecyclerView mRvProductList;
 
-    private String shopId;
+    private String shopId,sourcepage;
 
 
 
@@ -78,8 +79,12 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
         super.onViewCreated(view, savedInstanceState);
 
         shopId = getArguments().getString("shopId");
+        sourcepage = getArguments().getString("sourcepage");
         if (null == shopId) {
             shopId = "";
+        }
+        if (null == sourcepage) {
+            sourcepage = "";
         }
 
         mRvProductList = view.findViewById(R.id.rv_product_list);
@@ -126,7 +131,7 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().loan_list(shopId);
+                getPresenter().loan_list(shopId,sourcepage);
 
             }
         });
@@ -147,7 +152,7 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().loan_list(shopId);
+                getPresenter().loan_list(shopId,sourcepage);
 
             }
         });

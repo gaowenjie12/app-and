@@ -52,8 +52,9 @@ public class JoinInvestmentPresenter extends BasePresenter<JoinInvestmentActivit
 
     }
 
-    public void join_merchant_list(String shopId) {
-        loadMoreDefault.pagerAble.put("shopid",shopId);
+    public void join_merchant_list(String shopId, String sourcepage) {
+        loadMoreDefault.pagerAble.put("shopid", shopId);
+        loadMoreDefault.pagerAble.put("sourcepage", sourcepage);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 

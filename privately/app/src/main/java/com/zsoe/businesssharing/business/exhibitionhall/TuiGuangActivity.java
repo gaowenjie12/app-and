@@ -37,7 +37,7 @@ import rx.functions.Action1;
 public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
 
     private RecyclerView mRvProductList;
-    private String shopId;
+    private String shopId,sourcepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,12 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
             shopId = "";
         }
 
+
+        sourcepage = getIntent().getStringExtra(Config.INTENT_PARAMS2);
+        if (null == sourcepage) {
+            sourcepage = "";
+        }
+
         initTitleText("推广活动");
 
         initPtrFrameLayout(new Action1<String>() {
@@ -58,7 +64,7 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
                 //刷新
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().extenactivity_list(shopId);
+                getPresenter().extenactivity_list(shopId,sourcepage);
             }
         });
 
@@ -107,7 +113,7 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().extenactivity_list(shopId);
+                getPresenter().extenactivity_list(shopId,sourcepage);
             }
         });
 

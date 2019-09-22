@@ -52,8 +52,9 @@ public class FanancListPresenter extends BasePresenter<RongZiXiangMuFragment> {
 
     }
 
-    public void finance_list(String shopid) {
+    public void finance_list(String shopid,String sourcepage) {
         loadMoreDefault.pagerAble.put("shopid", shopid);
+        loadMoreDefault.pagerAble.put("sourcepage", sourcepage);
         body = signForm(loadMoreDefault.pagerAble);
         start(REQUEST_LOGIN);
 

@@ -31,7 +31,7 @@ public class FinancingLoansActivity extends BaseActivity {
     private ImageView title_left_iv;
 
 
-    private String shopId;
+    private String shopId,sourcepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,11 @@ public class FinancingLoansActivity extends BaseActivity {
         shopId = getIntent().getStringExtra(Config.INTENT_PARAMS1);
         if (null == shopId) {
             shopId = "";
+        }
+
+        sourcepage = getIntent().getStringExtra(Config.INTENT_PARAMS2);
+        if (null == sourcepage) {
+            sourcepage = "";
         }
 
         initView();
@@ -66,12 +71,12 @@ public class FinancingLoansActivity extends BaseActivity {
 
                 if (position == 0) {
                     if (yinHangXinDaiFragment == null) {
-                        yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(shopId);
+                        yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(shopId,sourcepage);
                     }
                     addOrShowFragment(getSupportFragmentManager().beginTransaction(), yinHangXinDaiFragment);
                 } else if (position == 1) {
                     if (rongZiXiangMuFragment == null) {
-                        rongZiXiangMuFragment = RongZiXiangMuFragment.newInstance(shopId);
+                        rongZiXiangMuFragment = RongZiXiangMuFragment.newInstance(shopId,sourcepage);
                     }
                     addOrShowFragment(getSupportFragmentManager().beginTransaction(), rongZiXiangMuFragment);
                 }
@@ -90,7 +95,7 @@ public class FinancingLoansActivity extends BaseActivity {
      */
     private void initData() {
         if (yinHangXinDaiFragment == null) {
-            yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(shopId);
+            yinHangXinDaiFragment = YinHangXinDaiFragment.newInstance(shopId,sourcepage);
         }
         if (!yinHangXinDaiFragment.isAdded()) {
 

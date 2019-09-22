@@ -9,7 +9,8 @@ import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
-import com.zsoe.businesssharing.bean.HomeBean;
+import com.zsoe.businesssharing.base.presenter.NetCompleteBack;
+import com.zsoe.businesssharing.bean.RootSearchBean;
 
 import java.util.HashMap;
 
@@ -20,6 +21,7 @@ import rx.functions.Func0;
 
 public class SearchPresenter extends BasePresenter<SearchActivity> {
     final public int REQUEST_LOGIN = 1;
+    final public int REQUEST_LOGIN2 = 2;
     FormBody body;
 
     @Override
@@ -28,18 +30,42 @@ public class SearchPresenter extends BasePresenter<SearchActivity> {
 
 
         restartableFirst(REQUEST_LOGIN,
-                new Func0<Observable<RootResponse<HomeBean>>>() {
+                new Func0<Observable<RootResponse<RootSearchBean>>>() {
                     @Override
-                    public Observable<RootResponse<HomeBean>> call() {
+                    public Observable<RootResponse<RootSearchBean>> call() {
 
-                        return DApplication.getServerAPI().index(body);
+                        return DApplication.getServerAPI().searchpage(body);
                     }
                 },
 
-                new NetCallBack<SearchActivity, HomeBean>() {
+                new NetCallBack<SearchActivity, RootSearchBean>() {
                     @Override
-                    public void callBack(SearchActivity v, HomeBean homeBean) {
-//                        v.setDate(homeBean);
+                    public void callBack(SearchActivity v, RootSearchBean rootSearchBean) {
+                        v.setDate(rootSearchBean);
+                    }
+                }
+                , new BaseToastNetError<SearchActivity>() {
+                    @Override
+                    public void call(SearchActivity v, Throwable throwable) {
+                        super.call(v, throwable);
+                        ToastUtils.showShort(throwable.getMessage());
+                    }
+                });
+
+
+        restartableFirst(REQUEST_LOGIN2,
+                new Func0<Observable<RootResponse>>() {
+                    @Override
+                    public Observable<RootResponse> call() {
+
+                        return DApplication.getServerAPI().historysearch_del(body);
+                    }
+                },
+
+                new NetCompleteBack<SearchActivity>() {
+                    @Override
+                    public void onComplete(SearchActivity v, RootResponse t) {
+                        v.delSuccess();
                     }
                 }
                 , new BaseToastNetError<SearchActivity>() {
@@ -53,11 +79,19 @@ public class SearchPresenter extends BasePresenter<SearchActivity> {
 
     }
 
-    public void home() {
+    public void searchpage() {
         HashMap<String, String> params = new HashMap<>();
         params.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
         body = signForm(params);
         start(REQUEST_LOGIN);
+
+    }
+
+    public void historysearch_del() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
+        body = signForm(params);
+        start(REQUEST_LOGIN2);
 
     }
 

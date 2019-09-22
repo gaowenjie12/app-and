@@ -32,6 +32,8 @@ import com.zsoe.businesssharing.business.exhibitionhall.IndustryClassificationAc
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.MasterDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.MasterListActivity;
+import com.zsoe.businesssharing.business.home.SearchActivity;
+import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.HeaderGridSpacingItemDecoration;
 import com.zsoe.businesssharing.commonview.banner.BannerView;
 import com.zsoe.businesssharing.commonview.expandablelayout.Utils;
@@ -49,7 +51,7 @@ import rx.functions.Action1;
  */
 
 @RequiresPresenter(GalleryRoomPresenter.class)
-public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
+public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> implements View.OnClickListener {
 
     private static final String TAG = "HomeFragment";
 
@@ -82,6 +84,7 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
     private NestedScrollView scrollView;
 
     ExpandAdapter expandAdapter;
+    private ClearEditText search_input;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -95,6 +98,13 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
         xiajiantou = view.findViewById(R.id.xiajiantou);
         more_layout = view.findViewById(R.id.more_layout);
         scrollView = view.findViewById(R.id.scrollView);
+
+
+        search_input = view.findViewById(R.id.search_input);
+        view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
+        search_input.setEnabled(true);
+        search_input.setFocusable(false);
+        search_input.setOnClickListener(this);
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
@@ -327,4 +337,8 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> {
 
     }
 
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(mContext, SearchActivity.class));
+    }
 }

@@ -42,10 +42,11 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
 
     private static final String TAG = "HomeFragment";
 
-    public static RongZiXiangMuFragment newInstance(String shopId) {
+    public static RongZiXiangMuFragment newInstance(String shopId, String sourcepage) {
         RongZiXiangMuFragment f = new RongZiXiangMuFragment();
         Bundle args = new Bundle();
         args.putString("shopId", shopId);
+        args.putString("sourcepage", sourcepage);
         f.setArguments(args);
         return f;
     }
@@ -65,14 +66,19 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
     OnionRecycleAdapter noticeBeanOnionRecycleAdapter;
     private List<ItemFinancBean> noticeBeanList = new ArrayList<>();
 
-    private String shopId;
+    private String shopId, sourcepage;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         shopId = getArguments().getString("shopId");
+        sourcepage = getArguments().getString("sourcepage");
         if (null == shopId) {
             shopId = "";
+        }
+        if (null == sourcepage) {
+            sourcepage = "";
         }
 
 
@@ -94,7 +100,7 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(mContext, FinancingLoansDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1,item.getId());
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getId());
                         startActivity(intent);
                     }
                 });
@@ -106,7 +112,7 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().finance_list(shopId);
+                getPresenter().finance_list(shopId,sourcepage);
 
             }
         });
@@ -132,7 +138,7 @@ public class RongZiXiangMuFragment extends BaseFragment<FanancListPresenter> {
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().finance_list(shopId);
+                getPresenter().finance_list(shopId,sourcepage);
 
             }
         });

@@ -1,22 +1,30 @@
 package com.zsoe.businesssharing.business.home;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.ItemSearchBean;
+import com.zsoe.businesssharing.bean.RootSearchBean;
 import com.zsoe.businesssharing.bean.TabEntity;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.MultiLineRadioGroup;
+import com.zsoe.businesssharing.utils.DialogManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity {
+@RequiresPresenter(SearchPresenter.class)
+public class SearchActivity extends BaseActivity<SearchPresenter> implements View.OnClickListener {
 
     /**
      * 请输入要搜索的内容
@@ -69,6 +77,8 @@ public class SearchActivity extends BaseActivity {
                         break;
                     case 3:
                         break;
+                    case 4:
+                        break;
 
                 }
             }
@@ -80,37 +90,8 @@ public class SearchActivity extends BaseActivity {
         });
 
         mTabLayout_6.setCurrentTab(0);
-
-        List<String> phrase = new ArrayList<>();
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-        phrase.add("培训班");
-
-        mHistoryContent.removeAllViews();
-        mHistoryContent.clearChecked();
-        mHistoryContent.addAll(phrase);
-        mHistoryContent.setEnabled(false);
-
-
-        mHotContent.removeAllViews();
-        mHotContent.clearChecked();
-        mHotContent.addAll(phrase);
-        mHotContent.setEnabled(false);
+        DialogManager.getInstance().showNetLoadingView(this);
+        getPresenter().searchpage();
 
 
     }
@@ -122,5 +103,66 @@ public class SearchActivity extends BaseActivity {
         mIvShanchu = (ImageView) findViewById(R.id.iv_shanchu);
         mHistoryContent = (MultiLineRadioGroup) findViewById(R.id.history_content);
         mHotContent = (MultiLineRadioGroup) findViewById(R.id.hot_content);
+        mIvShanchu.setOnClickListener(this);
+        mTvSousuo.setOnClickListener(this);
+    }
+
+    public void setDate(RootSearchBean rootSearchBean) {
+
+
+        List<ItemSearchBean> history_list = rootSearchBean.getHistory_list();
+        mHistoryContent.removeAllViews();
+        mHistoryContent.clearChecked();
+        mHistoryContent.addAll(history_list);
+        mHistoryContent.setOnCheckChangedListener(new MultiLineRadioGroup.OnCheckedChangedListener() {
+            @Override
+            public void onItemChecked(MultiLineRadioGroup group, int position, boolean checked) {
+                if (checked) {
+                    ItemSearchBean itemSearchBean = history_list.get(position);
+                }
+            }
+        });
+
+
+        List<ItemSearchBean> hot_list = rootSearchBean.getHot_list();
+        mHotContent.removeAllViews();
+        mHotContent.clearChecked();
+        mHotContent.addAll(hot_list);
+        mHotContent.setOnCheckChangedListener(new MultiLineRadioGroup.OnCheckedChangedListener() {
+            @Override
+            public void onItemChecked(MultiLineRadioGroup group, int position, boolean checked) {
+                if (checked) {
+                    ItemSearchBean itemSearchBean = hot_list.get(position);
+                }
+            }
+        });
+
+
+    }
+
+    public void delSuccess() {
+        List<ItemSearchBean> history_list = new ArrayList<>();
+        mHistoryContent.removeAllViews();
+        mHistoryContent.clearChecked();
+        mHistoryContent.addAll(history_list);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            default:
+                break;
+            case R.id.iv_shanchu:
+                DialogManager.getInstance().showNetLoadingView(this);
+                getPresenter().historysearch_del();
+                break;
+            case R.id.tv_sousuo:
+                String s = mSearchInput.getText().toString();
+                if (TextUtils.isEmpty(s)) {
+                    ToastUtils.showShort("请输入搜索内容");
+                    return;
+                }
+                break;
+        }
     }
 }

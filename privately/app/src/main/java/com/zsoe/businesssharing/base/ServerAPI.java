@@ -31,6 +31,7 @@ import com.zsoe.businesssharing.bean.MySignBean;
 import com.zsoe.businesssharing.bean.ProductDetail;
 import com.zsoe.businesssharing.bean.RenCompanyBean;
 import com.zsoe.businesssharing.bean.RootEventBean;
+import com.zsoe.businesssharing.bean.RootSearchBean;
 import com.zsoe.businesssharing.bean.StockBean;
 import com.zsoe.businesssharing.bean.XinXiBena;
 import com.zsoe.businesssharing.business.login.LoginUser;
@@ -403,7 +404,13 @@ public interface ServerAPI {
      * 搜索页面 /api/v1/index/searchpage 可以使用
      */
     @POST("index/searchpage")
-    Observable<RootResponse<List<JiaoLiuBean>>> searchpage(@Body FormBody body);
+    Observable<RootResponse<RootSearchBean>> searchpage(@Body FormBody body);
+
+    /**
+     * 删除 历史搜索 /api/v1/index/historysearch_del 可以使用
+     */
+    @POST("index/historysearch_del")
+    Observable<RootResponse> historysearch_del(@Body FormBody body);
 
     /**
      * 注销登录 /api/v1/user/logout
@@ -418,7 +425,7 @@ public interface ServerAPI {
     Observable<RootResponse> add_friend(@Body FormBody body);
 
     /**
-     *我的好友列表 /api/v1/msg/myfriend_list 可以使用
+     * 我的好友列表 /api/v1/msg/myfriend_list 可以使用
      */
     @POST("msg/myfriend_list")
     Observable<RootResponse<List<HaoYouBean>>> myfriend_list(@Body FormBody body);

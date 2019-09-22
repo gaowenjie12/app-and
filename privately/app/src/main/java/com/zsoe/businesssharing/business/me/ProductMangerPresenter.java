@@ -48,8 +48,9 @@ public class ProductMangerPresenter extends BasePresenter<ProductManagementActiv
 
     public void product_list() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("uid",DApplication.getInstance().getLoginUser().getId()+"");
-        map.put("shopid",DApplication.getInstance().getLoginUser().getShopid()+"");
+        map.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
+        map.put("shopid", DApplication.getInstance().getLoginUser().getShopid() + "");
+        map.put("sourcepage", "my");
         body = signForm(map);
         start(REQUEST_LOGIN);
 

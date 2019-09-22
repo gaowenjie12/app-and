@@ -183,6 +183,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 Intent intent3 = new Intent(mContext, JoinInvestmentActivity.class);
                 intent3.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                intent3.putExtra(Config.INTENT_PARAMS2, "my");
                 startActivity(intent3);
 
                 break;
@@ -196,6 +197,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_daikuan:
                 Intent intent4 = new Intent(mContext, FinancingLoansActivity.class);
                 intent4.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                intent4.putExtra(Config.INTENT_PARAMS2, "my");
                 startActivity(intent4);
                 break;
             case R.id.ll_zixun:
@@ -222,6 +224,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 Intent intent5 = new Intent(mContext, TuiGuangActivity.class);
                 intent5.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                intent5.putExtra(Config.INTENT_PARAMS2, "my");
                 startActivity(intent5);
 
                 break;
@@ -242,7 +245,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.ll_kefu:
                 Intent intent6 = new Intent(mContext, BrowserActivity.class);
-                intent6.putExtra(Config.INTENT_PARAMS1,DApplication.getInstance().getLoginUser().getCustomerurl());
+                intent6.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getCustomerurl());
                 startActivity(intent6);
                 break;
 

@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,8 @@ import com.zsoe.businesssharing.business.attention.ArchitecturalCultureFragment;
 import com.zsoe.businesssharing.business.attention.ChapterIntroductionFragment;
 import com.zsoe.businesssharing.business.attention.MailFragment;
 import com.zsoe.businesssharing.business.attention.TheEventFragment;
+import com.zsoe.businesssharing.business.home.SearchActivity;
+import com.zsoe.businesssharing.commonview.ClearEditText;
 
 import java.util.ArrayList;
 
@@ -25,7 +28,7 @@ import java.util.ArrayList;
  * 关注
  */
 
-public class AttentionFragment extends BaseFragment {
+public class AttentionFragment extends BaseFragment implements View.OnClickListener {
 
     private CommonTabLayout mTabLayout_6;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
@@ -56,6 +59,8 @@ public class AttentionFragment extends BaseFragment {
     private MailFragment mailFragment;
     protected BaseFragment currentFragment;
 
+    private ClearEditText search_input;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -65,6 +70,12 @@ public class AttentionFragment extends BaseFragment {
         mTabLayout_6 = view.findViewById(R.id.tl_6);
 
         view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
+
+        search_input = view.findViewById(R.id.search_input);
+        view.findViewById(R.id.tv_sousuo).setVisibility(View.GONE);
+        search_input.setEnabled(true);
+        search_input.setFocusable(false);
+        search_input.setOnClickListener(this);
 
         mTabEntities.add(new TabEntity("分会介绍", 0, 0));
         mTabEntities.add(new TabEntity("架构文化", 0, 0));
@@ -155,5 +166,10 @@ public class AttentionFragment extends BaseFragment {
         }
 
         currentFragment = chapterIntroductionFragment;
+    }
+
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(mContext, SearchActivity.class));
     }
 }

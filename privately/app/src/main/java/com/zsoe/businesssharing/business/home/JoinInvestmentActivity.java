@@ -33,7 +33,7 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
 
     private RecyclerView mRvJoinList;
 
-    private String shopId;
+    private String shopId,sourcepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,11 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
             shopId = "";
         }
 
+        sourcepage = getIntent().getStringExtra(Config.INTENT_PARAMS2);
+        if (null == sourcepage) {
+            sourcepage = "";
+        }
+
         initTitleText("招商加盟列表");
 
         initPtrFrameLayout(new Action1<String>() {
@@ -53,7 +58,7 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
             public void call(String s) {
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().join_merchant_list(shopId);
+                getPresenter().join_merchant_list(shopId,sourcepage);
             }
         });
 
@@ -101,7 +106,7 @@ public class JoinInvestmentActivity extends BaseActivity<JoinInvestmentPresenter
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().join_merchant_list(shopId);
+                getPresenter().join_merchant_list(shopId,sourcepage);
             }
         });
 

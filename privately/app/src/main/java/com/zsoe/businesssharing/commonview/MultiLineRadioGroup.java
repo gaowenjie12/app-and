@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import com.zsoe.businesssharing.R;
+import com.zsoe.businesssharing.bean.ItemSearchBean;
 import com.zsoe.businesssharing.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -284,23 +285,23 @@ public class MultiLineRadioGroup extends ViewGroup implements View.OnClickListen
         return list;
     }
 
-    public int append(String str) {
+    public int append(ItemSearchBean str) {
         CheckBox cb = getChild();
-        cb.setText(str);
+        cb.setText(str.getKeywords());
         cb.setTag(childCount);
         cb.setOnClickListener(this);
         viewList.add(cb);
         addView(cb);
-        childValues.add(str);
+        childValues.add(str.getKeywords());
         childCount++;
         forceLayout = true;
         postInvalidate();
         return childCount - 1;
     }
 
-    public void addAll(List<String> list) {
+    public void addAll(List<ItemSearchBean> list) {
         if (list != null && list.size() > 0) {
-            for (String str : list) {
+            for (ItemSearchBean str : list) {
                 append(str);
             }
         }
