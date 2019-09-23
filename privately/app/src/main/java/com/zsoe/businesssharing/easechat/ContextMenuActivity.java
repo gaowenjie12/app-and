@@ -20,7 +20,7 @@ import android.view.View;
 import com.hyphenate.chat.EMMessage;
 import com.zsoe.businesssharing.R;
 
-public class ContextMenuActivity extends EaseBaseActivity {
+public class ContextMenuActivity extends BaseMenuActivity {
     public static final int RESULT_CODE_COPY = 1;
     public static final int RESULT_CODE_DELETE = 2;
     public static final int RESULT_CODE_FORWARD = 3;

@@ -11,7 +11,6 @@ import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
 import com.zsoe.businesssharing.base.presenter.NetCompleteBack;
 import com.zsoe.businesssharing.bean.HaoYouBean;
-import com.zsoe.businesssharing.commonview.recyclerview.loadmore.OpenLoadMoreDefault;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,6 @@ import rx.functions.Func0;
 public class HaoYouPresenter extends BasePresenter<HaoYouActivity> {
     final public int REQUEST_LOGIN = 1;
     final public int REQUEST_LOGIN2 = 2;
-    public OpenLoadMoreDefault<HaoYouBean> loadMoreDefault;
 
     FormBody body;
 
@@ -44,9 +42,7 @@ public class HaoYouPresenter extends BasePresenter<HaoYouActivity> {
                 new NetCallBack<HaoYouActivity, List<HaoYouBean>>() {
                     @Override
                     public void callBack(HaoYouActivity v, List<HaoYouBean> haoYouBeanList) {
-                        loadMoreDefault.fixNumAndClear();
-                        loadMoreDefault.loadMoreFinish(haoYouBeanList);
-                        v.updateList();
+                        v.getSuccess(haoYouBeanList);
                     }
                 },
                 new BaseToastNetError<HaoYouActivity>());
@@ -72,8 +68,9 @@ public class HaoYouPresenter extends BasePresenter<HaoYouActivity> {
     }
 
     public void myfriend_list() {
-        loadMoreDefault.pagerAble.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
-        body = signForm(loadMoreDefault.pagerAble);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("uid", DApplication.getInstance().getLoginUser().getId() + "");
+        body = signForm(hashMap);
         start(REQUEST_LOGIN);
     }
 

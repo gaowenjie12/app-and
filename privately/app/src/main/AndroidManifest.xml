@@ -54,9 +54,19 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
-        <activity android:name=".business.home.SearchListActivity"></activity>
-        <activity android:name=".business.message.HaoYouActivity" />
-        <activity android:name=".business.me.AddFriendActivity" />
+        <activity
+            android:name=".business.home.SearchListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".business.message.HaoYouActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.AddFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".easechat.ContextMenuActivity"
+            android:theme="@style/MyDialogStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.exhibitionhall.TuiGuangActivity"
             android:screenOrientation="portrait" />
