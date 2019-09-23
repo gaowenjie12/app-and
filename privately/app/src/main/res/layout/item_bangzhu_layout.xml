@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_time"
+        android:padding="@dimen/adaptive_15dp"
+        android:textColor="@color/text_3"
+        android:textSize="16dp"
+        tools:text="为何马云仅有" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/adaptive_10dp"
+        android:textColor="@color/text_b6"
+        android:textSize="15dp"
+        tools:text="07-07" />
+
+    <View
+
+        style="@style/line_style"
+        android:layout_below="@+id/tv_title" />
+</RelativeLayout>

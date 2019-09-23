@@ -45,7 +45,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Vie
     private MultiLineRadioGroup mHotContent;
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
-    private int type;
+    private int type = 1;
 
 
     @Override
@@ -107,6 +107,10 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Vie
             public void onItemChecked(MultiLineRadioGroup group, int position, boolean checked) {
                 if (checked) {
                     ItemSearchBean itemSearchBean = history_list.get(position);
+                    Intent intent = new Intent(mContext, SearchListActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, type + "");
+                    intent.putExtra(Config.INTENT_PARAMS2, itemSearchBean.getKeywords());
+                    startActivity(intent);
                 }
             }
         });
@@ -121,6 +125,10 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Vie
             public void onItemChecked(MultiLineRadioGroup group, int position, boolean checked) {
                 if (checked) {
                     ItemSearchBean itemSearchBean = hot_list.get(position);
+                    Intent intent = new Intent(mContext, SearchListActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, type + "");
+                    intent.putExtra(Config.INTENT_PARAMS2, itemSearchBean.getKeywords());
+                    startActivity(intent);
                 }
             }
         });

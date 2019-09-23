@@ -1,4 +1,4 @@
-package com.zsoe.businesssharing.business.welcome;
+package com.zsoe.businesssharing.commonview;
 
 import android.content.Context;
 import android.media.MediaPlayer;

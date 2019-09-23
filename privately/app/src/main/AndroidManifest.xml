@@ -54,6 +54,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="label,allowBackup">
+
+
         <activity
             android:name=".business.home.SearchListActivity"
             android:screenOrientation="portrait"></activity>
@@ -185,10 +187,20 @@
             android:screenOrientation="portrait" /> <!-- 动态详情 -->
         <activity
             android:name=".business.exhibitionhall.DynamicDetailsActivity"
-            android:screenOrientation="portrait" /> <!-- 近期动态 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 近期动态 -->
         <activity
             android:name=".business.exhibitionhall.LatestNewsActivity"
-            android:screenOrientation="portrait" /> <!-- 企业列表 -->
+            android:screenOrientation="portrait" />
+
+        <!-- 帮助中心 -->
+        <activity
+            android:name=".business.exhibitionhall.BangZhuActivity"
+            android:screenOrientation="portrait" />
+
+
+        <!-- 企业列表 -->
         <activity
             android:name=".business.exhibitionhall.CompaniesListActivity"
             android:screenOrientation="portrait" /> <!-- 产品列表 -->

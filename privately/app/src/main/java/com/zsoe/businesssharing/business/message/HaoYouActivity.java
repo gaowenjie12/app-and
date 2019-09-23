@@ -47,55 +47,54 @@ public class HaoYouActivity extends BaseActivity<HaoYouPresenter> {
     }
 
 
-  public void getSuccess(List<HaoYouBean> haoYouBeanList){
+    public void getSuccess(List<HaoYouBean> haoYouBeanList) {
 
-      OnionRecycleAdapter  noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<HaoYouBean>(R.layout.item_haoyou_layout, haoYouBeanList) {
-          @Override
-          protected void convert(BaseViewHolder holder, final HaoYouBean item) {
-              super.convert(holder, item);
-
-
-              SimpleDraweeView simpleDraweeView = holder.getView(R.id.image);
-              FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getAvatar());
-              holder.setText(R.id.tv_title, item.getFriend_name());
+        OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<HaoYouBean>(R.layout.item_haoyou_layout, haoYouBeanList) {
+            @Override
+            protected void convert(BaseViewHolder holder, final HaoYouBean item) {
+                super.convert(holder, item);
 
 
-              View view = holder.getView(R.id.btnDelete);
-              view.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-
-                      DialogManager.getInstance().showNormalDialog(mContext, "删除好友", "删除好友后将不能收到该好友消息", "删除", "取消", new DialogInterface.OnClickListener() {
-                          @Override
-                          public void onClick(DialogInterface dialogInterface, int i) {
-                              DialogManager.getInstance().showNetLoadingView(mContext);
-                              getPresenter().remove_friend(DApplication.getInstance().getLoginUser().getId() + "",
-                                      item.getFriend_username() + ""
-                              );
-                          }
-                      });
-
-                  }
-              });
-
-              holder.itemView.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-                      // demo中直接进入聊天页面，实际一般是进入用户详情页
-                      startActivity(new Intent(mContext, ChatActivity.class).putExtra("userId", item.getFriend_username()));
-                  }
-              });
-
-          }
-      };
+                SimpleDraweeView simpleDraweeView = holder.getView(R.id.image);
+                FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getAvatar());
+                holder.setText(R.id.tv_title, item.getFriend_name());
 
 
-      mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
-      mRecyclerView.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
-      mRecyclerView.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
-      mRecyclerView.setAdapter(noticeBeanOnionRecycleAdapter);
-  }
+                View view = holder.getView(R.id.btnDelete);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
+                        DialogManager.getInstance().showNormalDialog(mContext, "删除好友", "删除好友后将不能收到该好友消息", "删除", "取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DialogManager.getInstance().showNetLoadingView(mContext);
+                                getPresenter().remove_friend(DApplication.getInstance().getLoginUser().getId() + "",
+                                        item.getFriend_username() + ""
+                                );
+                            }
+                        });
+
+                    }
+                });
+
+                holder.getView(R.id.SwipeMenuLayout).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // demo中直接进入聊天页面，实际一般是进入用户详情页
+                        startActivity(new Intent(mContext, ChatActivity.class).putExtra("userId", item.getFriend_username()));
+                    }
+                });
+
+            }
+        };
+
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。
+        mRecyclerView.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
+        mRecyclerView.setAdapter(noticeBeanOnionRecycleAdapter);
+    }
 
 
     public void deleteSuccess() {

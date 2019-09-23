@@ -1,8 +1,11 @@
 package com.zsoe.businesssharing.business;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.Button;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.chat.EMClient;
@@ -11,13 +14,19 @@ import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.business.login.LoginActivity;
 import com.zsoe.businesssharing.business.main.MainActivity;
+import com.zsoe.businesssharing.commonview.CustomVideoView;
 import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements View.OnClickListener {
 
-    private TimeCount timeCount = new TimeCount(1000, 1000);
+    //    private TimeCount timeCount = new TimeCount(1000, 1000);
+    private CustomVideoView mCustomVideo;
+    /**
+     * app_name
+     */
+    private Button mBtnLogin;
 
 
     @Override
@@ -25,11 +34,12 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
+        initView();
         //定位权限
         new OpenPermission2(mContext).requestPermission(new OpenPermission2.OnPermissionListener() {
             @Override
             public void onPermissionSuccess() {
-                timeCount.start();
+//                timeCount.start();
             }
         }, new OpenPermission2.OnPermissionCancleListener() {
             @Override
@@ -43,6 +53,10 @@ public class SplashActivity extends BaseActivity {
                 finish();
             }
         }, true, OpenPermission2.INIT_PERMISSION);
+
+
+        Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.guide_1);
+        mCustomVideo.playVideo(uri);
     }
 
 
@@ -54,6 +68,23 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private void initView() {
+        mCustomVideo = (CustomVideoView) findViewById(R.id.custom_video);
+        mBtnLogin = (Button) findViewById(R.id.btn_login);
+        mBtnLogin.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            default:
+                break;
+            case R.id.btn_login:
+                startMainPage();
+                break;
+        }
     }
 
     /**
@@ -112,6 +143,13 @@ public class SplashActivity extends BaseActivity {
                 }
             }
         }).start();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mCustomVideo != null) {
+            mCustomVideo.stopPlayback();
+        }
     }
 }

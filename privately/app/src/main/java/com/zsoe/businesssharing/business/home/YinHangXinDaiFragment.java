@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.BrowserActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.HttpResponseFunc;
@@ -120,6 +123,15 @@ public class YinHangXinDaiFragment extends BaseFragment<BankListPresenter> {
 
                         currentPosition = holder.getAdapterPosition();
                         collect(item.getId() + "", acttype);
+                    }
+                });
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent  = new Intent(mContext, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkurl());
+                        startActivity(intent);
                     }
                 });
 

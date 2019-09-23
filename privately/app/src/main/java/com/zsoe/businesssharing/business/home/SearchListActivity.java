@@ -2,7 +2,9 @@ package com.zsoe.businesssharing.business.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -129,6 +131,12 @@ public class SearchListActivity extends BaseActivity<SearchListPresenter> {
 
             }
         };
+
+
+        final View inflate = LayoutInflater.from(mContext).inflate(R.layout.no_data_view, null);
+        inflate.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        noticeBeanOnionRecycleAdapter.setEmptyView(true, inflate);
 
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));// 布局管理器。

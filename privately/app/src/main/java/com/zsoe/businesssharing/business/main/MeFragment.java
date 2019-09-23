@@ -15,6 +15,7 @@ import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.business.exhibitionhall.BangZhuActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.TuiGuangActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
@@ -109,6 +110,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onClick(View view) {
                     //跳入帮助中心
+                    Intent intent = new Intent(mContext, BangZhuActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, 4);
+                    startActivity(intent);
+
                 }
             });
 
@@ -127,7 +132,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onClick(View view) {
                     //跳入帮助中心
-
+                    Intent intent = new Intent(mContext, BangZhuActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, 4);
+                    startActivity(intent);
                 }
             });
 
@@ -203,7 +210,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_zixun:
 
                 Intent intent = new Intent(mContext, LatestNewsActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, 4);
+                intent.putExtra(Config.INTENT_PARAMS1, 2);
                 startActivity(intent);
 
                 break;

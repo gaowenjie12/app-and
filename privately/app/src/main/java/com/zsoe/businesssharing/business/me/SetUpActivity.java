@@ -107,6 +107,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
 
         DApplication.getInstance().exit();
         DApplication.getInstance().startLogin();
+
         UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.QQ, authListener);
 
 

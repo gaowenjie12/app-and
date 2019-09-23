@@ -51,7 +51,8 @@
         android:onClick="forward"
         android:padding="10dp"
         android:text="@string/forward"
-        android:textColor="@android:color/black"
+       android:visibility="gone"
+       android:textColor="@android:color/black"
         android:textSize="20sp" />
     <View
         android:layout_width="match_parent"
