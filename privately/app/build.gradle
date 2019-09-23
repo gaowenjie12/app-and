@@ -239,6 +239,9 @@ dependencies {
     //饺子播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
 
+    implementation 'com.parse:parse-android:1.13.1'
+
+
     implementation 'com.arialyy.aria:aria-core:3.6.6'
     annotationProcessor 'com.arialyy.aria:aria-compiler:3.6.6'
     implementation 'com.lxj:xpopup:1.8.9'

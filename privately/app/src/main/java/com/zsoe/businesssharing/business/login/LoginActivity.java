@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -39,6 +39,7 @@ import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.KeyboardWatcher;
 import com.zsoe.businesssharing.utils.LogUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -264,16 +265,22 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
 
             String s = platform.toString();
-            if (s.equals(SHARE_MEDIA.QQ)) {
 
-            } else if (s.equals(SHARE_MEDIA.WEIXIN)) {
 
+            String uid = data.get("uid");
+            String iconurl = data.get("iconurl");
+            String name = data.get("name");
+
+
+            String platformStr = "";
+            if (s.equals(SHARE_MEDIA.WEIXIN)) {
+                platformStr = "wechat";
+            } else if (s.equals(SHARE_MEDIA.SINA)) {
+                platformStr = "weibo";
             }
 
             DialogManager.getInstance().dismissNetLoadingView();
-            Toast.makeText(mContext, "成功了", Toast.LENGTH_LONG).show();
-            LogUtil.e("授权成功===" + data.toString());
-            Log.e("open", "授权成功===" + data.toString());
+            getPresenter().third(platformStr, uid, name, iconurl);
             Logger.e(data.toString());
 
         }
@@ -311,6 +318,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     public void loginSuccess(LoginUser loginUser) {
 
         if (DemoHelper.getInstance().isLoggedIn()) {
+
+            // 登陆成功，保存用户昵称与头像URL
+            SPUtils.getInstance().put("name", loginUser.getNickname());
+            SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
+
+            DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(loginUser.getNickname());
+            DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
+            DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
+
             // ** manually load all local groups and conversation
             EMClient.getInstance().groupManager().loadAllGroups();
             EMClient.getInstance().chatManager().loadAllConversations();
@@ -329,6 +345,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
             @Override
             public void onSuccess() {
+
+                // 登陆成功，保存用户昵称与头像URL
+                SPUtils.getInstance().put("name", loginUser.getNickname());
+                SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
+
+                DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(loginUser.getNickname());
+                DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
+                DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
+
 
                 // ** manually load all local groups and conversation
                 EMClient.getInstance().groupManager().loadAllGroups();
@@ -410,6 +435,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     @Override
     public void onQQLoginSuccess(JSONObject jsonObject, QQLoginManager.UserAuthInfo authInfo) {
         DialogManager.getInstance().dismissNetLoadingView();
+
+        String openid = "", nickname = "", figureurl_2 = "";
+        try {
+            openid = jsonObject.getString("openid");
+            nickname = jsonObject.getString("nickname");
+            figureurl_2 = jsonObject.getString("figureurl_2");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        getPresenter().third("qq", openid, nickname, figureurl_2);
+
+
         ToastUtils.showShort(jsonObject.toString());
         Logger.e(jsonObject.toString());
     }
@@ -423,7 +461,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
     @Override
     public void onQQLoginError(UiError uiError) {
-        ToastUtils.showShort("登录出错！");
+        ToastUtils.showShort("登录出错！" + uiError.toString());
 
         DialogManager.getInstance().dismissNetLoadingView();
     }

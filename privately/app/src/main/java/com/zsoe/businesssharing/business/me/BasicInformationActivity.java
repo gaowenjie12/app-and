@@ -163,11 +163,22 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
                 String district = mTvDiqu.getText().toString();
                 String companylocation = mTvSuozaidi.getText().toString();
 
+                String itemInsdustryId = "", rootHangYeid = "", cityBeanId = "";
+                if (null != itemInsdustry) {
+                    itemInsdustryId = itemInsdustry.getId() + "";
+                }
+                if (null != rootHangYe) {
+                    rootHangYeid = rootHangYe.getId() + "";
+                }
+                if (null != cityBean) {
+                    cityBeanId = cityBean.getId() + "";
+                }
+
                 DialogManager.getInstance().showNetLoadingView(mContext);
                 getPresenter().userProfile(mEdZhenshiStr, picPath, nickname, gender, startDateStr,
-                        mEdShoujihaoStr, email, district, itemInsdustry.getId() + "",
-                        companylocation, rootHangYe.getId() + "",
-                        cityBean.getId() + "");
+                        mEdShoujihaoStr, email, district, itemInsdustryId,
+                        companylocation, rootHangYeid,
+                        cityBeanId);
             }
         });
 
@@ -192,7 +203,7 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         mTvSuozaidi.setText(loginUser.getCompanylocation());
 
         mTvFuwuzhan.setText(loginUser.getServicename());
-        mTvHangye.setText(loginUser.getIndustry_pname()+"--"+loginUser.getIndustry_cname());
+        mTvHangye.setText(loginUser.getIndustry_pname() + "--" + loginUser.getIndustry_cname());
     }
 
     private void initView() {
@@ -238,8 +249,8 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
     }
 
 
-    String gender;
-    String startDateStr;
+    String gender ="";
+    String startDateStr ="";
 
     @Override
     public void onClick(View v) {
@@ -644,7 +655,7 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         finish();
     }
 
-    String picPath;
+    String picPath = "";
 
     public void sendImg(ArrayList<String> arrayList) {
         final HashMap<String, String> map = new HashMap<>();

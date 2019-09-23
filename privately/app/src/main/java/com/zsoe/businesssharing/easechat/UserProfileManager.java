@@ -39,7 +39,7 @@ public class UserProfileManager {
 		if (sdkInited) {
 			return true;
 		}
-//		ParseManager.getInstance().onInit(context);
+		ParseManager.getInstance().onInit(context);
 		syncContactInfosListeners = new ArrayList<DataSyncListener>();
 		sdkInited = true;
 		return true;
@@ -122,43 +122,50 @@ public class UserProfileManager {
 		return currentUser;
 	}
 
-//	public boolean updateCurrentUserNickName(final String nickname) {
-//		boolean isSuccess = ParseManager.getInstance().updateParseNickName(nickname);
-//		if (isSuccess) {
-//			setCurrentUserNick(nickname);
-//		}
-//		return isSuccess;
-//	}
+	public boolean updateCurrentUserNickName(final String nickname) {
+		boolean isSuccess = ParseManager.getInstance().updateParseNickName(nickname);
+		if (isSuccess) {
+			setCurrentUserNick(nickname);
+		}
+		return isSuccess;
+	}
 
-//	public String uploadUserAvatar(byte[] data) {
-//		String avatarUrl = ParseManager.getInstance().uploadParseAvatar(data);
-//		if (avatarUrl != null) {
-//			setCurrentUserAvatar(avatarUrl);
-//		}
-//		return avatarUrl;
-//	}
+	public String uploadUserAvatar(byte[] data) {
+		String avatarUrl = ParseManager.getInstance().uploadParseAvatar(data);
+		if (avatarUrl != null) {
+			setCurrentUserAvatar(avatarUrl);
+		}
+		return avatarUrl;
+	}
 
-//	public void asyncGetCurrentUserInfo() {
-//		ParseManager.getInstance().asyncGetCurrentUserInfo(new EMValueCallBack<EaseUser>() {
-//
-//			@Override
-//			public void onSuccess(EaseUser value) {
-//			    if(value != null){
-//    				setCurrentUserNick(value.getNickname());
-//    				setCurrentUserAvatar(value.getAvatar());
-//			    }
-//			}
-//
-//			@Override
-//			public void onError(int error, String errorMsg) {
-//
-//			}
-//		});
-//
-//	}
-//	public void asyncGetUserInfo(final String username,final EMValueCallBack<EaseUser> callback){
-//		ParseManager.getInstance().asyncGetUserInfo(username, callback);
-//	}
+	public String uploadUserAvatar(String data) {
+		if (data != null) {
+			setCurrentUserAvatar(data);
+		}
+		return data;
+	}
+
+	public void asyncGetCurrentUserInfo() {
+		ParseManager.getInstance().asyncGetCurrentUserInfo(new EMValueCallBack<EaseUser>() {
+
+			@Override
+			public void onSuccess(EaseUser value) {
+			    if(value != null){
+    				setCurrentUserNick(value.getNickname());
+    				setCurrentUserAvatar(value.getAvatar());
+			    }
+			}
+
+			@Override
+			public void onError(int error, String errorMsg) {
+
+			}
+		});
+
+	}
+	public void asyncGetUserInfo(final String username,final EMValueCallBack<EaseUser> callback){
+		ParseManager.getInstance().asyncGetUserInfo(username, callback);
+	}
 	private void setCurrentUserNick(String nickname) {
 		getCurrentUserInfo().setNickname(nickname);
 		PreferenceManager.getInstance().setCurrentUserNick(nickname);

@@ -95,5 +95,4 @@ public class SearchPresenter extends BasePresenter<SearchActivity> {
 
     }
 
-
 }

@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.message;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.HaoYouBean;
@@ -68,6 +70,25 @@ public class HaoYouActivity extends BaseActivity<HaoYouPresenter> {
                 FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getAvatar());
                 holder.setText(R.id.tv_title, item.getFriend_name());
 
+
+                View view = holder.getView(R.id.btnDelete);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        DialogManager.getInstance().showNormalDialog(mContext, "删除好友", "删除好友后将不能收到该好友消息", "删除", "取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DialogManager.getInstance().showNetLoadingView(mContext);
+                                getPresenter().remove_friend(DApplication.getInstance().getLoginUser().getId() + "",
+                                        item.getFriend_username() + ""
+                                );
+                            }
+                        });
+
+                    }
+                });
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -110,4 +131,8 @@ public class HaoYouActivity extends BaseActivity<HaoYouPresenter> {
         noticeBeanOnionRecycleAdapter.notifyDataSetChanged();
     }
 
+
+    public void deleteSuccess() {
+        mPtrFrame.autoRefresh();
+    }
 }

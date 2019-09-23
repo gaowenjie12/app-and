@@ -42,6 +42,24 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
                     }
                 },
                 new BaseToastNetError<LoginActivity>());
+
+
+        restartableFirst(REQUEST_LOGIN2,
+                new Func0<Observable<RootResponse<LoginUser>>>() {
+                    @Override
+                    public Observable<RootResponse<LoginUser>> call() {
+
+                        return DApplication.getServerAPI().third(body);
+                    }
+                },
+
+                new NetCallBack<LoginActivity, LoginUser>() {
+                    @Override
+                    public void callBack(LoginActivity v, LoginUser o) {
+                        v.loginSuccess(o);
+                    }
+                },
+                new BaseToastNetError<LoginActivity>());
     }
 
 
@@ -52,6 +70,16 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
         body = signForm(params);
         start(REQUEST_LOGIN);
 
+    }
+
+    public void third(String platform, String thirduid, String thirdname, String avatar) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("platform", platform);
+        params.put("thirduid", thirduid);
+        params.put("thirdname", thirdname);
+        params.put("avatar", avatar);
+        body = signForm(params);
+        start(REQUEST_LOGIN2);
     }
 
 }

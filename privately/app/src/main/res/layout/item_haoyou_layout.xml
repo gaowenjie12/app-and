@@ -1,47 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zsoe.businesssharing.commonview.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
-
-    <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/image"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_centerVertical="true"
-        android:layout_margin="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@+id/right_arrow"
-        android:scaleType="fitXY"
-        fresco:placeholderImage="@color/pv_wait_color"
-        fresco:placeholderImageScaleType="fitCenter"
-        fresco:roundAsCircle="true" />
+    android:clickable="true"
+    app:ios="false"
+    app:leftSwipe="true"
+    app:swipeEnable="true">
 
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/image"
-        android:textColor="@color/text_3"
-        android:textSize="@dimen/text_one_eight"
-        tools:text="企业交流会" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
-        android:src="@mipmap/right_arrow" />
+        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/right_arrow"
+            android:scaleType="fitXY"
+            fresco:placeholderImage="@color/pv_wait_color"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:roundAsCircle="true" />
 
 
-    <View
-        style="@style/line_style"
-        android:layout_below="@+id/image" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/image"
+            android:textColor="@color/text_3"
+            android:textSize="@dimen/text_one_eight"
+            tools:text="企业交流会" />
 
-</RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_arrow" />
+
+
+        <View
+            style="@style/line_style"
+            android:layout_below="@+id/image" />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:background="#FF5C33"
+        android:text="删除"
+        android:textColor="@android:color/white" />
+
+
+</com.zsoe.businesssharing.commonview.SwipeMenuLayout>

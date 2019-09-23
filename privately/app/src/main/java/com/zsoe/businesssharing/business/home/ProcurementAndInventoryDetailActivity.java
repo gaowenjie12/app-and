@@ -35,8 +35,10 @@ public class ProcurementAndInventoryDetailActivity extends BaseActivity<CaiGouPr
         initView();
 
         int id = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+
+        initTitleText("库存情况");
+
         getPresenter().stock_purchase_info(id + "");
-        initTitleText("采购需求/库存情况");
     }
 
     private void initView() {

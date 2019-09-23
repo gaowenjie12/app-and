@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ItemSearchBean;
 import com.zsoe.businesssharing.bean.RootSearchBean;
@@ -43,6 +45,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Vie
     private MultiLineRadioGroup mHotContent;
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+    private int type;
 
 
     @Override
@@ -65,22 +68,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Vie
         mTabLayout_6.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                switch (position) {
-                    case 0:
-
-                        break;
-
-                    case 1:
-                        break;
-
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-
-                }
+                type = position + 1;
             }
 
             @Override
@@ -162,6 +150,14 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Vie
                     ToastUtils.showShort("请输入搜索内容");
                     return;
                 }
+
+
+                Intent intent = new Intent(mContext, SearchListActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, type + "");
+                intent.putExtra(Config.INTENT_PARAMS2, s);
+                startActivity(intent);
+
+
                 break;
         }
     }

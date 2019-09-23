@@ -32,6 +32,7 @@ import com.zsoe.businesssharing.bean.ProductDetail;
 import com.zsoe.businesssharing.bean.RenCompanyBean;
 import com.zsoe.businesssharing.bean.RootEventBean;
 import com.zsoe.businesssharing.bean.RootSearchBean;
+import com.zsoe.businesssharing.bean.SearchBean;
 import com.zsoe.businesssharing.bean.StockBean;
 import com.zsoe.businesssharing.bean.XinXiBena;
 import com.zsoe.businesssharing.business.login.LoginUser;
@@ -66,7 +67,7 @@ public interface ServerAPI {
     Observable<RootResponse> resetpwd(@Body FormBody body);
 
     /**
-     * 注册会员
+     * 登录会员
      */
     @POST("user/login")
     Observable<RootResponse<LoginUser>> login(@Body FormBody body);
@@ -429,5 +430,25 @@ public interface ServerAPI {
      */
     @POST("msg/myfriend_list")
     Observable<RootResponse<List<HaoYouBean>>> myfriend_list(@Body FormBody body);
+
+    /**
+     * 第三方登录 /api/v1/user/third 可以使用
+     */
+    @POST("user/third")
+    Observable<RootResponse<LoginUser>> third(@Body FormBody body);
+
+
+    /**
+     * 搜索 /api/v1/index/search 可以使用 ----------
+     */
+    @POST("index/search")
+    Observable<RootResponse<List<SearchBean>>> search(@Body FormBody body);
+
+
+    /**
+     * 移除好友 /api/v1/msg/remove_friend 可以使用
+     */
+    @POST("msg/remove_friend")
+    Observable<RootResponse> remove_friend(@Body FormBody body);
 
 }

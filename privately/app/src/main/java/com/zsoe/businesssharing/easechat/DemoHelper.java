@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.zsoe.businesssharing.R;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.bean.RobotUser;
 import com.zsoe.businesssharing.business.main.MainActivity;
 import com.zsoe.businesssharing.easechat.InviteMessage.InviteMessageStatus;
@@ -173,7 +175,7 @@ public class DemoHelper {
             //initialize preference manager
             PreferenceManager.init(context);
             //initialize profile manager
-//            getUserProfileManager().init(context);
+            getUserProfileManager().init(context);
             //set Call options
 //            setCallOptions();
 
@@ -500,21 +502,21 @@ public class DemoHelper {
             @Override
             public void onConnected() {
                 // in case group and contact were already synced, we supposed to notify sdk we are ready to receive the events
-//                if (isGroupsSyncedWithServer && isContactsSyncedWithServer) {
-//                    EMLog.d(TAG, "group and contact already synced with servre");
-//                } else {
-//                    if (!isGroupsSyncedWithServer) {
-//                        asyncFetchGroupsFromServer(null);
-//                    }
-//
-//                    if (!isContactsSyncedWithServer) {
-//                        asyncFetchContactsFromServer(null);
-//                    }
-//
-//                    if (!isBlackListSyncedWithServer) {
-//                        asyncFetchBlackListFromServer(null);
-//                    }
-//                }
+                if (isGroupsSyncedWithServer && isContactsSyncedWithServer) {
+                    EMLog.d(TAG, "group and contact already synced with servre");
+                } else {
+                    if (!isGroupsSyncedWithServer) {
+                        asyncFetchGroupsFromServer(null);
+                    }
+
+                    if (!isContactsSyncedWithServer) {
+                        asyncFetchContactsFromServer(null);
+                    }
+
+                    if (!isBlackListSyncedWithServer) {
+                        asyncFetchBlackListFromServer(null);
+                    }
+                }
             }
         };
 
@@ -617,10 +619,11 @@ public class DemoHelper {
 
     /**
      * 处理会议邀请
-     *
-//     * @param confId   会议 id
-//     * @param password 会议密码
-//     */
+     * <p>
+     * //     * @param confId   会议 id
+     * //     * @param password 会议密码
+     * //
+     */
 //    public void goConference(String confId, String password, String extension) {
 //        if (isDuringMediaCommunication()) {
 //            return;
@@ -1285,20 +1288,49 @@ public class DemoHelper {
     private EaseUser getUserInfo(String username) {
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
-        EaseUser user = null;
+//        EaseUser user = null;
 //        if (username.equals(EMClient.getInstance().getCurrentUser()))
 //            return getUserProfileManager().getCurrentUserInfo();
-        user = getContactList().get(username);
-        if (user == null && getRobotList() != null) {
-            user = getRobotList().get(username);
-        }
+//        user = getContactList().get(username);
+//        if (user == null && getRobotList() != null) {
+//            user = getRobotList().get(username);
+//        }
+//
+//        // if user is not in your contacts, set inital letter for him/her
+//        if (user == null) {
+//            user = new EaseUser(username);
+//            EaseCommonUtils.setUserInitialLetter(user);
+//        }
 
-        // if user is not in your contacts, set inital letter for him/her
-        if (user == null) {
-            user = new EaseUser(username);
-            EaseCommonUtils.setUserInitialLetter(user);
+
+        // 获取user信息，demo是从内存的好友列表里获取，
+        // 实际开发中，可能还需要从服务器获取用户信息,
+        // 从服务器获取的数据，最好缓存起来，避免频繁的网络请求
+
+        if (username.equals(EMClient.getInstance().getCurrentUser())) {
+            EaseUser currentUserInfo = getUserProfileManager().getCurrentUserInfo();
+            return currentUserInfo;
         }
-        return user;
+        EaseUser easeUser;
+        if (contactList != null && contactList.containsKey(username)) {
+
+        } else { // 如果内存中没有，则将本地数据库中的取出到内存中。
+            getContactList();
+        }
+        // // TODO 获取不在好友列表里的群成员具体信息，即陌生人信息，demo未实现
+        // if (user == null && getRobotList() != null) {
+        // user = getRobotList().get(hxId);
+        // }
+        easeUser = contactList.get(username);
+        if (easeUser == null) {
+            easeUser = new EaseUser(username);
+        } else {
+            if (TextUtils.isEmpty(easeUser.getNickname())) { // 如果名字为空，则显示环信号码
+                easeUser.setNickname(easeUser.getUsername());
+            }
+        }
+        return easeUser;
+
     }
 
     /**
@@ -1311,18 +1343,56 @@ public class DemoHelper {
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 for (EMMessage message : messages) {
+
+
+                    String userName = message.getStringAttribute("userName", "");
+                    String userPic = message.getStringAttribute("userPic", "");
+
+                    Log.e("open", "收到拓展消息userName===" + userName + "===userPic==" + userPic);
+
+//                    EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
+//                    // 判断一下是否是会议邀请
+//                    String confId = message.getStringAttribute(Constant.MSG_ATTR_CONF_ID, "");
+//                    if (!"".equals(confId)) {
+//                        String password = message.getStringAttribute(Constant.MSG_ATTR_CONF_PASS, "");
+//                        String extension = message.getStringAttribute(Constant.MSG_ATTR_EXTENSION, "");
+////                        goConference(confId, password, extension);
+//                    }
+//                    // in background, do not refresh UI, notify it in notification bar
+//                    if (!easeUI.hasForegroundActivies()) {
+//                        getNotifier().notify(message);
+//                    }
+
+
+                    String hxIdFrom = message.getFrom();
+                    EaseUser easeUser = new EaseUser(hxIdFrom);
+                    easeUser.setAvatar(userPic);
+                    easeUser.setNickname(userName);
+
+                    // 存入内存
+                    getContactList();
+                    contactList.put(hxIdFrom, easeUser);
+                    // 存入db
+                    UserDao dao = new UserDao(DApplication.getInstance().getApplicationContext());
+                    List<EaseUser> users = new ArrayList<EaseUser>();
+                    users.add(easeUser);
+                    dao.saveContactList(users);
+
+                    getModel().setContactSynced(true);
+
+                    // 通知listeners联系人同步完毕
+                    notifyContactsSyncListener(true);
+//                    if (isGroupsSyncedWithServer()) {
+//                        notifyForRecevingEvents();
+//                    }
+
+                    // ******************扩展信息处理完成**********************
                     EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
-                    // 判断一下是否是会议邀请
-                    String confId = message.getStringAttribute(Constant.MSG_ATTR_CONF_ID, "");
-                    if (!"".equals(confId)) {
-                        String password = message.getStringAttribute(Constant.MSG_ATTR_CONF_PASS, "");
-                        String extension = message.getStringAttribute(Constant.MSG_ATTR_EXTENSION, "");
-//                        goConference(confId, password, extension);
-                    }
-                    // in background, do not refresh UI, notify it in notification bar
+                    // 应用在后台，不需要刷新UI,通知栏提示新消息
                     if (!easeUI.hasForegroundActivies()) {
                         getNotifier().notify(message);
                     }
+
                 }
             }
 
@@ -1527,12 +1597,12 @@ public class DemoHelper {
         demoModel.saveContactList(mList);
     }
 
-//    public UserProfileManager getUserProfileManager() {
-//        if (userProManager == null) {
-//            userProManager = new UserProfileManager();
-//        }
-//        return userProManager;
-//    }
+    public UserProfileManager getUserProfileManager() {
+        if (userProManager == null) {
+            userProManager = new UserProfileManager();
+        }
+        return userProManager;
+    }
 
 //    void endCall() {
 //        try {
@@ -1702,18 +1772,18 @@ public class DemoHelper {
                     //notify sync success
                     notifyContactsSyncListener(true);
 
-//                    getUserProfileManager().asyncFetchContactInfosFromServer(usernames, new EMValueCallBack<List<EaseUser>>() {
-//
-//                        @Override
-//                        public void onSuccess(List<EaseUser> uList) {
-//                            updateContactList(uList);
-//                            getUserProfileManager().notifyContactInfosSyncListener(true);
-//                        }
-//
-//                        @Override
-//                        public void onError(int error, String errorMsg) {
-//                        }
-//                    });
+                    getUserProfileManager().asyncFetchContactInfosFromServer(usernames, new EMValueCallBack<List<EaseUser>>() {
+
+                        @Override
+                        public void onSuccess(List<EaseUser> uList) {
+                            updateContactList(uList);
+                            getUserProfileManager().notifyContactInfosSyncListener(true);
+                        }
+
+                        @Override
+                        public void onError(int error, String errorMsg) {
+                        }
+                    });
                     if (callback != null) {
                         callback.onSuccess(usernames);
                     }
@@ -1832,7 +1902,7 @@ public class DemoHelper {
 
         setContactList(null);
         setRobotList(null);
-//        getUserProfileManager().reset();
+        getUserProfileManager().reset();
         DemoDBManager.getInstance().closeDB();
     }
 

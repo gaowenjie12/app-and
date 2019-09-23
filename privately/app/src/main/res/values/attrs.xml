@@ -263,11 +263,11 @@
         <attr name="selectorDrawable" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="SwipeMenuLayout">
-        <attr name="leftViewId" format="reference" />
-        <attr name="rightViewId" format="reference" />
-        <attr name="contentViewId" format="reference" />
-    </declare-styleable>
+<!--    <declare-styleable name="SwipeMenuLayout">-->
+<!--        <attr name="leftViewId" format="reference" />-->
+<!--        <attr name="rightViewId" format="reference" />-->
+<!--        <attr name="contentViewId" format="reference" />-->
+<!--    </declare-styleable>-->
 
     <attr name="bgColor" format="color" />
     <attr name="fgColor" format="color" />
@@ -836,4 +836,12 @@
     <attr name="cpOverlayTextSize" format="dimension|reference"/>
     <attr name="cpOverlayTextColor" format="color|reference"/>
     <attr name="cpOverlayBackground" format="color|reference"/>
+
+
+    <declare-styleable name="SwipeMenuLayout">
+        <attr name="swipeEnable" format="boolean"/>
+        <attr name="ios" format="boolean"/>
+        <attr name="leftSwipe" format="boolean"/>
+    </declare-styleable>
+
 </resources>
