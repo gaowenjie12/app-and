@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     EMClientListener clientListener = new EMClientListener() {
         @Override
         public void onMigrate2x(boolean success) {
-            Toast.makeText(MainActivity.this, "onUpgradeFrom 2.x to 3.x " + (success ? "success" : "fail"), Toast.LENGTH_LONG).show();
+//            Toast.makeText(MainActivity.this, "onUpgradeFrom 2.x to 3.x " + (success ? "success" : "fail"), Toast.LENGTH_LONG).show();
             if (success) {
                 refreshUIWithMessage();
             }
@@ -224,7 +224,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
             public void run() {
                 // refresh unread count
                 updateUnreadLabel();
-                EventBus.getDefault().post(new MessageEvent(2));
+                EventBus.getDefault().post(new MessageEvent(""));
             }
         });
     }
@@ -241,7 +241,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 updateUnreadAddressLable();
 
                 // refresh conversation list
-                EventBus.getDefault().post(new MessageEvent(2));
+                EventBus.getDefault().post(new MessageEvent(""));
 
 //                if (contactListFragment != null) {
 //                    contactListFragment.refresh();
@@ -460,9 +460,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent messageEvent) {
-        if (messageEvent.type == 1) {
-            updateUnreadLabel();
-        }
+        updateUnreadLabel();
     }
 
 
@@ -490,13 +488,13 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         if (!isConflict && !isCurrentAccountRemoved) {
             updateUnreadLabel();
             updateUnreadAddressLable();
-            EventBus.getDefault().post(new MessageEvent(2));
+            EventBus.getDefault().post(new MessageEvent(""));
 
         }
 
-        if (null != messageFragment) {
-            messageFragment.updateUnreadLabel();
-        }
+//        if (null != messageFragment) {
+//            messageFragment.updateUnreadLabel();
+//        }
 
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
     }

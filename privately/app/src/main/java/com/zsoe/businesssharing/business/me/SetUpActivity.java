@@ -105,11 +105,13 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
 
     public void loginOut() {
 
+        if (DApplication.getInstance().getLoginUser().getPlatform().equals("")) {
+
+        }
         DApplication.getInstance().exit();
         DApplication.getInstance().startLogin();
 
         UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.QQ, authListener);
-
 
         DemoHelper.getInstance().logout(true, new EMCallBack() {
 
@@ -117,7 +119,6 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
             public void onSuccess() {
                 runOnUiThread(new Runnable() {
                     public void run() {
-
 
                     }
                 });

@@ -124,6 +124,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         //判断用户状态，选择跳转的activity
         if (null != FancyUtils.getLoginUser()) {
             startActivity(new Intent(mContext, MainActivity.class));
+            finish();
         } else {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();

@@ -35,9 +35,6 @@ public class ProcurementAndInventoryDetailActivity extends BaseActivity<CaiGouPr
         initView();
 
         int id = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
-
-        initTitleText("库存情况");
-
         getPresenter().stock_purchase_info(id + "");
     }
 
@@ -50,6 +47,9 @@ public class ProcurementAndInventoryDetailActivity extends BaseActivity<CaiGouPr
     }
 
     public void setDate(CaiGouDetail caiGouDetail) {
+
+        initTitleText(caiGouDetail.getTitle());
+
         mTvChanpinName.setText(caiGouDetail.getKeyword());
         mTvGongsiName.setText(caiGouDetail.getCompanyname());
         mTvContent.setText(caiGouDetail.getContent());

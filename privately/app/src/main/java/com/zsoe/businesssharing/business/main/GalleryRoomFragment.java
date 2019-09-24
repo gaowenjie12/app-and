@@ -165,6 +165,16 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
         });
 
 
+        //设置布局的方式
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext, spanCount);
+        int spacing = ScreenUtils.dip2px(mContext, 10);//每一个矩形的间距
+        //设置每个item间距
+        hangye_recyclerView.addItemDecoration(new HeaderGridSpacingItemDecoration(spanCount, spacing, includeEdge, 0));
+        hangye_recyclerView.setNestedScrollingEnabled(false);
+        hangye_recyclerView.setLayoutManager(layoutManager);// 布局管理器。
+        hangye_recyclerView.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
+        hangye_recyclerView.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
+
     }
 
     int spanCount = 5;//跟布局里面的spanCount属性是一致的
@@ -182,19 +192,7 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
 
         mPtrFrame.refreshComplete();
         banner_view.setDate(galleryRoomBean.getSlide());
-
-        //设置布局的方式
-        GridLayoutManager layoutManager = new GridLayoutManager(mContext, spanCount);
         expandAdapter = new ExpandAdapter(mContext, galleryRoomBean.getInsdustrylist());
-
-        int spacing = ScreenUtils.dip2px(mContext, 10);//每一个矩形的间距
-
-        //设置每个item间距
-        hangye_recyclerView.addItemDecoration(new HeaderGridSpacingItemDecoration(spanCount, spacing, includeEdge, 0));
-        hangye_recyclerView.setNestedScrollingEnabled(false);
-        hangye_recyclerView.setLayoutManager(layoutManager);// 布局管理器。
-        hangye_recyclerView.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
-        hangye_recyclerView.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         hangye_recyclerView.setAdapter(expandAdapter);
 
         if (galleryRoomBean.getInsdustrylist().size() > 15) {

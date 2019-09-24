@@ -60,6 +60,12 @@ public class BasicInformationPresenter extends BasePresenter<BasicInformationAct
                     public void callBack(BasicInformationActivity v, LoginUser loginUser) {
                         v.userProfileSuccess(loginUser);
                     }
+
+                    @Override
+                    public void callBackServerError(BasicInformationActivity v, RootResponse t) {
+                        super.callBackServerError(v, t);
+
+                    }
                 },
                 new BaseToastNetError<BasicInformationActivity>());
 

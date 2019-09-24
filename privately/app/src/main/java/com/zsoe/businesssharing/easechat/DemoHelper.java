@@ -48,7 +48,10 @@ import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.bean.RobotUser;
 import com.zsoe.businesssharing.business.main.MainActivity;
+import com.zsoe.businesssharing.business.message.MessageEvent;
 import com.zsoe.businesssharing.easechat.InviteMessage.InviteMessageStatus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1342,6 +1345,7 @@ public class DemoHelper {
         messageListener = new EMMessageListener() {
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
+                EventBus.getDefault().post(new MessageEvent(""));
                 for (EMMessage message : messages) {
 
 

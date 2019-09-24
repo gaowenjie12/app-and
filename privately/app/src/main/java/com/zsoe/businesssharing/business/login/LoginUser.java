@@ -35,6 +35,16 @@ public class LoginUser {
     private String industry_cname;
     private String servicename;
     private String customerurl;
+    private String platform;
+
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
 
     public String getCustomerurl() {
         return customerurl;

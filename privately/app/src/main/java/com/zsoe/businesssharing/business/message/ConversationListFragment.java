@@ -1,6 +1,8 @@
 package com.zsoe.businesssharing.business.message;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -11,6 +13,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -120,7 +124,7 @@ public class ConversationListFragment extends EaseConversationListFragment {
         refresh();
 
 
-        EventBus.getDefault().post(new MessageEvent(1));
+        EventBus.getDefault().post(new MessageEvent(""));
 //        // update unread count
 //        ((MainActivity) getActivity()).updateUnreadLabel();
         return true;
@@ -132,8 +136,20 @@ public class ConversationListFragment extends EaseConversationListFragment {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent messageEvent) {
-        if (messageEvent.type == 2) {
-            refresh();
-        }
+        Log.e("open","聊天列表收到一条消息");
+        refresh();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

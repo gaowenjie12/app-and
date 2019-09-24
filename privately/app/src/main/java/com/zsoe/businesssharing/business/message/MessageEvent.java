@@ -6,9 +6,9 @@ package com.zsoe.businesssharing.business.message;
 
 public class MessageEvent {
 
-    public int type;
+    public String type;
 
-    public MessageEvent(int type) {
+    public MessageEvent(String type) {
         this.type = type;
     }
 

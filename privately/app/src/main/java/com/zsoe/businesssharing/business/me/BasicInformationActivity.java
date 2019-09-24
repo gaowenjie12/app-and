@@ -203,7 +203,13 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         mTvSuozaidi.setText(loginUser.getCompanylocation());
 
         mTvFuwuzhan.setText(loginUser.getServicename());
-        mTvHangye.setText(loginUser.getIndustry_pname() + "--" + loginUser.getIndustry_cname());
+
+        if (TextUtils.isEmpty(loginUser.getIndustry_pname()) || TextUtils.isEmpty(loginUser.getIndustry_cname())) {
+            mTvHangye.setText("请选择行业");
+        } else {
+            mTvHangye.setText(loginUser.getIndustry_pname() + "--" + loginUser.getIndustry_cname());
+        }
+
     }
 
     private void initView() {
@@ -249,8 +255,8 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
     }
 
 
-    String gender ="";
-    String startDateStr ="";
+    String gender = "";
+    String startDateStr = "";
 
     @Override
     public void onClick(View v) {

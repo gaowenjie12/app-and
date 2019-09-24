@@ -88,6 +88,8 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         } else {
             rl_lingdaohuixin.setVisibility(View.VISIBLE);
         }
+
+        updateUnreadLabel();
     }
 
 
@@ -149,9 +151,10 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent messageEvent) {
-
         updateUnreadLabel();
 
     }
+
+
 
 }

@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yayandroid.locationmanager.configuration.Configurations;
 import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 import com.zsoe.businesssharing.R;
+import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
@@ -170,7 +171,9 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 nextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(mContext, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, tag1.getLinkurl());
+                        startActivity(intent);
                     }
                 });
             }
