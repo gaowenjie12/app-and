@@ -31,11 +31,15 @@ import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.TabEntity;
 import com.zsoe.businesssharing.business.login.LoginActivity;
+import com.zsoe.businesssharing.business.message.MainEvent;
 import com.zsoe.businesssharing.business.message.MessageEvent;
 import com.zsoe.businesssharing.easechat.ChatActivity;
 import com.zsoe.businesssharing.easechat.Constant;
 import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.easechat.InviteMessgeDao;
+import com.zsoe.businesssharing.utils.LogUtil;
+import com.zsoe.businesssharing.utils.PhotoLoader;
+import com.zsoe.businesssharing.utils.ScreenUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,13 +48,18 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import indi.liyi.viewer.ImageViewer;
+import indi.liyi.viewer.ViewData;
+import indi.liyi.viewer.ViewerStatus;
+import indi.liyi.viewer.listener.OnBrowseStatusListener;
+
 @RequiresPresenter(MainPresenter.class)
 public class MainActivity extends BaseActivity<MainPresenter> {
 
 
 //    private ViewPager mViewPager;
 
-    private String[] mTitles = {"首页", "展厅", "关注", "消息", "我的"};
+    private String[] mTitles = {"首页", "展厅", "消息", "关注", "我的"};
     private int[] mIconUnselectIds = {
             R.mipmap.tab_shouye_pre, R.mipmap.tab_zhanting_pre,
             R.mipmap.tab_guanzhu_pre, R.mipmap.tab_xiaoxi_pre, R.mipmap.tab_wode_pre};
@@ -76,6 +85,9 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
     private BroadcastReceiver internalDebugReceiver;
+
+    private ImageViewer imageViewer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -374,6 +386,22 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     private void initView() {
 //        mFlContent = (FrameLayout) findViewById(R.id.fl_content);
         mBottomNavigation = (CommonTabLayout) findViewById(R.id.bottom_navigation);
+        imageViewer = findViewById(R.id.imageViewer);
+
+
+        imageViewer.overlayStatusBar(false)
+                .imageLoader(new PhotoLoader());
+
+        imageViewer.setOnBrowseStatusListener(new OnBrowseStatusListener() {
+            @Override
+            public void onBrowseStatus(int status) {
+                if (status == ViewerStatus.STATUS_BEGIN_OPEN) {
+                    ScreenUtils.changeStatusBarColor(MainActivity.this, R.color.black);
+                } else if (status == ViewerStatus.STATUS_SILENCE) {
+                    ScreenUtils.changeStatusBarColor(MainActivity.this, R.color.white);
+                }
+            }
+        });
     }
 
     private void initBottomNavigationView() {
@@ -398,16 +426,17 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                         galleryRoomFragment = GalleryRoomFragment.newInstance(getString(R.string.tab_2));
                     }
                     addOrShowFragment(getSupportFragmentManager().beginTransaction(), galleryRoomFragment);
-                } else if (position == 2) {// 关注
-                    if (attentionFragment == null) {
-                        attentionFragment = AttentionFragment.newInstance(getString(R.string.tab_3));
-                    }
-                    addOrShowFragment(getSupportFragmentManager().beginTransaction(), attentionFragment);
-                } else if (position == 3) {//消息
+                } else if (position == 2) {//  消息
                     if (messageFragment == null) {
                         messageFragment = MessageFragment.newInstance(getString(R.string.tab_4));
                     }
                     addOrShowFragment(getSupportFragmentManager().beginTransaction(), messageFragment);
+                } else if (position == 3) {//关注
+                    if (attentionFragment == null) {
+                        attentionFragment = AttentionFragment.newInstance(getString(R.string.tab_3));
+                    }
+                    addOrShowFragment(getSupportFragmentManager().beginTransaction(), attentionFragment);
+
                 } else if (position == 4) {//我的
                     if (meFragment == null) {
                         meFragment = MeFragment.newInstance(getString(R.string.tab_5));
@@ -434,14 +463,14 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
         if (count > 0) {
             //三位数
-            mBottomNavigation.showMsg(3, count);
-            mBottomNavigation.setMsgMargin(3, -5, 5);
+            mBottomNavigation.showMsg(2, count);
+            mBottomNavigation.setMsgMargin(2, -5, 5);
 
             if (null != messageFragment) {
                 messageFragment.updateUnreadLabel();
             }
         } else {
-            mBottomNavigation.hideMsg(3);
+            mBottomNavigation.hideMsg(2);
         }
     }
 
@@ -600,4 +629,20 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     private void unregisterBroadcastReceiver() {
         broadcastManager.unregisterReceiver(broadcastReceiver);
     }
+
+
+    /**
+     * 通知“我的”显示小红点
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MainEvent mainEvent) {
+
+        ViewData viewData = mainEvent.mVdList.get(mainEvent.position);
+        LogUtil.e("getTargetX==" + viewData.getTargetX() + "===getTargetY==" + viewData.getTargetY());
+
+        imageViewer.viewData(mainEvent.mVdList)
+                .watch(mainEvent.position);
+
+    }
+
 }

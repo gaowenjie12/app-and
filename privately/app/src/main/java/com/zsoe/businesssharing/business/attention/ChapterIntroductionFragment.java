@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business.attention;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,11 +16,20 @@ import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.FenHuiBean;
+import com.zsoe.businesssharing.business.message.MainEvent;
 import com.zsoe.businesssharing.commonview.ExpandableTextView;
 import com.zsoe.businesssharing.commonview.banner.BannerView;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.utils.FrecoFactory;
+import com.zsoe.businesssharing.utils.ScreenUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import indi.liyi.viewer.Utils;
+import indi.liyi.viewer.ViewData;
 import rx.functions.Action1;
 
 /**
@@ -51,6 +61,8 @@ public class ChapterIntroductionFragment extends BaseFragment<ChapterIntroductio
     private BannerView bannerView;
     private RecyclerView rv_pic;
     private ExpandableTextView tv_chenguo;
+    private List<ViewData> mVdList;
+
 
     @Override
 
@@ -81,6 +93,21 @@ public class ChapterIntroductionFragment extends BaseFragment<ChapterIntroductio
 
         bannerView.setDate(fenHuiBean.getSlide());
 
+
+        Point mScreenSize = ScreenUtils.getScreenSize(getActivity());
+        mVdList = new ArrayList<>();
+        List<String> photos = fenHuiBean.getPhotos();
+        for (int i = 0, len = photos.size(); i < len; i++) {
+            ViewData viewData = new ViewData();
+            viewData.setImageSrc(photos.get(i));
+            viewData.setTargetX(0);
+            viewData.setTargetY(0);
+            viewData.setTargetWidth(mScreenSize.x);
+            viewData.setTargetHeight(Utils.dp2px(getActivity(), 200));
+            mVdList.add(viewData);
+        }
+
+
         OnionRecycleAdapter noticeBeanOnionRecycleAdapter = new OnionRecycleAdapter<String>(R.layout.item_fenhui_layout, fenHuiBean.getPhotos()) {
             @Override
             protected void convert(BaseViewHolder holder, final String item) {
@@ -90,6 +117,20 @@ public class ChapterIntroductionFragment extends BaseFragment<ChapterIntroductio
                 FrecoFactory.getInstance().disPlay(simpleDraweeView, item);
 
 
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        int[] location = new int[2];
+                        // 获取在整个屏幕内的绝对坐标
+                        view.getLocationOnScreen(location);
+                        ViewData viewData = mVdList.get(holder.getAdapterPosition());
+                        viewData.setTargetX(location[0]);
+                        viewData.setTargetY(location[1]);
+                        EventBus.getDefault().post(new MainEvent(holder.getAdapterPosition(),mVdList));
+
+                    }
+                });
             }
         };
 

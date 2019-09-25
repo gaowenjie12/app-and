@@ -30,4 +30,10 @@
         tl:tl_textUnselectColor="@color/text_c"
         tl:tl_textsize="12dp" />
 
+
+    <indi.liyi.viewer.ImageViewer
+        android:id="@+id/imageViewer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </RelativeLayout>

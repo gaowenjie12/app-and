@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ItemEventBean;
 import com.zsoe.businesssharing.bean.SlideBean;
-import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.commonview.banner.BannerView;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.commonview.recyclerview.loadmore.LoadMoreContainer;
@@ -84,8 +84,8 @@ public class TheEventFragment extends BaseFragment<EventPresenter> {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, LatestNewsActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, 1);
+                        Intent intent  = new Intent(mContext, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkurl());
                         startActivity(intent);
                     }
                 });

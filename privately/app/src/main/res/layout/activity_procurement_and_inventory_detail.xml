@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:padding="10dp"
-                android:text="查看产品"
+                android:text="查看企业"
                 android:textColor="@color/AC9472" />
         </RelativeLayout>
 

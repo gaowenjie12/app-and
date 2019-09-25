@@ -4,7 +4,8 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        // 如果添加依赖时，报找不到项目时（则项目正在审核），可以添加此句maven地址，如果找到项目，可不必添加
+        maven { url "https://dl.bintray.com/albertlii/android-maven/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'
@@ -18,6 +19,8 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        // 如果添加依赖时，报找不到项目时（则项目正在审核），可以添加此句maven地址，如果找到项目，可不必添加
+        maven { url "https://dl.bintray.com/albertlii/android-maven/" }
     }
 }
 

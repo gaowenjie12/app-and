@@ -1,7 +1,9 @@
 package com.zsoe.businesssharing.business.exhibitionhall;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -18,6 +20,7 @@ import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
+import com.zsoe.businesssharing.base.baseadapter.BaseQuickAdapter;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.HttpResponseFunc;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
@@ -27,14 +30,24 @@ import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 import com.zsoe.businesssharing.utils.GlideUtils;
+import com.zsoe.businesssharing.utils.PhotoLoader;
+import com.zsoe.businesssharing.utils.ScreenUtils;
 import com.zsoe.businesssharing.utils.android.schedulers.AndroidSchedulers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import indi.liyi.viewer.ImageDrawee;
+import indi.liyi.viewer.ImageViewer;
+import indi.liyi.viewer.Utils;
+import indi.liyi.viewer.ViewData;
+import indi.liyi.viewer.ViewerStatus;
+import indi.liyi.viewer.listener.OnBrowseStatusListener;
+import indi.liyi.viewer.listener.OnItemChangedListener;
 import okhttp3.FormBody;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -51,6 +64,10 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
     private RelativeLayout mRlChakan;
     private RecyclerView mRvPic;
 
+    private List<ViewData> mVdList;
+    private ImageViewer imageViewer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +78,7 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
             @Override
             public void call(View view) {
                 Intent intent = new Intent(mContext, ProductListActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS3,productDetail.getShopid()+"");
+                intent.putExtra(Config.INTENT_PARAMS3, productDetail.getShopid() + "");
                 startActivity(intent);
             }
         });
@@ -83,6 +100,9 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
         mTvCompanyName = (TextView) findViewById(R.id.tv_company_name);
         mTvJieshao = (ExpandableTextView) findViewById(R.id.tv_jieshao);
         mRlChakan = (RelativeLayout) findViewById(R.id.rl_chakan);
+
+
+        imageViewer = findViewById(R.id.imageViewer);
     }
 
     private ProductDetail productDetail;
@@ -115,7 +135,7 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CompanyProfilesActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1,productDetail.getShopid());
+                intent.putExtra(Config.INTENT_PARAMS1, productDetail.getShopid());
                 startActivity(intent);
             }
         });
@@ -132,15 +152,71 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
             }
         };
 
+        jiazhiAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int[] location = new int[2];
+                // 获取在整个屏幕内的绝对坐标
+                view.getLocationOnScreen(location);
+                ViewData viewData = mVdList.get(position);
+                viewData.setTargetX(location[0]);
+                viewData.setTargetY(location[1]);
+                imageViewer.viewData(mVdList)
+                        .watch(position);
+            }
+        });
+
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(mContext);
         linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
+
+
         mRvPic.setFocusableInTouchMode(false);
         mRvPic.setNestedScrollingEnabled(false);
         mRvPic.setLayoutManager(linearLayoutManager2);// 布局管理器。
         mRvPic.setHasFixedSize(true);// 如果Item够简单，高度是确定的，打开FixSize将提高性能。
         mRvPic.setItemAnimator(new DefaultItemAnimator());// 设置Item默认动画，加也行，不加
         mRvPic.setAdapter(jiazhiAdapter);
+        linearLayoutManager2.scrollToPositionWithOffset(0, 0);
 
+        Point mScreenSize = ScreenUtils.getScreenSize(this);
+        mVdList = new ArrayList<>();
+        for (int i = 0, len = photos.size(); i < len; i++) {
+            ViewData viewData = new ViewData();
+            viewData.setImageSrc(photos.get(i));
+            viewData.setTargetX(0);
+            viewData.setTargetY(0);
+            viewData.setTargetWidth(mScreenSize.x);
+            viewData.setTargetHeight(Utils.dp2px(this, 200));
+            mVdList.add(viewData);
+        }
+
+
+
+        imageViewer.overlayStatusBar(false)
+                .imageLoader(new PhotoLoader());
+
+
+        imageViewer
+                .setOnItemChangedListener(new OnItemChangedListener() {
+                    @Override
+                    public void onItemChanged(int position, ImageDrawee drawee) {
+                        if (imageViewer.getViewStatus() == ViewerStatus.STATUS_WATCHING) {
+                            mVdList.get(imageViewer.getCurrentPosition()).setTargetX(0);
+                            linearLayoutManager2.scrollToPositionWithOffset(imageViewer.getCurrentPosition(), (int) (mVdList.get(imageViewer.getCurrentPosition()).getTargetX() / 2));
+                        }
+                    }
+                })
+                .setOnBrowseStatusListener(
+                        new OnBrowseStatusListener() {
+                            @Override
+                            public void onBrowseStatus(int status) {
+                                if (status == ViewerStatus.STATUS_BEGIN_OPEN) {
+                                    ScreenUtils.changeStatusBarColor(ProductDetailActivity.this, R.color.black);
+                                } else if (status == ViewerStatus.STATUS_SILENCE) {
+                                    ScreenUtils.changeStatusBarColor(ProductDetailActivity.this, R.color.white);
+                                }
+                            }
+                        });
     }
 
 
@@ -217,5 +293,21 @@ public class ProductDetailActivity extends BaseActivity<ProductInfoPresenter> {
     protected void onPause() {
         super.onPause();
         Jzvd.releaseAllVideos();
+    }
+
+    /**
+     * 监听返回键
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean b = imageViewer.onKeyDown(keyCode, event);
+        if (b) {
+            return b;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

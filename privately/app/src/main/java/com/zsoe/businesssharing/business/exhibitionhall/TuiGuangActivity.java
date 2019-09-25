@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.business.exhibitionhall;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -37,7 +38,7 @@ import rx.functions.Action1;
 public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
 
     private RecyclerView mRvProductList;
-    private String shopId,sourcepage;
+    private String shopId, sourcepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
                 //刷新
                 //刷新
                 getPresenter().loadMoreDefault.refresh();
-                getPresenter().extenactivity_list(shopId,sourcepage);
+                getPresenter().extenactivity_list(shopId, sourcepage);
             }
         });
 
@@ -91,7 +92,12 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
                 FrecoFactory.getInstance().disPlay(simpleDraweeView, item.getThumb());
 
                 holder.setText(R.id.tv_name, item.getTitle());
-                holder.setText(R.id.tv_jianshao, "到场嘉宾：" + item.getGuester());
+                if (!TextUtils.isEmpty(item.getGuester())) {
+                    holder.setText(R.id.tv_jianshao, "到场嘉宾：" + item.getGuester());
+                } else {
+                    holder.setText(R.id.tv_jianshao, "");
+                }
+
                 holder.setText(R.id.tv_zhiwei, item.getActivitytime() + "  " + item.getActivityaddress());
                 ImageView iv_shoucang = holder.getView(R.id.iv_shoucang);
                 iv_shoucang.setVisibility(View.GONE);
@@ -113,7 +119,7 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
         getPresenter().loadMoreDefault.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                getPresenter().extenactivity_list(shopId,sourcepage);
+                getPresenter().extenactivity_list(shopId, sourcepage);
             }
         });
 
