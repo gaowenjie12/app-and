@@ -34,6 +34,7 @@ import com.zsoe.businesssharing.bean.RootEventBean;
 import com.zsoe.businesssharing.bean.RootSearchBean;
 import com.zsoe.businesssharing.bean.SearchBean;
 import com.zsoe.businesssharing.bean.StockBean;
+import com.zsoe.businesssharing.bean.VersionBean;
 import com.zsoe.businesssharing.bean.XinXiBena;
 import com.zsoe.businesssharing.business.login.LoginUser;
 
@@ -450,5 +451,11 @@ public interface ServerAPI {
      */
     @POST("msg/remove_friend")
     Observable<RootResponse> remove_friend(@Body FormBody body);
+
+    /**
+     * my/check_version 可以使用
+     */
+    @POST("my/check_version")
+    Observable<RootResponse<VersionBean>> check_version(@Body FormBody body);
 
 }

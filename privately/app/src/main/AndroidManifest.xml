@@ -67,8 +67,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".easechat.ContextMenuActivity"
-            android:theme="@style/MyDialogStyle"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" />
         <activity
             android:name=".business.exhibitionhall.TuiGuangActivity"
             android:screenOrientation="portrait" />
@@ -238,10 +238,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 引导页 -->
-        <activity
-            android:name=".business.welcome.WelcomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/themeWelcome" /> <!-- 主页 -->
+        <!--        <activity-->
+        <!--            android:name=".business.welcome.WelcomeActivity"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            android:theme="@style/themeWelcome" /> &lt;!&ndash; 主页 &ndash;&gt;-->
         <activity
             android:name=".business.main.MainActivity"
             android:exported="true"
@@ -334,6 +334,18 @@
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
+
+
+        <provider
+            android:name=".commonview.update.UpdateFileProvider"
+            android:authorities="${applicationId}.updatefileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/update_cache_path"/>
+        </provider>
+
     </application>
 
 </manifest>

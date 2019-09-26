@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -30,9 +31,12 @@ import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.TabEntity;
+import com.zsoe.businesssharing.bean.VersionBean;
 import com.zsoe.businesssharing.business.login.LoginActivity;
 import com.zsoe.businesssharing.business.message.MainEvent;
 import com.zsoe.businesssharing.business.message.MessageEvent;
+import com.zsoe.businesssharing.commonview.update.UpdateInfo;
+import com.zsoe.businesssharing.commonview.update.UpdateManager;
 import com.zsoe.businesssharing.easechat.ChatActivity;
 import com.zsoe.businesssharing.easechat.Constant;
 import com.zsoe.businesssharing.easechat.DemoHelper;
@@ -145,6 +149,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
         //debug purpose only
         registerInternalDebugReceiver();
+        getPresenter().check_version();
     }
 
 
@@ -642,6 +647,36 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
         imageViewer.viewData(mainEvent.mVdList)
                 .watch(mainEvent.position);
+
+    }
+
+    public void setDate(VersionBean versionBean) {
+        if (versionBean.getIs_upd() == 1) {
+            check(111, versionBean);
+        } else {
+            ToastUtils.showShort("已是最新版本");
+        }
+
+    }
+
+
+    void check(final int
+                       notifyId, VersionBean versionBean) {
+
+        UpdateInfo info = new UpdateInfo();
+        info.hasUpdate = true;
+        info.updateContent = versionBean.getContent();
+//        info.versionCode = ;
+        info.versionName = versionBean.getNewversion();
+        info.url = versionBean.getDownloadurl();
+        info.md5 = "56cf48f10e4cf6043fbf53bbbc4009e4";
+//        info.size = 10149314;
+        info.isForce = false;
+        info.isIgnorable = false;
+        info.isSilent = false;
+
+
+        UpdateManager.create(mContext).setManual(true).setNotifyId(notifyId).setUpdateInfo(info).check();
 
     }
 

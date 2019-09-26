@@ -246,7 +246,7 @@ public class DialogManager {
         TextView btn_ok = (TextView) dialog.findViewById(R.id.btn_ok);
         TextView btn_dismiss = (TextView) dialog.findViewById(R.id.btn_dismiss);
 
-        tv_dialog_title.setText("版本更新");
+        tv_dialog_title.setText("新版本："+updateInfo.versionName);
         tv_dialog_text.setText(updateInfo.updateContent);
 
         btn_ok.setText("立即更新");

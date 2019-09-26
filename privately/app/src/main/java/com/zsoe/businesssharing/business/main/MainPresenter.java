@@ -10,6 +10,7 @@ import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
 import com.zsoe.businesssharing.base.presenter.NetCallBack;
 import com.zsoe.businesssharing.bean.GongYouBean;
+import com.zsoe.businesssharing.bean.VersionBean;
 
 import java.util.HashMap;
 
@@ -44,6 +45,24 @@ public class MainPresenter extends BasePresenter<MainActivity> {
                     }
                 },
                 new BaseToastNetError<MainActivity>());
+
+
+
+        restartableFirst(REQUEST_LOGIN2,
+                new Func0<Observable<RootResponse<VersionBean>>>() {
+                    @Override
+                    public Observable<RootResponse<VersionBean>> call() {
+
+                        return DApplication.getServerAPI().check_version(body);
+                    }
+                },
+                new NetCallBack<MainActivity, VersionBean>() {
+                    @Override
+                    public void callBack(MainActivity v, VersionBean versionBean) {
+                        v.setDate(versionBean);
+                    }
+                },
+                new BaseToastNetError<MainActivity>());
     }
 
 
@@ -54,4 +73,11 @@ public class MainPresenter extends BasePresenter<MainActivity> {
 
     }
 
+
+    public void check_version() {
+        HashMap<String, String> map = new HashMap<>();
+        body = signForm(map);
+        start(REQUEST_LOGIN2);
+
+    }
 }

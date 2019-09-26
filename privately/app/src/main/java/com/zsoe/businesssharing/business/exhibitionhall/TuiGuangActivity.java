@@ -93,9 +93,10 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
 
                 holder.setText(R.id.tv_name, item.getTitle());
                 if (!TextUtils.isEmpty(item.getGuester())) {
+                    holder.getView(R.id.tv_jianshao).setVisibility(View.VISIBLE);
                     holder.setText(R.id.tv_jianshao, "到场嘉宾：" + item.getGuester());
                 } else {
-                    holder.setText(R.id.tv_jianshao, "");
+                    holder.getView(R.id.tv_jianshao).setVisibility(View.GONE);
                 }
 
                 holder.setText(R.id.tv_zhiwei, item.getActivitytime() + "  " + item.getActivityaddress());

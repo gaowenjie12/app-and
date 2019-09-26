@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.EMCallBack;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -15,7 +16,10 @@ import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
+import com.zsoe.businesssharing.bean.VersionBean;
 import com.zsoe.businesssharing.business.login.ChangePwActivity;
+import com.zsoe.businesssharing.commonview.update.UpdateInfo;
+import com.zsoe.businesssharing.commonview.update.UpdateManager;
 import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 
@@ -68,6 +72,8 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
                 startActivity(new Intent(mContext, AboutUsActivity.class));
                 break;
             case R.id.rl_jianchagengxin:
+                DialogManager.getInstance().showNetLoadingView(mContext);
+                getPresenter().check_version();
                 break;
             case R.id.btn_login:
                 // 确认
@@ -140,5 +146,35 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
                 });
             }
         });
+    }
+
+    public void setDate(VersionBean versionBean) {
+        if (versionBean.getIs_upd() == 1) {
+            check(111, versionBean);
+        } else {
+            ToastUtils.showShort("已是最新版本");
+        }
+
+    }
+
+
+    void check(final int
+                       notifyId, VersionBean versionBean) {
+
+        UpdateInfo info = new UpdateInfo();
+        info.hasUpdate = true;
+        info.updateContent = versionBean.getContent();
+//        info.versionCode = ;
+        info.versionName = versionBean.getNewversion();
+        info.url = versionBean.getDownloadurl();
+        info.md5 = "56cf48f10e4cf6043fbf53bbbc4009e4";
+//        info.size = 10149314;
+        info.isForce = false;
+        info.isIgnorable = false;
+        info.isSilent = false;
+
+
+        UpdateManager.create(mContext).setManual(true).setNotifyId(notifyId).setUpdateInfo(info).check();
+
     }
 }

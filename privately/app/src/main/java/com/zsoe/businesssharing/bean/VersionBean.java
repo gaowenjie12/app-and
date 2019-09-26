@@ -8,59 +8,59 @@ package com.zsoe.businesssharing.bean;
  */
 public class VersionBean {
 
-    private String new_version;
-    private String title;
+    private String newversion;
+    private String packagesize;
     private String content;
-    private String download_url;
-    private int has_new_version;
-    private int force_update;
+    private String downloadurl;
+    private int enforce;
+    private int is_upd;
 
 
-    public String getNew_version() {
-        return new_version;
+    public int getIs_upd() {
+        return is_upd;
     }
 
-    public void setNew_version(String new_version) {
-        this.new_version = new_version;
+    public void setIs_upd(int is_upd) {
+        this.is_upd = is_upd;
     }
 
-    public String getTitle() {
-        return title;
+    public void setNewversion(String newversion) {
+        this.newversion = newversion;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getNewversion() {
+        return newversion;
     }
 
-    public String getContent() {
-        return content;
+    public void setPackagesize(String packagesize) {
+        this.packagesize = packagesize;
+    }
+
+    public String getPackagesize() {
+        return packagesize;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public String getDownload_url() {
-        return download_url;
+    public String getContent() {
+        return content;
     }
 
-    public void setDownload_url(String download_url) {
-        this.download_url = download_url;
+    public void setDownloadurl(String downloadurl) {
+        this.downloadurl = downloadurl;
     }
 
-    public int getHas_new_version() {
-        return has_new_version;
+    public String getDownloadurl() {
+        return downloadurl;
     }
 
-    public void setHas_new_version(int has_new_version) {
-        this.has_new_version = has_new_version;
+    public void setEnforce(int enforce) {
+        this.enforce = enforce;
     }
 
-    public int getForce_update() {
-        return force_update;
-    }
-
-    public void setForce_update(int force_update) {
-        this.force_update = force_update;
+    public int getEnforce() {
+        return enforce;
     }
 }
