@@ -253,6 +253,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_kefu:
                 Intent intent6 = new Intent(mContext, BrowserActivity.class);
                 intent6.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getCustomerurl());
+                intent6.putExtra(Config.INTENT_PARAMS2, "客服");
                 startActivity(intent6);
                 break;
 

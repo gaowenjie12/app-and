@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -62,8 +63,8 @@ public class BrowserActivity extends BaseActivity {
 
         }
 
-        mIntentUrl = mIntentUrl+"?v="+System.currentTimeMillis();
-        Log.e("open",mIntentUrl);
+        mIntentUrl = mIntentUrl + "?v=" + System.currentTimeMillis();
+        Log.e("open", mIntentUrl);
 
         setContentView(loadContentView());
 
@@ -194,7 +195,7 @@ public class BrowserActivity extends BaseActivity {
             @Override
             public void onReceivedTitle(WebView arg0, final String title) {
                 super.onReceivedTitle(arg0, title);
-                if (title != null) {
+                if (title != null && TextUtils.isEmpty(mTitle)) {
                     title_title_tv.setText(title);
                 }
             }
