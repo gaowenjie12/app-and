@@ -272,6 +272,16 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
             TextView tv_dongtai = linearLayout.findViewById(R.id.tv_dongtai);
             tv_name.setText(itemInsdustry.getName());
 
+
+            simpleDraweeView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, MasterDetailActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+                    startActivity(intent);
+                }
+            });
+
             tv_dongtai.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

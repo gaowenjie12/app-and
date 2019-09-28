@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.umeng.analytics.MobclickAgent;
 import com.zsoe.businesssharing.R;
@@ -22,6 +23,7 @@ import com.zsoe.businesssharing.base.presenter.PresenterFactory;
 import com.zsoe.businesssharing.base.presenter.PresenterLifecycleDelegate;
 import com.zsoe.businesssharing.base.presenter.ReflectionPresenterFactory;
 import com.zsoe.businesssharing.base.presenter.ViewWithPresenter;
+import com.zsoe.businesssharing.business.login.LoginUser;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.EmptyUtil;
 import com.zsoe.businesssharing.utils.ScreenUtils;
@@ -91,6 +93,7 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
         super.onCreate(savedInstanceState);
 
         mContext = this;
+
 //        if (getIntent().getBooleanExtra(Config.INTENT_TONGJI, false))
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         DApplication.getInstance().addActivity(this);
@@ -141,7 +144,18 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
         if (isImmersionBarEnabled()) {
             initImmersionBar();
         }
+
+        if (isLoginIntent()) {
+            LoginUser loginUser = DApplication.getInstance().getLoginUser();
+            if (null == loginUser) {
+                DApplication.getInstance().startLogin();
+                ToastUtils.showShort("尚未登录");
+                finish();
+                return;
+            }
+        }
     }
+
 
     protected void initImmersionBar() {
         //在BaseActivity里初始化
@@ -161,6 +175,13 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
      * 是否可以使用沉浸式
      */
     protected boolean isImmersionBarEnabled() {
+        return true;
+    }
+
+    /**
+     * 是否检查登录状态
+     */
+    protected boolean isLoginIntent() {
         return true;
     }
 

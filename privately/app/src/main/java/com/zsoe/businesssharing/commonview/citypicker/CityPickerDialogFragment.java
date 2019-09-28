@@ -180,6 +180,7 @@ public class CityPickerDialogFragment extends DialogFragment implements TextWatc
         //初始化热门城市
         if (mHotCities == null || mHotCities.isEmpty()) {
             mHotCities = new ArrayList<>();
+            mHotCities.add(new HotCity("全国", "全国", "101010100"));
             mHotCities.add(new HotCity("北京", "北京", "101010100"));
             mHotCities.add(new HotCity("上海", "上海", "101020100"));
             mHotCities.add(new HotCity("广州", "广东", "101280101"));

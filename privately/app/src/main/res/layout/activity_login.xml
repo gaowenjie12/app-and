@@ -9,12 +9,16 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+
+
     <ImageView
         android:id="@+id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:src="@mipmap/back_arrow" />
+
+
 
     <com.zsoe.businesssharing.commonview.DrawableTextView
         android:id="@+id/logo"

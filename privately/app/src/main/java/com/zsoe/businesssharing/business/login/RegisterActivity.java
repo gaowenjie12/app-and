@@ -265,4 +265,9 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
 
     }
+
+    @Override
+    protected boolean isLoginIntent() {
+        return false;
+    }
 }

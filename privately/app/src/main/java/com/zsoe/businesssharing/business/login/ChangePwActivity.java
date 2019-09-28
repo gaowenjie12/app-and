@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.commonview.ClearEditText;
 import com.zsoe.businesssharing.commonview.DrawableTextView;
@@ -60,13 +61,20 @@ public class ChangePwActivity extends BaseActivity<ChangePwPresenter> implements
     private LinearLayout mBody;
 
     private CountDownTimer loginTimer;
-
+    int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepw);
         initView();
+
+        type = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
+
+        if (type != -1) {
+            initTitleText("忘记密码");
+            mLogo.setText("忘记密码");
+        }
 
 
         loginTimer = new CountDownTimer(60000, 1000) {

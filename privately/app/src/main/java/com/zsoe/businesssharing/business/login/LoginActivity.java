@@ -29,6 +29,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.FancyUtils;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.business.main.MainActivity;
@@ -43,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+
+import rx.functions.Action1;
 
 
 /**
@@ -79,17 +82,35 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     private ImageView mLoginWeibo;
 
     private QQLoginManager qqLoginManager;
+    /**
+     * 忘记密码？
+     */
+    private TextView mForgetPassword;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         qqLoginManager = new QQLoginManager("1109739836", this);
+
+        setTitleRightText("首页", new Action1<View>() {
+            @Override
+            public void call(View view) {
+                startActivity(new Intent(mContext, MainActivity.class));
+            }
+        });
         initView();
         initListener();
         umShareAPI = UMShareAPI.get(this);
         keyboardWatcher = new KeyboardWatcher(findViewById(Window.ID_ANDROID_CONTENT));
         keyboardWatcher.addSoftKeyboardStateListener(this);
+
+        findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -116,6 +137,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         mLoginWeixin.setOnClickListener(this);
         mLoginWeibo = (ImageView) findViewById(R.id.login_weibo);
         mLoginWeibo.setOnClickListener(this);
+        mForgetPassword = (TextView) findViewById(R.id.forget_password);
+        mForgetPassword.setOnClickListener(this);
     }
 
     private void initListener() {
@@ -240,6 +263,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
                     return;
                 }
                 umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.SINA, authListener);
+                break;
+            case R.id.forget_password:
+                Intent intent = new Intent(mContext, ChangePwActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, 1);
+                startActivity(intent);
                 break;
         }
     }
@@ -464,5 +492,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         ToastUtils.showShort("登录出错！" + uiError.toString());
 
         DialogManager.getInstance().dismissNetLoadingView();
+    }
+
+    @Override
+    protected boolean isLoginIntent() {
+        return false;
     }
 }

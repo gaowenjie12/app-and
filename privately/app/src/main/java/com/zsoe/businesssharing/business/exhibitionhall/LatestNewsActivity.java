@@ -40,10 +40,22 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_latest_news);
         initView();
-        initTitleText("近期动态");
+
+        //平台文章列表(5种类型)；1事件2行业资讯3系统公告4帮助中心5头条快讯6动态列表 /api/v1/msg/article_list 可以使用
+
 
         type = getIntent().getIntExtra(Config.INTENT_PARAMS1, -1);
         person_id = getIntent().getIntExtra(Config.INTENT_PARAMS2, -1);
+
+        if (type == 2) {
+            initTitleText("行业资讯");
+        } else if (type == 3) {
+            initTitleText("系统公告");
+        } else if (type == 5) {
+            initTitleText("头条资讯");
+        } else {
+            initTitleText("动态列表");
+        }
 
         initPtrFrameLayout(new Action1<String>() {
             @Override
@@ -79,8 +91,8 @@ public class LatestNewsActivity extends BaseActivity<LatestNewsPresenter> {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent  = new Intent(mContext,BrowserActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1,item.getLinkurl());
+                        Intent intent = new Intent(mContext, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkurl());
                         startActivity(intent);
                     }
                 });

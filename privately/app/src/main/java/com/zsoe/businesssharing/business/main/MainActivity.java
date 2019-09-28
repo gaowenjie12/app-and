@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
         //debug purpose only
         registerInternalDebugReceiver();
-        getPresenter().check_version();
+//        getPresenter().check_version();
     }
 
 
@@ -680,4 +680,8 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
     }
 
+    @Override
+    protected boolean isLoginIntent() {
+        return false;
+    }
 }

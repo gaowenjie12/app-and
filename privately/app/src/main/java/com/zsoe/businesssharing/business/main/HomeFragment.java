@@ -158,6 +158,12 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
     public void setDate(HomeBean homeBean) {
         mPtrFrame.refreshComplete();
         List<HeadNews> headnews = homeBean.getHeadnews();
@@ -383,6 +389,8 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                             public void onPick(int position, City data) {
                                 tv_diqu.setText(data.getName());
                                 DApplication.getInstance().setCity(data.getName());
+                                DialogManager.getInstance().showNetLoadingView(mContext);
+                                getPresenter().home();
                             }
 
                             @Override

@@ -317,4 +317,9 @@ public class BrowserActivity extends BaseActivity {
         view.removeAllViews();
         super.finish();
     }
+
+    @Override
+    protected boolean isLoginIntent() {
+        return false;
+    }
 }
