@@ -97,29 +97,39 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_xitonggonggao:
-                Intent intent = new Intent(mContext, LatestNewsActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, 3);
-                startActivity(intent);
+                if (isLoginIntent()) {
+
+                    Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, 3);
+                    startActivity(intent);
+                }
 
                 break;
 
             case R.id.rl_hangyezixun:
+                if (isLoginIntent()) {
 
-                Intent intent2 = new Intent(mContext, LatestNewsActivity.class);
-                intent2.putExtra(Config.INTENT_PARAMS1, 2);
-                startActivity(intent2);
-
+                    Intent intent2 = new Intent(mContext, LatestNewsActivity.class);
+                    intent2.putExtra(Config.INTENT_PARAMS1, 2);
+                    startActivity(intent2);
+                }
                 break;
 
             case R.id.rl_lingdaohuixin:
-                Intent intent1 = new Intent(mContext, MessageRemindActivity.class);
-                intent1.putExtra(Config.INTENT_PARAMS1,1);
-                startActivity(intent1);
+                if (isLoginIntent()) {
+
+                    Intent intent1 = new Intent(mContext, MessageRemindActivity.class);
+                    intent1.putExtra(Config.INTENT_PARAMS1, 1);
+                    startActivity(intent1);
+                }
                 break;
 
             case R.id.rl_liaotianliebiao:
-                Intent intent3 = new Intent(mContext, ConversationListActivity.class);
-                startActivity(intent3);
+                if (isLoginIntent()) {
+
+                    Intent intent3 = new Intent(mContext, ConversationListActivity.class);
+                    startActivity(intent3);
+                }
                 break;
         }
     }
@@ -154,7 +164,6 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         updateUnreadLabel();
 
     }
-
 
 
 }

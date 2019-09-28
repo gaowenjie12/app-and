@@ -100,9 +100,11 @@ public class MailFragment extends BaseFragment<MailPresenter> {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(mContext, BuZhangXinxiActivity.class);
-                            intent.putExtra(Config.INTENT_PARAMS1, type);
-                            startActivity(intent);
+                            if (isLoginIntent()) {
+                                Intent intent = new Intent(mContext, BuZhangXinxiActivity.class);
+                                intent.putExtra(Config.INTENT_PARAMS1, type);
+                                startActivity(intent);
+                            }
                         }
                     });
                 } else {

@@ -494,8 +494,4 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         DialogManager.getInstance().dismissNetLoadingView();
     }
 
-    @Override
-    protected boolean isLoginIntent() {
-        return false;
-    }
 }

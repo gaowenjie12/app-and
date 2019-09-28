@@ -101,7 +101,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         tv_liuyan = view.findViewById(R.id.tv_liuyan);
         iamge2 = view.findViewById(R.id.iamge2);
 
-        if (DApplication.getInstance().getLoginUser().getType() > 0) {
+        if (null != DApplication.getInstance().getLoginUser() && DApplication.getInstance().getLoginUser().getType() > 0) {
             //领导身份
 
             iamge2.setImageResource(R.mipmap.bangzhu);
@@ -110,9 +110,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onClick(View view) {
                     //跳入帮助中心
-                    Intent intent = new Intent(mContext, BangZhuActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, 4);
-                    startActivity(intent);
+                    if (isLoginIntent()) {
+
+                        Intent intent = new Intent(mContext, BangZhuActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, 4);
+                        startActivity(intent);
+                    }
 
                 }
             });
@@ -120,7 +123,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             ll_xinxiang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(mContext, MessageRemindActivity.class));
+                    if (isLoginIntent()) {
+
+                        startActivity(new Intent(mContext, MessageRemindActivity.class));
+                    }
                 }
             });
 
@@ -132,16 +138,22 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onClick(View view) {
                     //跳入帮助中心
-                    Intent intent = new Intent(mContext, BangZhuActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, 4);
-                    startActivity(intent);
+                    if (isLoginIntent()) {
+
+                        Intent intent = new Intent(mContext, BangZhuActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, 4);
+                        startActivity(intent);
+                    }
                 }
             });
 
             ll_liuyanban.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(mContext, LiuYanBanActivity.class));
+                    if (isLoginIntent()) {
+
+                        startActivity(new Intent(mContext, LiuYanBanActivity.class));
+                    }
                 }
             });
         }
@@ -177,84 +189,118 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_sign:
-                startActivity(new Intent(mContext, MySignActivity.class));
+                if (isLoginIntent()) {
+
+                    startActivity(new Intent(mContext, MySignActivity.class));
+                }
 
                 break;
 
             case R.id.ll_jianzhi:
-                startActivity(new Intent(mContext, ProductManagementActivity.class));
+                if (isLoginIntent()) {
+
+                    startActivity(new Intent(mContext, ProductManagementActivity.class));
+                }
 
                 break;
 
             case R.id.ll_jiameng:
+                if (isLoginIntent()) {
 
-                Intent intent3 = new Intent(mContext, JoinInvestmentActivity.class);
-                intent3.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
-                intent3.putExtra(Config.INTENT_PARAMS2, "my");
-                startActivity(intent3);
+                    Intent intent3 = new Intent(mContext, JoinInvestmentActivity.class);
+                    intent3.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                    intent3.putExtra(Config.INTENT_PARAMS2, "my");
+                    startActivity(intent3);
+                }
 
                 break;
 
             case R.id.ll_kunc:
-                Intent intent1 = new Intent(mContext, ProcurementManagementActivity.class);
-                intent1.putExtra(Config.INTENT_PARAMS1, 1);
-                startActivity(intent1);
+                if (isLoginIntent()) {
+
+                    Intent intent1 = new Intent(mContext, ProcurementManagementActivity.class);
+                    intent1.putExtra(Config.INTENT_PARAMS1, 1);
+                    startActivity(intent1);
+                }
 
                 break;
             case R.id.ll_daikuan:
-                Intent intent4 = new Intent(mContext, FinancingLoansActivity.class);
-                intent4.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
-                intent4.putExtra(Config.INTENT_PARAMS2, "my");
-                startActivity(intent4);
+                if (isLoginIntent()) {
+
+                    Intent intent4 = new Intent(mContext, FinancingLoansActivity.class);
+                    intent4.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                    intent4.putExtra(Config.INTENT_PARAMS2, "my");
+                    startActivity(intent4);
+                }
                 break;
             case R.id.ll_zixun:
+                if (isLoginIntent()) {
 
-                Intent intent = new Intent(mContext, LatestNewsActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, 2);
-                startActivity(intent);
+                    Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, 2);
+                    startActivity(intent);
+                }
 
                 break;
 
             case R.id.ll_caigou:
-                Intent intent2 = new Intent(mContext, ProcurementManagementActivity.class);
-                intent2.putExtra(Config.INTENT_PARAMS1, 2);
-                startActivity(intent2);
+                if (isLoginIntent()) {
+
+                    Intent intent2 = new Intent(mContext, ProcurementManagementActivity.class);
+                    intent2.putExtra(Config.INTENT_PARAMS1, 2);
+                    startActivity(intent2);
+                }
 
                 break;
             case R.id.ll_renzheng:
+                if (isLoginIntent()) {
 
-                startActivity(new Intent(mContext, CertificationCompanyActivity.class));
-
+                    startActivity(new Intent(mContext, CertificationCompanyActivity.class));
+                }
                 break;
 
             case R.id.ll_tuiguang:
+                if (isLoginIntent()) {
 
-                Intent intent5 = new Intent(mContext, TuiGuangActivity.class);
-                intent5.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
-                intent5.putExtra(Config.INTENT_PARAMS2, "my");
-                startActivity(intent5);
+                    Intent intent5 = new Intent(mContext, TuiGuangActivity.class);
+                    intent5.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getShopid() + "");
+                    intent5.putExtra(Config.INTENT_PARAMS2, "my");
+                    startActivity(intent5);
+                }
 
                 break;
             case R.id.ll_wode:
-                startActivityForResult(new Intent(mContext, BasicInformationActivity.class), 2);
+                if (isLoginIntent()) {
 
+                    startActivityForResult(new Intent(mContext, BasicInformationActivity.class), 2);
+                }
                 break;
             case R.id.ll_shoucang:
-                startActivity(new Intent(mContext, CollectionListActivity.class));
+                if (isLoginIntent()) {
 
+                    startActivity(new Intent(mContext, CollectionListActivity.class));
+                }
                 break;
             case R.id.ll_kajuan:
-                startActivity(new Intent(mContext, CardVolumeListActivity.class));
+                if (isLoginIntent()) {
 
+                    startActivity(new Intent(mContext, CardVolumeListActivity.class));
+                }
                 break;
             case R.id.ll_shezhi:
-                startActivity(new Intent(mContext, SetUpActivity.class));
+                if (isLoginIntent()) {
+
+                    startActivity(new Intent(mContext, SetUpActivity.class));
+                }
                 break;
             case R.id.ll_kefu:
-                Intent intent6 = new Intent(mContext, BrowserActivity.class);
-                intent6.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getCustomerurl());
-                intent6.putExtra(Config.INTENT_PARAMS2, "客服");
-                startActivity(intent6);
+                if (isLoginIntent()) {
+
+                    Intent intent6 = new Intent(mContext, BrowserActivity.class);
+                    intent6.putExtra(Config.INTENT_PARAMS1, DApplication.getInstance().getLoginUser().getCustomerurl());
+                    intent6.putExtra(Config.INTENT_PARAMS2, "客服");
+                    startActivity(intent6);
+                }
                 break;
 
         }

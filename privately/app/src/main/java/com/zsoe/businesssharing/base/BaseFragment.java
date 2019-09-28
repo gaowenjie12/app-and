@@ -1,6 +1,7 @@
 package com.zsoe.businesssharing.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.umeng.analytics.MobclickAgent;
 import com.zsoe.businesssharing.R;
@@ -20,6 +22,8 @@ import com.zsoe.businesssharing.base.presenter.PresenterFactory;
 import com.zsoe.businesssharing.base.presenter.PresenterLifecycleDelegate;
 import com.zsoe.businesssharing.base.presenter.ReflectionPresenterFactory;
 import com.zsoe.businesssharing.base.presenter.ViewWithPresenter;
+import com.zsoe.businesssharing.business.login.LoginActivity;
+import com.zsoe.businesssharing.business.login.LoginUser;
 import com.zsoe.businesssharing.utils.ScreenUtils;
 
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
@@ -79,6 +83,20 @@ public abstract class BaseFragment<P extends Presenter> extends Fragment impleme
             presenterDelegate.onRestoreInstanceState(bundle.getBundle(PRESENTER_STATE_KEY));
         }
     }
+
+
+    public boolean isLoginIntent() {
+        LoginUser loginUser = DApplication.getInstance().getLoginUser();
+        if (null == loginUser) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            ToastUtils.showShort("尚未登录");
+            return false;
+        }
+
+        return true;
+    }
+
 
     @Nullable
     @Override
@@ -234,7 +252,7 @@ public abstract class BaseFragment<P extends Presenter> extends Fragment impleme
     }
 
     protected void setTitleRightSecondIcon(int resid, final Action1<View> clickAction) {
-        ImageView  rightImageView = (ImageView) findViewById(R.id.title_rigth_second);
+        ImageView rightImageView = (ImageView) findViewById(R.id.title_rigth_second);
         if (rightImageView != null) {
             rightImageView.setVisibility(View.VISIBLE);
             rightImageView.setImageResource(resid);

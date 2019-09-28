@@ -1,6 +1,7 @@
 package com.zsoe.businesssharing.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.zsoe.businesssharing.base.presenter.PresenterFactory;
 import com.zsoe.businesssharing.base.presenter.PresenterLifecycleDelegate;
 import com.zsoe.businesssharing.base.presenter.ReflectionPresenterFactory;
 import com.zsoe.businesssharing.base.presenter.ViewWithPresenter;
+import com.zsoe.businesssharing.business.login.LoginActivity;
 import com.zsoe.businesssharing.business.login.LoginUser;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.EmptyUtil;
@@ -144,16 +146,18 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
         if (isImmersionBarEnabled()) {
             initImmersionBar();
         }
+    }
 
-        if (isLoginIntent()) {
-            LoginUser loginUser = DApplication.getInstance().getLoginUser();
-            if (null == loginUser) {
-                DApplication.getInstance().startLogin();
-                ToastUtils.showShort("尚未登录");
-                finish();
-                return;
-            }
+    public boolean isLoginIntent() {
+        LoginUser loginUser = DApplication.getInstance().getLoginUser();
+        if (null == loginUser) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            ToastUtils.showShort("尚未登录");
+            return false;
         }
+
+        return true;
     }
 
 
@@ -175,13 +179,6 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
      * 是否可以使用沉浸式
      */
     protected boolean isImmersionBarEnabled() {
-        return true;
-    }
-
-    /**
-     * 是否检查登录状态
-     */
-    protected boolean isLoginIntent() {
         return true;
     }
 

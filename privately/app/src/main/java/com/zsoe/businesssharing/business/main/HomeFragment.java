@@ -207,10 +207,13 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, EventDetailsActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
-                        intent.putExtra(Config.INTENT_PARAMS2, "1");
-                        startActivity(intent);
+                        if(isLoginIntent()){
+                            Intent intent = new Intent(mContext, EventDetailsActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
+                            intent.putExtra(Config.INTENT_PARAMS2, "1");
+                            startActivity(intent);
+                        }
+
                     }
                 });
 
@@ -238,9 +241,12 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, ProcurementAndInventoryDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
-                        startActivity(intent);
+                        if(isLoginIntent()) {
+
+                            Intent intent = new Intent(mContext, ProcurementAndInventoryDetailActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
+                            startActivity(intent);
+                        }
                     }
                 });
 
@@ -272,9 +278,12 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, ProductDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
-                        startActivity(intent);
+                        if(isLoginIntent()) {
+
+                            Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
+                            startActivity(intent);
+                        }
                     }
                 });
 
@@ -307,9 +316,12 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, JoinInvestmentDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
-                        startActivity(intent);
+                        if(isLoginIntent()) {
+
+                            Intent intent = new Intent(mContext, JoinInvestmentDetailActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
+                            startActivity(intent);
+                        }
                     }
                 });
 
@@ -332,49 +344,68 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
         switch (view.getId()) {
             case R.id.kunc:
 
-                startActivity(new Intent(mContext, ProcurementAndInventoryActivity.class));
+                if (isLoginIntent()) {
+                    startActivity(new Intent(mContext, ProcurementAndInventoryActivity.class));
+                }
 
                 break;
 
             case R.id.jianzhi:
-                Intent intent1 = new Intent(mContext, ProductListActivity.class);
-                intent1.putExtra(Config.INTENT_PARAMS1, "1");
-                startActivity(intent1);
+                if (isLoginIntent()) {
+
+                    Intent intent1 = new Intent(mContext, ProductListActivity.class);
+                    intent1.putExtra(Config.INTENT_PARAMS1, "1");
+                    startActivity(intent1);
+                }
 
                 break;
 
             case R.id.zhaoshang:
-                startActivity(new Intent(mContext, JoinInvestmentActivity.class));
+                if (isLoginIntent()) {
+
+                    startActivity(new Intent(mContext, JoinInvestmentActivity.class));
+                }
 
                 break;
             case R.id.daikuan:
-                startActivity(new Intent(mContext, FinancingLoansActivity.class));
+                if (isLoginIntent()) {
+
+                    startActivity(new Intent(mContext, FinancingLoansActivity.class));
+                }
 
                 break;
             case R.id.tv_tuiguang_more:
-                Intent intent5 = new Intent(mContext, TuiGuangActivity.class);
-                startActivity(intent5);
+                if (isLoginIntent()) {
+                    Intent intent5 = new Intent(mContext, TuiGuangActivity.class);
+                    startActivity(intent5);
+                }
                 break;
             case R.id.tv_caigou_more:
-                startActivity(new Intent(mContext, ProcurementAndInventoryActivity.class));
+
+                if (isLoginIntent()) {
+                    startActivity(new Intent(mContext, ProcurementAndInventoryActivity.class));
+                }
 
                 break;
             case R.id.tv_jiazhi_more:
-                Intent intent2 = new Intent(mContext, ProductListActivity.class);
-                intent2.putExtra(Config.INTENT_PARAMS1, "1");
-                startActivity(intent2);
+                if (isLoginIntent()) {
+                    Intent intent2 = new Intent(mContext, ProductListActivity.class);
+                    intent2.putExtra(Config.INTENT_PARAMS1, "1");
+                    startActivity(intent2);
+                }
 
                 break;
             case R.id.tv_zhaoshang_more:
-                startActivity(new Intent(mContext, JoinInvestmentActivity.class));
-
+                if (isLoginIntent()) {
+                    startActivity(new Intent(mContext, JoinInvestmentActivity.class));
+                }
                 break;
             case R.id.tv_xinwen_more:
-
-                Intent intent = new Intent(mContext, LatestNewsActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, 5);
-                startActivity(intent);
-
+                if (isLoginIntent()) {
+                    Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, 5);
+                    startActivity(intent);
+                }
                 break;
 
             case R.id.tv_diqu:
@@ -406,7 +437,9 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 break;
 
             case R.id.search_input:
-                startActivity(new Intent(mContext, SearchActivity.class));
+                if(isLoginIntent()){
+                    startActivity(new Intent(mContext, SearchActivity.class));
+                }
                 break;
         }
     }

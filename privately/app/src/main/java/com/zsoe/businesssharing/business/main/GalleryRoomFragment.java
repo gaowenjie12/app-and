@@ -28,6 +28,7 @@ import com.zsoe.businesssharing.bean.ItemInsdustry;
 import com.zsoe.businesssharing.business.exhibitionhall.CommunicationMeetingForeshowActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ExpandAdapter;
 import com.zsoe.businesssharing.business.exhibitionhall.GalleryRoomPresenter;
+import com.zsoe.businesssharing.business.exhibitionhall.IndustryActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.IndustryClassificationActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.MasterDetailActivity;
@@ -149,18 +150,22 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
         tv_daka_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, MasterListActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, "1");
-                startActivity(intent);
+                if (isLoginIntent()) {
+                    Intent intent = new Intent(mContext, MasterListActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, "1");
+                    startActivity(intent);
+                }
             }
         });
 
         tv_daliang_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, MasterListActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1, "2");
-                startActivity(intent);
+                if (isLoginIntent()) {
+                    Intent intent = new Intent(mContext, MasterListActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, "2");
+                    startActivity(intent);
+                }
             }
         });
 
@@ -194,6 +199,21 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
         banner_view.setDate(galleryRoomBean.getSlide());
         expandAdapter = new ExpandAdapter(mContext, galleryRoomBean.getInsdustrylist());
         hangye_recyclerView.setAdapter(expandAdapter);
+
+        expandAdapter.setOnItemClick(new ExpandAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (isLoginIntent()) {
+                    ItemInsdustry itemInsdustry = galleryRoomBean.getInsdustrylist().get(position);
+                    //item 点击事件
+                    Intent intent = new Intent(mContext, IndustryActivity.class);
+                    intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId());
+                    mContext.startActivity(intent);
+
+                }
+            }
+        });
+
 
         if (galleryRoomBean.getInsdustrylist().size() > 15) {
             more_layout.setVisibility(View.VISIBLE);
@@ -254,9 +274,11 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, MasterDetailActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
-                    startActivity(intent);
+                    if (isLoginIntent()) {
+                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+                        startActivity(intent);
+                    }
 
                 }
             });
@@ -276,19 +298,25 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
             simpleDraweeView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, MasterDetailActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
-                    startActivity(intent);
+                    if (isLoginIntent()) {
+                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+                        startActivity(intent);
+                    }
                 }
             });
 
             tv_dongtai.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, LatestNewsActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, 6);
-                    intent.putExtra(Config.INTENT_PARAMS2, itemInsdustry.getId());
-                    startActivity(intent);
+                    if (isLoginIntent()) {
+
+                        Intent intent = new Intent(mContext, LatestNewsActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, 6);
+                        intent.putExtra(Config.INTENT_PARAMS2, itemInsdustry.getId());
+                        startActivity(intent);
+
+                    }
                 }
             });
         }
@@ -307,7 +335,9 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
                 relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(mContext, IndustryClassificationActivity.class));
+                        if (isLoginIntent()) {
+                            startActivity(new Intent(mContext, IndustryClassificationActivity.class));
+                        }
                     }
                 });
             } else if (i == 1) {
@@ -316,11 +346,12 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
                 relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, 1);
-                        intent.putExtra(Config.INTENT_PARAMS2, 0);
-                        startActivity(intent);
+                        if (isLoginIntent()) {
+                            Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, 1);
+                            intent.putExtra(Config.INTENT_PARAMS2, 0);
+                            startActivity(intent);
+                        }
 
                     }
                 });
@@ -332,10 +363,14 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
                     public void onClick(View view) {
 //                        startActivity(new Intent(mContext, CommunicationMeetingForeshowActivity.class));
 
-                        Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, 2);
-                        intent.putExtra(Config.INTENT_PARAMS2, 0);
-                        startActivity(intent);
+                        if (isLoginIntent()) {
+
+                            Intent intent = new Intent(mContext, CommunicationMeetingForeshowActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, 2);
+                            intent.putExtra(Config.INTENT_PARAMS2, 0);
+                            startActivity(intent);
+
+                        }
 
                     }
                 });
@@ -347,6 +382,8 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(mContext, SearchActivity.class));
+        if (isLoginIntent()) {
+            startActivity(new Intent(mContext, SearchActivity.class));
+        }
     }
 }

@@ -154,8 +154,4 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    @Override
-    protected boolean isLoginIntent() {
-        return false;
-    }
 }

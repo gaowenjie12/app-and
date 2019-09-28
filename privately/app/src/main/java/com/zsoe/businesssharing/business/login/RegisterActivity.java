@@ -266,8 +266,4 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     }
 
-    @Override
-    protected boolean isLoginIntent() {
-        return false;
-    }
 }

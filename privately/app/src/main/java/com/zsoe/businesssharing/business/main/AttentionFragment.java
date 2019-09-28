@@ -170,6 +170,8 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(mContext, SearchActivity.class));
+        if (isLoginIntent()){
+            startActivity(new Intent(mContext, SearchActivity.class));
+        }
     }
 }

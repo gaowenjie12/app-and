@@ -1,7 +1,6 @@
 package com.zsoe.businesssharing.business.exhibitionhall;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zsoe.businesssharing.R;
-import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.bean.ItemInsdustry;
 import com.zsoe.businesssharing.utils.GlideUtils;
 
@@ -55,14 +53,13 @@ public class ExpandAdapter extends RecyclerView.Adapter<ExpandAdapter.ViewHolder
         ItemInsdustry itemInsdustry = mDatas.get(position);
 
         holder.tv_hangye.setText(itemInsdustry.getName());
-        GlideUtils.loadImage(mContext,itemInsdustry.getThumb(), holder.hangye_image);
+        GlideUtils.loadImage(mContext, itemInsdustry.getThumb(), holder.hangye_image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //item 点击事件
-                Intent intent = new Intent(mContext, IndustryActivity.class);
-                intent.putExtra(Config.INTENT_PARAMS1,itemInsdustry.getId());
-                mContext.startActivity(intent);
+            public void onClick(View view) {
+                if (null != onItemClickListener) {
+                    onItemClickListener.onItemClick(holder.getAdapterPosition());
+                }
             }
         });
     }
@@ -94,4 +91,15 @@ public class ExpandAdapter extends RecyclerView.Adapter<ExpandAdapter.ViewHolder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hangye_layout, parent, false);
         return new ViewHolder(v);
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    OnItemClickListener onItemClickListener;
+
+    public void setOnItemClick(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
 }

@@ -680,8 +680,4 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
     }
 
-    @Override
-    protected boolean isLoginIntent() {
-        return false;
-    }
 }

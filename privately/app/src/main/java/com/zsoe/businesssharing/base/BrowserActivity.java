@@ -318,8 +318,4 @@ public class BrowserActivity extends BaseActivity {
         super.finish();
     }
 
-    @Override
-    protected boolean isLoginIntent() {
-        return false;
-    }
 }
