@@ -1,10 +1,8 @@
 package com.zsoe.businesssharing.business.main;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -16,13 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yayandroid.locationmanager.configuration.Configurations;
-import com.yayandroid.locationmanager.configuration.LocationConfiguration;
 import com.zsoe.businesssharing.R;
+import com.zsoe.businesssharing.base.BaseFragment;
 import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
+import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.ExtenactivityBean;
 import com.zsoe.businesssharing.bean.HeadNews;
 import com.zsoe.businesssharing.bean.HomeBean;
@@ -36,6 +34,7 @@ import com.zsoe.businesssharing.business.exhibitionhall.ProductDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductListActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.TuiGuangActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansActivity;
+import com.zsoe.businesssharing.business.home.HomePresenter;
 import com.zsoe.businesssharing.business.home.JoinInvestmentActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentDetailActivity;
 import com.zsoe.businesssharing.business.home.ProcurementAndInventoryActivity;
@@ -50,12 +49,9 @@ import com.zsoe.businesssharing.commonview.citypicker.model.City;
 import com.zsoe.businesssharing.commonview.citypicker.model.LocateState;
 import com.zsoe.businesssharing.commonview.citypicker.model.LocatedCity;
 import com.zsoe.businesssharing.commonview.recyclerview.BaseViewHolder;
-import com.zsoe.businesssharing.utils.CoordinateTransform;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
-import com.zsoe.businesssharing.utils.LogUtil;
 
-import java.io.IOException;
 import java.util.List;
 
 import rx.functions.Action1;
@@ -63,8 +59,8 @@ import rx.functions.Action1;
 /**
  * 首页
  */
-
-public class HomeFragment extends LocationBaseFragment implements View.OnClickListener {
+@RequiresPresenter(HomePresenter.class)
+public class HomeFragment extends BaseFragment<HomePresenter> implements View.OnClickListener {
 
     public static HomeFragment newInstance(String title) {
         HomeFragment f = new HomeFragment();
@@ -177,9 +173,11 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 nextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(mContext, BrowserActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, tag1.getLinkurl());
-                        startActivity(intent);
+                        if (isLoginIntent()) {
+                            Intent intent = new Intent(mContext, BrowserActivity.class);
+                            intent.putExtra(Config.INTENT_PARAMS1, tag1.getLinkurl());
+                            startActivity(intent);
+                        }
                     }
                 });
             }
@@ -207,7 +205,7 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(isLoginIntent()){
+                        if (isLoginIntent()) {
                             Intent intent = new Intent(mContext, EventDetailsActivity.class);
                             intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
                             intent.putExtra(Config.INTENT_PARAMS2, "1");
@@ -241,7 +239,7 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(isLoginIntent()) {
+                        if (isLoginIntent()) {
 
                             Intent intent = new Intent(mContext, ProcurementAndInventoryDetailActivity.class);
                             intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
@@ -278,7 +276,7 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(isLoginIntent()) {
+                        if (isLoginIntent()) {
 
                             Intent intent = new Intent(mContext, ProductDetailActivity.class);
                             intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
@@ -316,7 +314,7 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(isLoginIntent()) {
+                        if (isLoginIntent()) {
 
                             Intent intent = new Intent(mContext, JoinInvestmentDetailActivity.class);
                             intent.putExtra(Config.INTENT_PARAMS1, item.getLinkid());
@@ -409,7 +407,6 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
                 break;
 
             case R.id.tv_diqu:
-                getLocation();
                 CityPicker.from(getActivity())
                         .enableAnimation(true)
 //                        .setAnimationStyle(R.style.CustomAnim)
@@ -431,59 +428,25 @@ public class HomeFragment extends LocationBaseFragment implements View.OnClickLi
 
                             @Override
                             public void onLocate() {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        CityPicker.from(getActivity()).locateComplete(new LocatedCity(DApplication.getInstance().locationName, "广东", "101280601"), LocateState.SUCCESS);
+                                    }
+                                }, 500);
+
                             }
                         })
                         .show();
+
+
                 break;
 
             case R.id.search_input:
-                if(isLoginIntent()){
+                if (isLoginIntent()) {
                     startActivity(new Intent(mContext, SearchActivity.class));
                 }
                 break;
         }
-    }
-
-
-    //更新location  return cityName
-    private String updateWithNewLocation(double[] lngLat_gcj02) {
-        String mcityName = "";
-        List<Address> addList = null;
-        try {
-            addList = new Geocoder(getActivity()).getFromLocation(lngLat_gcj02[1], lngLat_gcj02[0], 1);    //解析经纬度
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (addList != null && addList.size() > 0) {
-            for (int i = 0; i < addList.size(); i++) {
-                Address add = addList.get(i);
-                mcityName += add.getLocality();
-            }
-        }
-        if (mcityName.length() != 0) {
-            return mcityName.substring(0, (mcityName.length() - 1));
-        } else {
-            return mcityName;
-        }
-    }
-
-    @Override
-    public LocationConfiguration getLocationConfiguration() {
-        return Configurations.defaultConfiguration("Gimme the permission!", "Would you mind to turn GPS on?");
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        //WGS84 转  火星坐标（GCJ02）
-        double[] lngLat_gcj02 = CoordinateTransform.transformWGS84ToGCJ02(location.getLongitude(), location.getLatitude());
-        LogUtil.e("经度==" + lngLat_gcj02[0] + "==维度==" + lngLat_gcj02[1]);
-        String temp = updateWithNewLocation(lngLat_gcj02);
-        CityPicker.from(getActivity()).locateComplete(new LocatedCity(temp, "广东", "101280601"), LocateState.SUCCESS);
-
-    }
-
-    @Override
-    public void onLocationFailed(int type) {
-
     }
 }

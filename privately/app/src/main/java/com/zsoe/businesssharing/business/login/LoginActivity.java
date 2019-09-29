@@ -405,7 +405,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
             public void onError(final int code, final String message) {
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
+                        Toast.makeText(getApplicationContext(), "登录失败请重试",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -474,8 +474,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         }
 
         getPresenter().third("qq", openid, nickname, figureurl_2);
-
-
         ToastUtils.showShort(jsonObject.toString());
         Logger.e(jsonObject.toString());
     }

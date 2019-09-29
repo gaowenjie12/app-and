@@ -26,9 +26,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import androidx.core.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.core.content.FileProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -57,6 +58,9 @@ public class UpdateUtil {
         SharedPreferences sp = context.getSharedPreferences(PREFS, 0);
         File file = new File(context.getExternalCacheDir(), sp.getString(KEY_UPDATE, "") + ".apk");
         UpdateUtil.log("apk ==> " + file.toString());
+
+        Log.e("open", "apk ==> " + file.toString());
+
         if (file.exists()) {
             file.delete();
         }
@@ -69,10 +73,12 @@ public class UpdateUtil {
         }
         SharedPreferences sp = context.getSharedPreferences(PREFS, 0);
         String old = sp.getString(KEY_UPDATE, "");
-        if (md5.equals(old)) {
-            UpdateUtil.log("same md5");
-            return;
-        }
+//        if (md5.equals(old)) {
+//            UpdateUtil.log("same md5");
+//            Log.e("open", "same md5");
+//
+//            return;
+//        }
         File oldFile = new File(context.getExternalCacheDir(), old);
         if (oldFile.exists()) {
             oldFile.delete();

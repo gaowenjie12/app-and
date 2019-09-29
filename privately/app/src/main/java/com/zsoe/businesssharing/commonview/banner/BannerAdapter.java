@@ -6,15 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
+import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.bean.SlideBean;
 import com.zsoe.businesssharing.business.exhibitionhall.ProductDetailActivity;
 import com.zsoe.businesssharing.business.home.FinancingLoansDetailActivity;
 import com.zsoe.businesssharing.business.home.JoinInvestmentDetailActivity;
 import com.zsoe.businesssharing.business.home.ProcurementAndInventoryDetailActivity;
+import com.zsoe.businesssharing.business.login.LoginActivity;
+import com.zsoe.businesssharing.business.login.LoginUser;
 import com.zsoe.businesssharing.commonview.wcviewpager.ObjectAtPositionPagerAdapter;
 import com.zsoe.businesssharing.utils.FrecoFactory;
 
@@ -63,35 +67,37 @@ public class BannerAdapter extends ObjectAtPositionPagerAdapter {
                 //    6        => '融资',
                 //    7       => '产品',
 
+                if (isLoginIntent()) {
 
-                if (linktype == 1 || linktype == 5) {
-                    Intent intent = new Intent(context, BrowserActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurl());
-                    context.startActivity(intent);
-                } else if (linktype == 2) {
+                    if (linktype == 1 || linktype == 5) {
+                        Intent intent = new Intent(context, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurl());
+                        context.startActivity(intent);
+                    } else if (linktype == 2) {
 
-                    Intent intent = new Intent(context, ProcurementAndInventoryDetailActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
-                    context.startActivity(intent);
+                        Intent intent = new Intent(context, ProcurementAndInventoryDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
+                        context.startActivity(intent);
 
-                } else if (linktype == 3) {
-                    Intent intent = new Intent(context, ProcurementAndInventoryDetailActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
-                    context.startActivity(intent);
-                } else if (linktype == 4) {
-                    Intent intent = new Intent(context, JoinInvestmentDetailActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
-                    context.startActivity(intent);
-                } else if (linktype == 6) {
-                    Intent intent = new Intent(context, FinancingLoansDetailActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
-                    context.startActivity(intent);
-                } else if (linktype == 7) {
-                    Intent intent = new Intent(context, ProductDetailActivity.class);
-                    intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
-                    context.startActivity(intent);
+                    } else if (linktype == 3) {
+                        Intent intent = new Intent(context, ProcurementAndInventoryDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
+                        context.startActivity(intent);
+                    } else if (linktype == 4) {
+                        Intent intent = new Intent(context, JoinInvestmentDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
+                        context.startActivity(intent);
+                    } else if (linktype == 6) {
+                        Intent intent = new Intent(context, FinancingLoansDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
+                        context.startActivity(intent);
+                    } else if (linktype == 7) {
+                        Intent intent = new Intent(context, ProductDetailActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, slideBean.getLinkurlid());
+                        context.startActivity(intent);
+                    }
+
                 }
-
             }
         });
         return view;
@@ -108,5 +114,17 @@ public class BannerAdapter extends ObjectAtPositionPagerAdapter {
         container.removeView((View) object);
     }
 
+
+    public boolean isLoginIntent() {
+        LoginUser loginUser = DApplication.getInstance().getLoginUser();
+        if (null == loginUser) {
+            Intent intent = new Intent(context, LoginActivity.class);
+            context.startActivity(intent);
+            ToastUtils.showShort("尚未登录");
+            return false;
+        }
+
+        return true;
+    }
 
 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.EMCallBack;
+import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -18,10 +19,14 @@ import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.VersionBean;
 import com.zsoe.businesssharing.business.login.ChangePwActivity;
+import com.zsoe.businesssharing.business.login.QQLoginManager;
 import com.zsoe.businesssharing.commonview.update.UpdateInfo;
 import com.zsoe.businesssharing.commonview.update.UpdateManager;
+import com.zsoe.businesssharing.commonview.update.UpdateUtil;
 import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
+
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -111,13 +116,33 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
 
     public void loginOut() {
 
-        if (DApplication.getInstance().getLoginUser().getPlatform().equals("")) {
+        if (DApplication.getInstance().getLoginUser().getPlatform().equals("weibo")) {
+            UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.SINA, authListener);
+        } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("wechat")) {
+            UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.WEIXIN, authListener);
+        }else if(DApplication.getInstance().getLoginUser().getPlatform().equals("qq")){
+
+            new QQLoginManager("1109739836", new QQLoginManager.QQLoginListener() {
+                @Override
+                public void onQQLoginSuccess(JSONObject jsonObject, QQLoginManager.UserAuthInfo authInfo) {
+
+                }
+
+                @Override
+                public void onQQLoginCancel() {
+
+                }
+
+                @Override
+                public void onQQLoginError(UiError uiError) {
+
+                }
+            }).logout();
 
         }
+
         DApplication.getInstance().exit();
         DApplication.getInstance().startLogin();
-
-        UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.QQ, authListener);
 
         DemoHelper.getInstance().logout(true, new EMCallBack() {
 
@@ -138,10 +163,9 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
             @Override
             public void onError(int code, String message) {
                 runOnUiThread(new Runnable() {
-
                     @Override
                     public void run() {
-                        Toast.makeText(mContext, "unbind devicetokens failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "退出错误", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -173,7 +197,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
         info.isIgnorable = false;
         info.isSilent = false;
 
-
+        UpdateUtil.clean(this);
         UpdateManager.create(mContext).setManual(true).setNotifyId(notifyId).setUpdateInfo(info).check();
 
     }

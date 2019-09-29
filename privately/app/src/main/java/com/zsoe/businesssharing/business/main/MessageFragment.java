@@ -83,7 +83,7 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         rl_lingdaohuixin.setOnClickListener(this);
         rl_liaotianliebiao.setOnClickListener(this);
 
-        if (DApplication.getInstance().getLoginUser().getType() > 0) {
+        if (null!=DApplication.getInstance().getLoginUser()&&DApplication.getInstance().getLoginUser().getType() > 0) {
             rl_lingdaohuixin.setVisibility(View.GONE);
         } else {
             rl_lingdaohuixin.setVisibility(View.VISIBLE);

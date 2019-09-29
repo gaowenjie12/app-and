@@ -251,6 +251,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     'com.github.bumptech.glide:compiler:4.8.0'
 
+    implementation 'com.amap.api:location:latest.integration'
+    implementation 'com.amap.api:map2d:latest.integration'
+
     implementation project(':library')
     implementation project(':easeui')
 

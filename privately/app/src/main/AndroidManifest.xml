@@ -22,7 +22,7 @@
     <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera" />
 
@@ -345,6 +345,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/update_cache_path"/>
         </provider>
+
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="412a80afe6056d25105d819920ae7f4f" />
+
+
+        <!-- android:permission在2.13.1.0版本后必须配置 -->
+        <service android:name="com.amap.api.location.APSService" />
 
     </application>
 

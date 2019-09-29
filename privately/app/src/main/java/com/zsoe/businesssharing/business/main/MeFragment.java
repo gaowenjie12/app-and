@@ -175,7 +175,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_kefu.setOnClickListener(this);
         tv_sign.setOnClickListener(this);
 
-        initUser();
+        if(null!=DApplication.getInstance().getLoginUser()){
+            initUser();
+        }
 
     }
 
