@@ -349,7 +349,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="412a80afe6056d25105d819920ae7f4f" />
+            android:value="c5f0ee9348d2847798ea44f97b60c142" />
 
 
         <!-- android:permission在2.13.1.0版本后必须配置 -->

@@ -143,7 +143,8 @@ public class CompanyProfilesActivity extends BaseActivity<CompanyInfoPresenter> 
         FrecoFactory.getInstance().disPlay(mCompanyImage, companyInfo.getAvatar());
 
         mTvMasterName.setText(companyInfo.getName());
-        mTvMasterZhiwei.setText(companyInfo.getCompanydes());
+        mTvMasterZhiwei.setText("主营业务："+companyInfo.getMaincate());
+        mTvChenguo.setText(companyInfo.getCompanydes());
 
         List<String> photos = companyInfo.getPhotos();
 

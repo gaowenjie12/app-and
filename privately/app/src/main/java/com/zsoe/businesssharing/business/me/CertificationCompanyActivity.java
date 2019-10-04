@@ -280,6 +280,9 @@ public class CertificationCompanyActivity extends BaseActivity<RenzhengPresenter
 
     public void getSuccess(RenCompanyBean renCompanyBean) {
 
+        if (null == renCompanyBean) {
+            return;
+        }
         mEtQuancheng.setText(renCompanyBean.getCompanyname());
         mEtLeimu.setText(renCompanyBean.getMaincate());
         mEtShenfenzheng.setText(renCompanyBean.getIdcardnum());
@@ -287,9 +290,13 @@ public class CertificationCompanyActivity extends BaseActivity<RenzhengPresenter
         mEtMail.setText(renCompanyBean.getEmail());
 
         mEtPhone.setText(renCompanyBean.getMobile());
-        FrecoFactory.getInstance().disPlay(mIvYingyeImg, renCompanyBean.getLicense());
-        FrecoFactory.getInstance().disPlay(mIvJiehunImg, renCompanyBean.getMarrlicense());
+        if (!TextUtils.isEmpty(renCompanyBean.getLicense())) {
+            FrecoFactory.getInstance().disPlay(mIvYingyeImg, renCompanyBean.getLicense());
+        }
 
+        if (!TextUtils.isEmpty(renCompanyBean.getMarrlicense())) {
+            FrecoFactory.getInstance().disPlay(mIvJiehunImg, renCompanyBean.getMarrlicense());
+        }
     }
 
 

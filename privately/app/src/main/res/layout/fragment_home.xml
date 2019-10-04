@@ -58,49 +58,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"></com.zsoe.businesssharing.commonview.banner.BannerView>
 
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:text="头条快讯："
-                        android:textColor="@color/AC9472"
-                        android:textSize="@dimen/text_one_four"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_xinwen_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:padding="15dp"
-                        android:text="更多"
-                        android:textColor="@color/AC9472"
-                        android:textSize="@dimen/text_one_two" />
-
-
-                    <com.zsoe.businesssharing.commonview.UpDownViewSwitcher
-                        android:id="@+id/home_view_switcher"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_vertical"
-                        android:layout_toLeftOf="@+id/tv_xinwen_more"
-                        android:layout_toRightOf="@+id/tout"
-                        app:animator_duration="400"
-                        app:animator_translate_distance="40dp"
-                        app:switch_duration="3000"
-                        app:up_to_down="false" />
-
-
-                </RelativeLayout>
-
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -169,10 +126,52 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="头条快讯："
+                        android:textColor="@color/AC9472"
+                        android:textSize="@dimen/text_one_four"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_xinwen_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:padding="15dp"
+                        android:text="更多"
+                        android:textColor="@color/AC9472"
+                        android:textSize="@dimen/text_one_two" />
+
+
+                    <com.zsoe.businesssharing.commonview.UpDownViewSwitcher
+                        android:id="@+id/home_view_switcher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/tv_xinwen_more"
+                        android:layout_toRightOf="@+id/tout"
+                        app:animator_duration="400"
+                        app:animator_translate_distance="40dp"
+                        app:switch_duration="3000"
+                        app:up_to_down="false" />
+
+
+                </RelativeLayout>
+
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:orientation="vertical">
 

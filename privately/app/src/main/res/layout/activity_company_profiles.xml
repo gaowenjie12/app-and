@@ -175,6 +175,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -206,14 +207,18 @@
 
                 </RelativeLayout>
 
+                <View
+                    style="@style/line_style"/>
+
                 <com.zsoe.businesssharing.commonview.ExpandableTextView
                     android:id="@+id/tv_chenguo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_margin="10dp"
                     app:DrawableAndTextGravity="right"
-                    app:contentTextColor="@color/colorPrimaryDark"
-                    app:expandCollapseTextColor="@color/colorAccent"
+                    app:contentTextSize="7dp"
+                    app:contentTextColor="@color/text_3"
+                    app:expandCollapseTextColor="@color/AC9472"
                     app:expandText="更多"
                     app:maxCollapsedLines="6" />
             </LinearLayout>

@@ -64,7 +64,7 @@
                     android:layout_marginTop="8dp"
                     app:DrawableAndTextGravity="right"
                     app:contentTextColor="@color/text_3"
-                    app:contentTextSize="8dp"
+                    app:contentTextSize="7dp"
                     app:expandCollapseTextColor="@color/AC9472"
                     app:expandText="详情"
                     app:maxCollapsedLines="6" />
@@ -128,7 +128,7 @@
                     android:layout_marginRight="10dp"
                     app:DrawableAndTextGravity="right"
                     app:contentTextColor="@color/text_3"
-                    app:contentTextSize="8dp"
+                    app:contentTextSize="7dp"
                     app:expandCollapseTextColor="@color/AC9472"
                     app:expandText="详情"
                     app:maxCollapsedLines="6" />
@@ -159,7 +159,7 @@
                     android:layout_marginTop="8dp"
                     app:DrawableAndTextGravity="right"
                     app:contentTextColor="@color/text_3"
-                    app:contentTextSize="8dp"
+                    app:contentTextSize="7dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     app:expandCollapseTextColor="@color/AC9472"

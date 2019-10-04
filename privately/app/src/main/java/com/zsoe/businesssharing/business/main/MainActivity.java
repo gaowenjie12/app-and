@@ -67,11 +67,11 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     private String[] mTitles = {"首页", "展厅", "消息", "关注", "我的"};
     private int[] mIconUnselectIds = {
             R.mipmap.tab_shouye_pre, R.mipmap.tab_zhanting_pre,
-            R.mipmap.tab_guanzhu_pre, R.mipmap.tab_xiaoxi_pre, R.mipmap.tab_wode_pre};
+            R.mipmap.tab_xiaoxi_pre, R.mipmap.tab_guanzhu_pre, R.mipmap.tab_wode_pre};
 
     private int[] mIconSelectIds = {
-            R.mipmap.tab_shouye, R.mipmap.tab_zhanting,
-            R.mipmap.tab_guanzhu, R.mipmap.tab_xiaoxi, R.mipmap.tab_wode};
+            R.mipmap.tab_shouye, R.mipmap.tab_zhanting, R.mipmap.tab_xiaoxi,
+            R.mipmap.tab_guanzhu, R.mipmap.tab_wode};
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 

@@ -53,7 +53,7 @@ public class ProductManagementActivity extends BaseActivity<ProductMangerPresent
     }
 
     public void setDate(List<ChanPinBeanItem> noticeBeanList) {
-
+        mPtrFrame.refreshComplete();
         OnionRecycleAdapter hangyeAdapter = new OnionRecycleAdapter<ChanPinBeanItem>(R.layout.item_chanpin_guanli_list_layout, noticeBeanList) {
             @Override
             protected void convert(BaseViewHolder holder, final ChanPinBeanItem item) {
