@@ -297,6 +297,21 @@ public class CertificationCompanyActivity extends BaseActivity<RenzhengPresenter
         if (!TextUtils.isEmpty(renCompanyBean.getMarrlicense())) {
             FrecoFactory.getInstance().disPlay(mIvJiehunImg, renCompanyBean.getMarrlicense());
         }
+
+
+        int status = renCompanyBean.getStatus();
+        if (status == 0) {
+            btn_login.setEnabled(false);
+            btn_login.setText(renCompanyBean.getCheckstatus());
+        } else if (status == -1) {
+            btn_login.setEnabled(true);
+            btn_login.setText("提交审核");
+        } else {
+            btn_login.setEnabled(true);
+            btn_login.setText(renCompanyBean.getCheckstatus());
+        }
+
+
     }
 
 

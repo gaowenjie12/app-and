@@ -305,7 +305,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@color/main_c"
-                android:text="提交审核   (审核已通过)"
+                android:text="提交审核"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
 

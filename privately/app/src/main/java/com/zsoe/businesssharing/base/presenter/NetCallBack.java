@@ -2,6 +2,7 @@ package com.zsoe.businesssharing.base.presenter;
 
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.zsoe.businesssharing.base.CacheAble;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.RootResponse;
@@ -22,6 +23,8 @@ public abstract class NetCallBack<View, T> extends CacheAble<View, RootResponse<
     public void call(View v, RootResponse<T> tRootResponse) {
         DialogManager.getInstance().dismissNetLoadingView();
         LogUtil.e(tRootResponse.toString());
+        Logger.e(tRootResponse.toString());
+
 
         switch (tRootResponse.getCode()) {
             case 1:

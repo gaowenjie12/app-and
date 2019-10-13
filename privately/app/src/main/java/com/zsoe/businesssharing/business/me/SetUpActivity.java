@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.EMCallBack;
@@ -31,7 +30,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 @RequiresPresenter(LoginOutPresenter.class)
-public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements View.OnClickListener {
+public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements View.OnClickListener , QQLoginManager.QQLoginListener {
 
     private RelativeLayout mRlZhanghaoguanli;
     private RelativeLayout mRlQingchuhuanc;
@@ -98,19 +97,19 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
 //            SocializeUtils.safeCloseDialog(dialog);
-            Toast.makeText(mContext, "成功了", Toast.LENGTH_LONG).show();
+//            Toast.makeText(mContext, "成功了", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
 //            SocializeUtils.safeCloseDialog(dialog);
-            Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
 //            SocializeUtils.safeCloseDialog(dialog);
-            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
+//            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
         }
     };
 
@@ -122,22 +121,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
             UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.WEIXIN, authListener);
         }else if(DApplication.getInstance().getLoginUser().getPlatform().equals("qq")){
 
-            new QQLoginManager("1109739836", new QQLoginManager.QQLoginListener() {
-                @Override
-                public void onQQLoginSuccess(JSONObject jsonObject, QQLoginManager.UserAuthInfo authInfo) {
-
-                }
-
-                @Override
-                public void onQQLoginCancel() {
-
-                }
-
-                @Override
-                public void onQQLoginError(UiError uiError) {
-
-                }
-            }).logout();
+            new QQLoginManager("1109933226", this).logout();
 
         }
 
@@ -165,7 +149,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(mContext, "退出错误", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, "退出错误", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -199,6 +183,21 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
 
         UpdateUtil.clean(this);
         UpdateManager.create(mContext).setManual(true).setNotifyId(notifyId).setUpdateInfo(info).check();
+
+    }
+
+    @Override
+    public void onQQLoginSuccess(JSONObject jsonObject, QQLoginManager.UserAuthInfo authInfo) {
+
+    }
+
+    @Override
+    public void onQQLoginCancel() {
+
+    }
+
+    @Override
+    public void onQQLoginError(UiError uiError) {
 
     }
 }

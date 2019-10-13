@@ -19,7 +19,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
-        manifestPlaceholders = [qqappid: "1109739836"]
+        manifestPlaceholders = [qqappid: "1109933226"]
 
         //        正确的做法
 //        当前市面绝大多数是arm的CPU，而且都是V7架构的了，所以可以保留armeabi或者armeabi-v7a即可。

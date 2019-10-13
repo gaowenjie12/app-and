@@ -16,6 +16,15 @@ public class RenCompanyBean {
     private String license;
     private String marrlicense;
     private String checkstatus;
+    private int status = -1;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public void setCompanyname(String companyname) {
         this.companyname = companyname;

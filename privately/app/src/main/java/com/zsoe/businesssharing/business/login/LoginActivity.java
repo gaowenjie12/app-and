@@ -91,7 +91,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        qqLoginManager = new QQLoginManager("1109739836", this);
+        qqLoginManager = new QQLoginManager("1109933226", this);
 
         setTitleRightText("首页", new Action1<View>() {
             @Override
@@ -257,7 +257,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
                 umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, authListener);
                 break;
             case R.id.login_weibo:
-                boolean install3 = umShareAPI.isInstall(this, SHARE_MEDIA.WEIXIN);
+                boolean install3 = umShareAPI.isInstall(this, SHARE_MEDIA.SINA);
                 if (!install3) {
                     ToastUtils.showShort("请安装微博客户端");
                     return;
@@ -301,15 +301,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
 
             String platformStr = "";
-            if (s.equals(SHARE_MEDIA.WEIXIN)) {
+            if (s.equals("WEIXIN")) {
                 platformStr = "wechat";
-            } else if (s.equals(SHARE_MEDIA.SINA)) {
+            } else if (s.equals("SINA")) {
                 platformStr = "weibo";
             }
 
             DialogManager.getInstance().dismissNetLoadingView();
             getPresenter().third(platformStr, uid, name, iconurl);
             Logger.e(data.toString());
+            Logger.e("友盟的" + s);
+            Logger.e("platformStr==" + platformStr);
 
         }
 
@@ -322,7 +324,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
             DialogManager.getInstance().dismissNetLoadingView();
-
             Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
             LogUtil.e("授权失败===" + t.getMessage());
         }
@@ -335,7 +336,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
             DialogManager.getInstance().dismissNetLoadingView();
-
             Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
         }
     };
@@ -369,7 +369,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
             return;
         }
 
-        EMClient.getInstance().login(account, pass, new EMCallBack() {
+        String username, mima;
+
+        if (TextUtils.isEmpty(account) && TextUtils.isEmpty(pass)) {
+            username = loginUser.getUsername();
+            mima = "123456";
+        } else {
+            username = account;
+            mima = pass;
+        }
+
+        EMClient.getInstance().login(username, mima, new EMCallBack() {
 
             @Override
             public void onSuccess() {
@@ -466,7 +476,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
         String openid = "", nickname = "", figureurl_2 = "";
         try {
-            openid = jsonObject.getString("openid");
+            openid = jsonObject.getString("open_id");
             nickname = jsonObject.getString("nickname");
             figureurl_2 = jsonObject.getString("figureurl_2");
         } catch (JSONException e) {
@@ -474,7 +484,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         }
 
         getPresenter().third("qq", openid, nickname, figureurl_2);
-        ToastUtils.showShort(jsonObject.toString());
         Logger.e(jsonObject.toString());
     }
 
@@ -488,7 +497,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     @Override
     public void onQQLoginError(UiError uiError) {
         ToastUtils.showShort("登录出错！" + uiError.toString());
-
+        Logger.e(uiError.toString());
         DialogManager.getInstance().dismissNetLoadingView();
     }
 

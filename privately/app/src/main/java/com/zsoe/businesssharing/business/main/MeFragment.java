@@ -101,6 +101,18 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         tv_liuyan = view.findViewById(R.id.tv_liuyan);
         iamge2 = view.findViewById(R.id.iamge2);
 
+
+    }
+
+    private void initUser() {
+        FrecoFactory.getInstance().disPlay(user_image, DApplication.getInstance().getLoginUser().getAvatar());
+        user_name.setText(DApplication.getInstance().getLoginUser().getUsername());
+        user_gongsi.setText(DApplication.getInstance().getLoginUser().getIdentify());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (null != DApplication.getInstance().getLoginUser() && DApplication.getInstance().getLoginUser().getType() > 0) {
             //领导身份
 
@@ -175,16 +187,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         ll_kefu.setOnClickListener(this);
         tv_sign.setOnClickListener(this);
 
-        if(null!=DApplication.getInstance().getLoginUser()){
+        if (null != DApplication.getInstance().getLoginUser()) {
             initUser();
         }
 
-    }
-
-    private void initUser() {
-        FrecoFactory.getInstance().disPlay(user_image, DApplication.getInstance().getLoginUser().getAvatar());
-        user_name.setText(DApplication.getInstance().getLoginUser().getUsername());
-        user_gongsi.setText(DApplication.getInstance().getLoginUser().getIdentify());
     }
 
     @Override

@@ -156,7 +156,7 @@ public class DApplication extends Application {
          * 友盟相关平台配置。注意友盟官方新文档中没有这项配置，但是如果不配置会吊不起来相关平台的授权界面
          */
         PlatformConfig.setWeixin("wx96c57014385a0e0c", "64a432c883355d9a106b9f23cdfb952c");//微信APPID和AppSecret
-//        PlatformConfig.setQQZone("1109739836", "jqoB2ONdjIZdsiPj");//QQAPPID和AppSecret
+//        PlatformConfig.setQQZone("1109933226", "jqoB2ONdjIZdsiPj");//QQAPPID和AppSecret
         PlatformConfig.setSinaWeibo("2335429698", "8093274847f1350cabd42fd2bd7806e2", "https://www.baidu.com");//微博
     }
 
