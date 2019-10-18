@@ -13,6 +13,7 @@ import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.business.main.MainActivity;
 import com.zsoe.businesssharing.commonview.CustomVideoView;
+import com.zsoe.businesssharing.commonview.update.UpdateUtil;
 import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
@@ -52,7 +53,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
             }
         }, true, OpenPermission2.INIT_PERMISSION);
 
-
+        UpdateUtil.clean(this);
         Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.guide_1);
         mCustomVideo.playVideo(uri);
     }

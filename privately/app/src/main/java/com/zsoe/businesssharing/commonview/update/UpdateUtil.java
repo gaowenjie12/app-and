@@ -57,9 +57,9 @@ public class UpdateUtil {
     public static void clean(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFS, 0);
         File file = new File(context.getExternalCacheDir(), sp.getString(KEY_UPDATE, "") + ".apk");
-        UpdateUtil.log("apk ==> " + file.toString());
 
         Log.e("open", "apk ==> " + file.toString());
+        Log.e("open","apk 是否存在==> " + file.exists());
 
         if (file.exists()) {
             file.delete();

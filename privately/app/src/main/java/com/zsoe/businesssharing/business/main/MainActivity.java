@@ -37,7 +37,6 @@ import com.zsoe.businesssharing.business.message.MainEvent;
 import com.zsoe.businesssharing.business.message.MessageEvent;
 import com.zsoe.businesssharing.commonview.update.UpdateInfo;
 import com.zsoe.businesssharing.commonview.update.UpdateManager;
-import com.zsoe.businesssharing.commonview.update.UpdateUtil;
 import com.zsoe.businesssharing.easechat.ChatActivity;
 import com.zsoe.businesssharing.easechat.Constant;
 import com.zsoe.businesssharing.easechat.DemoHelper;
@@ -150,7 +149,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
         //debug purpose only
         registerInternalDebugReceiver();
-//        getPresenter().check_version();
+        getPresenter().check_version();
     }
 
 
@@ -676,7 +675,6 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         info.isIgnorable = false;
         info.isSilent = false;
 
-        UpdateUtil.clean(this);
         UpdateManager.create(mContext).setManual(true).setNotifyId(notifyId).setUpdateInfo(info).check();
 
     }

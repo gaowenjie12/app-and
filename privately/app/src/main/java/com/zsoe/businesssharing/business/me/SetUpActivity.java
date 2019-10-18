@@ -21,7 +21,6 @@ import com.zsoe.businesssharing.business.login.ChangePwActivity;
 import com.zsoe.businesssharing.business.login.QQLoginManager;
 import com.zsoe.businesssharing.commonview.update.UpdateInfo;
 import com.zsoe.businesssharing.commonview.update.UpdateManager;
-import com.zsoe.businesssharing.commonview.update.UpdateUtil;
 import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 
@@ -30,7 +29,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 @RequiresPresenter(LoginOutPresenter.class)
-public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements View.OnClickListener , QQLoginManager.QQLoginListener {
+public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements View.OnClickListener, QQLoginManager.QQLoginListener {
 
     private RelativeLayout mRlZhanghaoguanli;
     private RelativeLayout mRlQingchuhuanc;
@@ -119,7 +118,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
             UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.SINA, authListener);
         } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("wechat")) {
             UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.WEIXIN, authListener);
-        }else if(DApplication.getInstance().getLoginUser().getPlatform().equals("qq")){
+        } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("qq")) {
 
             new QQLoginManager("1109933226", this).logout();
 
@@ -181,7 +180,6 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
         info.isIgnorable = false;
         info.isSilent = false;
 
-        UpdateUtil.clean(this);
         UpdateManager.create(mContext).setManual(true).setNotifyId(notifyId).setUpdateInfo(info).check();
 
     }
@@ -199,5 +197,18 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
     @Override
     public void onQQLoginError(UiError uiError) {
 
+        int serviceVersionCode = 0;//服务器最新版本号
+        int clientVersionCode = 0;//客户端当前本版号
+        int is_upd = 0;//是否有新版本更新
+
+        if (serviceVersionCode > clientVersionCode) {
+            //如果服务器code大于客户端code，代表有新版本。客户端要更新
+            is_upd = 1;
+        }else{
+            //否则，不需要更新
+            is_upd = 0;
+        }
+
+        //把 is_upd 字段返回给客户端
     }
 }
