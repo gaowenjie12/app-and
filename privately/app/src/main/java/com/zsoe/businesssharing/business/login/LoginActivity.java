@@ -415,8 +415,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
             public void onError(final int code, final String message) {
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "登录失败请重试",
+                        Toast.makeText(getApplicationContext(), message,
                                 Toast.LENGTH_SHORT).show();
+//
+//                                Toast.makeText(getApplicationContext(), "登录失败请重试",
+//                                Toast.LENGTH_SHORT).show();
                     }
                 });
             }
