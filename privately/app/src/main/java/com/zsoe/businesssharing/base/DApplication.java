@@ -157,7 +157,7 @@ public class DApplication extends Application {
          */
         PlatformConfig.setWeixin("wx96c57014385a0e0c", "64a432c883355d9a106b9f23cdfb952c");//微信APPID和AppSecret
 //        PlatformConfig.setQQZone("1109933226", "jqoB2ONdjIZdsiPj");//QQAPPID和AppSecret
-        PlatformConfig.setSinaWeibo("2335429698", "8093274847f1350cabd42fd2bd7806e2", "https://www.baidu.com");//微博
+        PlatformConfig.setSinaWeibo("2335429698", "8093274847f1350cabd42fd2bd7806e2", "https://app.qyjczfh.com/");//微博
     }
 
 

@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -654,7 +653,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         if (versionBean.getIs_upd() == 1) {
             check(111, versionBean);
         } else {
-            ToastUtils.showShort("已是最新版本");
+//            ToastUtils.showShort("已是最新版本");
         }
 
     }

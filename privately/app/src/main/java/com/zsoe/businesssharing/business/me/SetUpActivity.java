@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.EMCallBack;
 import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMAuthListener;
@@ -159,7 +158,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
         if (versionBean.getIs_upd() == 1) {
             check(111, versionBean);
         } else {
-            ToastUtils.showShort("已是最新版本");
+//            ToastUtils.showShort("已是最新版本");
         }
 
     }

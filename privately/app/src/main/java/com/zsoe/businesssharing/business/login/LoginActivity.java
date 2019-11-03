@@ -309,10 +309,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
             DialogManager.getInstance().dismissNetLoadingView();
             getPresenter().third(platformStr, uid, name, iconurl);
-            Logger.e(data.toString());
-            Logger.e("友盟的" + s);
-            Logger.e("platformStr==" + platformStr);
-
         }
 
         /**
@@ -344,6 +340,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     String pass;
 
     public void loginSuccess(LoginUser loginUser) {
+
+        Logger.e(loginUser.toString());
 
         if (DemoHelper.getInstance().isLoggedIn()) {
 

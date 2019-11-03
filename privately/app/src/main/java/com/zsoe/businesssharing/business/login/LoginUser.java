@@ -270,7 +270,6 @@ public class LoginUser {
         return industry_ccate;
     }
 
-
     @Override
     public String toString() {
         return "LoginUser{" +
@@ -284,6 +283,7 @@ public class LoginUser {
                 ", birthday='" + birthday + '\'' +
                 ", score=" + score +
                 ", type=" + type +
+                ", shopid=" + shopid +
                 ", realname='" + realname + '\'' +
                 ", uuid='" + uuid + '\'' +
                 ", district='" + district + '\'' +
@@ -300,6 +300,8 @@ public class LoginUser {
                 ", industry_pname='" + industry_pname + '\'' +
                 ", industry_cname='" + industry_cname + '\'' +
                 ", servicename='" + servicename + '\'' +
+                ", customerurl='" + customerurl + '\'' +
+                ", platform='" + platform + '\'' +
                 '}';
     }
 }
