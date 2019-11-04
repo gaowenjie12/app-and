@@ -352,6 +352,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
             DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(loginUser.getNickname());
             DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
             DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
+            uploadUserAvatar(loginUser.getAvatar());
 
             // ** manually load all local groups and conversation
             EMClient.getInstance().groupManager().loadAllGroups();
@@ -390,6 +391,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
                 DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
                 DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
 
+                uploadUserAvatar(loginUser.getAvatar());
 
                 // ** manually load all local groups and conversation
                 EMClient.getInstance().groupManager().loadAllGroups();
@@ -502,4 +504,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         DialogManager.getInstance().dismissNetLoadingView();
     }
 
+
+    private void uploadUserAvatar(String data) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                final String avatarUrl = DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(data);
+            }
+        }).start();
+    }
 }

@@ -113,14 +113,14 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
 
     public void loginOut() {
 
-        if (DApplication.getInstance().getLoginUser().getPlatform().equals("weibo")) {
-            UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.SINA, authListener);
-        } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("wechat")) {
-            UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.WEIXIN, authListener);
-        } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("qq")) {
-
-            new QQLoginManager("1109933226", this).logout();
-
+        if(null!=DApplication.getInstance().getLoginUser().getPlatform()){
+            if (DApplication.getInstance().getLoginUser().getPlatform().equals("weibo")) {
+                UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.SINA, authListener);
+            } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("wechat")) {
+                UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.WEIXIN, authListener);
+            } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("qq")) {
+                new QQLoginManager("1109933226", this).logout();
+            }
         }
 
         DApplication.getInstance().exit();

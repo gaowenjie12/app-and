@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
@@ -50,6 +52,7 @@ import com.zsoe.businesssharing.commonview.wheelview.listener.OnOptionsSelectLis
 import com.zsoe.businesssharing.commonview.wheelview.listener.OnTimeSelectListener;
 import com.zsoe.businesssharing.commonview.wheelview.view.OptionsPickerView;
 import com.zsoe.businesssharing.commonview.wheelview.view.TimePickerView;
+import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DateUtil;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.FrecoFactory;
@@ -59,8 +62,12 @@ import com.zsoe.businesssharing.utils.StrUtils;
 import com.zsoe.businesssharing.utils.UpLoadFileUtils;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -658,6 +665,7 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
     public void userProfileSuccess(LoginUser loginUser) {
         ToastUtils.showShort("修改成功");
         FancyUtils.setLoginUser(loginUser);
+        SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
         finish();
     }
 
@@ -707,6 +715,7 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
                                     ToastUtils.showShort(rootResponse.getMsg());
                                     CallBean data = rootResponse.getData();
                                     picPath = data.getUrl();
+                                    uploadUserAvatar(picPath);
                                 }
                             }
                         });
@@ -716,4 +725,14 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         });
     }
 
+
+    private void uploadUserAvatar(String data) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                final String avatarUrl = DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(data);
+            }
+        }).start();
+    }
 }
