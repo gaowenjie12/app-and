@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
@@ -62,12 +61,8 @@ import com.zsoe.businesssharing.utils.StrUtils;
 import com.zsoe.businesssharing.utils.UpLoadFileUtils;
 import com.zsoe.businesssharing.utils.permission.OpenPermission2;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -666,6 +661,8 @@ public class BasicInformationActivity extends BaseActivity<BasicInformationPrese
         ToastUtils.showShort("修改成功");
         FancyUtils.setLoginUser(loginUser);
         SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
+        SPUtils.getInstance().put("name", loginUser.getNickname());
+
         finish();
     }
 
