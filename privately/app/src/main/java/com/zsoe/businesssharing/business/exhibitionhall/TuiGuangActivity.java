@@ -108,6 +108,7 @@ public class TuiGuangActivity extends BaseActivity<TuiGuangListPresenter> {
                     public void onClick(View view) {
                         Intent intent = new Intent(mContext, EventDetailsActivity.class);
                         intent.putExtra(Config.INTENT_PARAMS1, item.getId());
+                        intent.putExtra(Config.INTENT_PARAMS2, "1");
                         startActivity(intent);
                     }
                 });

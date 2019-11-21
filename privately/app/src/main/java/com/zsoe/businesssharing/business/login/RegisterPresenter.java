@@ -7,6 +7,7 @@ import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
 import com.zsoe.businesssharing.base.presenter.BaseToastNetError;
+import com.zsoe.businesssharing.base.presenter.NetCallBack;
 import com.zsoe.businesssharing.base.presenter.NetCompleteBack;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import rx.functions.Func0;
 public class RegisterPresenter extends BasePresenter<RegisterActivity> {
     final public int REQUEST_LOGIN = 1;
     final public int REQUEST_LOGIN2 = 2;
+    final public int REQUEST_LOGIN3 = 3;
     FormBody body;
 
     @Override
@@ -62,6 +64,24 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity> {
                 new BaseToastNetError<RegisterActivity>());
 
 
+        restartableFirst(REQUEST_LOGIN3,
+                new Func0<Observable<RootResponse<LoginUser>>>() {
+                    @Override
+                    public Observable<RootResponse<LoginUser>> call() {
+
+                        return DApplication.getServerAPI().third(body);
+                    }
+                },
+
+                new NetCallBack<RegisterActivity, LoginUser>() {
+                    @Override
+                    public void callBack(RegisterActivity v, LoginUser o) {
+                        v.loginSuccess(o);
+                    }
+                },
+                new BaseToastNetError<RegisterActivity>());
+
+
     }
 
 
@@ -84,5 +104,13 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity> {
 
     }
 
-
+    public void third(String platform, String thirduid, String thirdname, String avatar) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("platform", platform);
+        params.put("thirduid", thirduid);
+        params.put("thirdname", thirdname);
+        params.put("avatar", avatar);
+        body = signForm(params);
+        start(REQUEST_LOGIN3);
+    }
 }

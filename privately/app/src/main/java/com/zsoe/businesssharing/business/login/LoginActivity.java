@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +22,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.orhanobut.logger.Logger;
-import com.tencent.tauth.UiError;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
 import com.zsoe.businesssharing.base.Config;
@@ -38,12 +33,6 @@ import com.zsoe.businesssharing.commonview.DrawableTextView;
 import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 import com.zsoe.businesssharing.utils.KeyboardWatcher;
-import com.zsoe.businesssharing.utils.LogUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Map;
 
 import rx.functions.Action1;
 
@@ -53,7 +42,7 @@ import rx.functions.Action1;
  */
 
 @RequiresPresenter(LoginPresenter.class)
-public class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener, QQLoginManager.QQLoginListener {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, KeyboardWatcher.SoftKeyboardStateListener{
     private DrawableTextView logo;
     private EditText et_mobile;
     private EditText et_password;
@@ -77,11 +66,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
      *
      */
     private ClearEditText mEtPassword;
-    private ImageView mLoginQq;
-    private ImageView mLoginWeixin;
-    private ImageView mLoginWeibo;
 
-    private QQLoginManager qqLoginManager;
+
     /**
      * 忘记密码？
      */
@@ -91,7 +77,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        qqLoginManager = new QQLoginManager("1109933226", this);
 
         setTitleRightText("首页", new Action1<View>() {
             @Override
@@ -101,7 +86,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         });
         initView();
         initListener();
-        umShareAPI = UMShareAPI.get(this);
         keyboardWatcher = new KeyboardWatcher(findViewById(Window.ID_ANDROID_CONTENT));
         keyboardWatcher.addSoftKeyboardStateListener(this);
 
@@ -131,12 +115,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         mEtPassword = (ClearEditText) findViewById(R.id.et_password);
 
         mEtMobile.setText(FancyUtils.getUserPhone());
-        mLoginQq = (ImageView) findViewById(R.id.login_qq);
-        mLoginQq.setOnClickListener(this);
-        mLoginWeixin = (ImageView) findViewById(R.id.login_weixin);
-        mLoginWeixin.setOnClickListener(this);
-        mLoginWeibo = (ImageView) findViewById(R.id.login_weibo);
-        mLoginWeibo.setOnClickListener(this);
+
         mForgetPassword = (TextView) findViewById(R.id.forget_password);
         mForgetPassword.setOnClickListener(this);
     }
@@ -211,7 +190,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
 
     }
 
-    UMShareAPI umShareAPI;
 
 
     @Override
@@ -244,26 +222,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
                 getPresenter().login(account, pass);
 
                 break;
-            case R.id.login_qq:
-                DialogManager.getInstance().showNetLoadingView(mContext, "正在等待授权");
-                qqLoginManager.launchQQLogin();
-                break;
-            case R.id.login_weixin:
-                boolean install2 = umShareAPI.isInstall(this, SHARE_MEDIA.WEIXIN);
-                if (!install2) {
-                    ToastUtils.showShort("请安装微信客户端");
-                    return;
-                }
-                umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, authListener);
-                break;
-            case R.id.login_weibo:
-                boolean install3 = umShareAPI.isInstall(this, SHARE_MEDIA.SINA);
-                if (!install3) {
-                    ToastUtils.showShort("请安装微博客户端");
-                    return;
-                }
-                umShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.SINA, authListener);
-                break;
             case R.id.forget_password:
                 Intent intent = new Intent(mContext, ChangePwActivity.class);
                 intent.putExtra(Config.INTENT_PARAMS1, 1);
@@ -273,68 +231,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     }
 
 
-    UMAuthListener authListener = new UMAuthListener() {
-        /**
-         * @desc 授权开始的回调
-         * @param platform 平台名称
-         */
-        @Override
-        public void onStart(SHARE_MEDIA platform) {
-            DialogManager.getInstance().showNetLoadingView(mContext, "正在等待授权");
-        }
-
-        /**
-         * @desc 授权成功的回调
-         * @param platform 平台名称
-         * @param action 行为序号，开发者用不上
-         * @param data 用户资料返回
-         */
-        @Override
-        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-
-            String s = platform.toString();
-
-
-            String uid = data.get("uid");
-            String iconurl = data.get("iconurl");
-            String name = data.get("name");
-
-
-            String platformStr = "";
-            if (s.equals("WEIXIN")) {
-                platformStr = "wechat";
-            } else if (s.equals("SINA")) {
-                platformStr = "weibo";
-            }
-
-            DialogManager.getInstance().dismissNetLoadingView();
-            getPresenter().third(platformStr, uid, name, iconurl);
-        }
-
-        /**
-         * @desc 授权失败的回调
-         * @param platform 平台名称
-         * @param action 行为序号，开发者用不上
-         * @param t 错误原因
-         */
-        @Override
-        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            DialogManager.getInstance().dismissNetLoadingView();
-            Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
-            LogUtil.e("授权失败===" + t.getMessage());
-        }
-
-        /**
-         * @desc 授权取消的回调
-         * @param platform 平台名称
-         * @param action 行为序号，开发者用不上
-         */
-        @Override
-        public void onCancel(SHARE_MEDIA platform, int action) {
-            DialogManager.getInstance().dismissNetLoadingView();
-            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
-        }
-    };
 
     String account;
     String pass;
@@ -430,22 +326,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        UMShareAPI.get(this).release();
         keyboardWatcher.removeSoftKeyboardStateListener(this);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        UMShareAPI.get(this).onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        qqLoginManager.onActivityResultData(requestCode, resultCode, data);
-    }
 
     @Override
     public void onSoftKeyboardOpened(int keyboardSize) {
@@ -472,38 +355,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
         mAnimatorTranslateY.start();
         zoomOut(logo);
     }
-
-    @Override
-    public void onQQLoginSuccess(JSONObject jsonObject, QQLoginManager.UserAuthInfo authInfo) {
-        DialogManager.getInstance().dismissNetLoadingView();
-
-        String openid = "", nickname = "", figureurl_2 = "";
-        try {
-            openid = jsonObject.getString("open_id");
-            nickname = jsonObject.getString("nickname");
-            figureurl_2 = jsonObject.getString("figureurl_2");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        getPresenter().third("qq", openid, nickname, figureurl_2);
-        Logger.e(jsonObject.toString());
-    }
-
-    @Override
-    public void onQQLoginCancel() {
-        DialogManager.getInstance().dismissNetLoadingView();
-        ToastUtils.showShort("登录取消");
-
-    }
-
-    @Override
-    public void onQQLoginError(UiError uiError) {
-        ToastUtils.showShort("登录出错！" + uiError.toString());
-        Logger.e(uiError.toString());
-        DialogManager.getInstance().dismissNetLoadingView();
-    }
-
 
     private void uploadUserAvatar(String data) {
         new Thread(new Runnable() {
