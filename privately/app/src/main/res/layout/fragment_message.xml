@@ -143,6 +143,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/the_one_layout"
             android:orientation="vertical"
             android:layout_marginTop="40dp"

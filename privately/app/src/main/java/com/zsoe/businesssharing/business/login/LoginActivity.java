@@ -17,10 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.chat.EMClient;
 import com.orhanobut.logger.Logger;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
@@ -238,88 +235,93 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements View.
     public void loginSuccess(LoginUser loginUser) {
 
         Logger.e(loginUser.toString());
-
-        if (DemoHelper.getInstance().isLoggedIn()) {
-
-            // 登陆成功，保存用户昵称与头像URL
-            SPUtils.getInstance().put("name", loginUser.getNickname());
-            SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
-
-            DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(loginUser.getNickname());
-            DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
-            DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
-            uploadUserAvatar(loginUser.getAvatar());
-
-            // ** manually load all local groups and conversation
-            EMClient.getInstance().groupManager().loadAllGroups();
-            EMClient.getInstance().chatManager().loadAllConversations();
+        startActivity(new Intent(mContext, MainActivity.class));
+        FancyUtils.setLoginUser(loginUser);
+        FancyUtils.setUserPhone(account);
+        finish();
 
 
-            // get user's info (this should be get from App's server or 3rd party service)
-//                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
-            startActivity(new Intent(mContext, MainActivity.class));
-            FancyUtils.setLoginUser(loginUser);
-            FancyUtils.setUserPhone(account);
-            finish();
-            return;
-        }
-
-        String username, mima;
-
-        if (TextUtils.isEmpty(account) && TextUtils.isEmpty(pass)) {
-            username = loginUser.getUsername();
-            mima = "123456";
-        } else {
-            username = account;
-            mima = pass;
-        }
-
-        EMClient.getInstance().login(username, mima, new EMCallBack() {
-
-            @Override
-            public void onSuccess() {
-
-                // 登陆成功，保存用户昵称与头像URL
-                SPUtils.getInstance().put("name", loginUser.getNickname());
-                SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
-
-                DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(loginUser.getNickname());
-                DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
-                DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
-
-                uploadUserAvatar(loginUser.getAvatar());
-
-                // ** manually load all local groups and conversation
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-
-
-                // get user's info (this should be get from App's server or 3rd party service)
-//                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
-                startActivity(new Intent(mContext, MainActivity.class));
-                FancyUtils.setLoginUser(loginUser);
-                FancyUtils.setUserPhone(account);
-                finish();
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(final int code, final String message) {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), message,
-                                Toast.LENGTH_SHORT).show();
+//        if (DemoHelper.getInstance().isLoggedIn()) {
 //
-//                                Toast.makeText(getApplicationContext(), "登录失败请重试",
+//            // 登陆成功，保存用户昵称与头像URL
+//            SPUtils.getInstance().put("name", loginUser.getNickname());
+//            SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
+//
+//            DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(loginUser.getNickname());
+//            DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
+//            DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
+//            uploadUserAvatar(loginUser.getAvatar());
+//
+//            // ** manually load all local groups and conversation
+//            EMClient.getInstance().groupManager().loadAllGroups();
+//            EMClient.getInstance().chatManager().loadAllConversations();
+//
+//
+//            // get user's info (this should be get from App's server or 3rd party service)
+////                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
+//            startActivity(new Intent(mContext, MainActivity.class));
+//            FancyUtils.setLoginUser(loginUser);
+//            FancyUtils.setUserPhone(account);
+//            finish();
+//            return;
+//        }
+//
+//        String username, mima;
+//
+//        if (TextUtils.isEmpty(account) && TextUtils.isEmpty(pass)) {
+//            username = loginUser.getUsername();
+//            mima = "123456";
+//        } else {
+//            username = account;
+//            mima = pass;
+//        }
+//
+//        EMClient.getInstance().login(username, mima, new EMCallBack() {
+//
+//            @Override
+//            public void onSuccess() {
+//
+//                // 登陆成功，保存用户昵称与头像URL
+//                SPUtils.getInstance().put("name", loginUser.getNickname());
+//                SPUtils.getInstance().put("logoUrl", loginUser.getAvatar());
+//
+//                DemoHelper.getInstance().getUserProfileManager().updateCurrentUserNickName(loginUser.getNickname());
+//                DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(loginUser.getAvatar());
+//                DemoHelper.getInstance().setCurrentUserName(loginUser.getUsername()); // 环信Id
+//
+//                uploadUserAvatar(loginUser.getAvatar());
+//
+//                // ** manually load all local groups and conversation
+//                EMClient.getInstance().groupManager().loadAllGroups();
+//                EMClient.getInstance().chatManager().loadAllConversations();
+//
+//
+//                // get user's info (this should be get from App's server or 3rd party service)
+////                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
+//                startActivity(new Intent(mContext, MainActivity.class));
+//                FancyUtils.setLoginUser(loginUser);
+//                FancyUtils.setUserPhone(account);
+//                finish();
+//            }
+//
+//            @Override
+//            public void onProgress(int progress, String status) {
+//
+//            }
+//
+//            @Override
+//            public void onError(final int code, final String message) {
+//                runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        Toast.makeText(getApplicationContext(), message,
 //                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+////
+////                                Toast.makeText(getApplicationContext(), "登录失败请重试",
+////                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
     }
 
 

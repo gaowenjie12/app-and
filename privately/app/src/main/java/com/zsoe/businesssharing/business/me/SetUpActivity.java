@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.hyphenate.EMCallBack;
 import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -23,7 +22,6 @@ import com.zsoe.businesssharing.business.login.ChangePwActivity;
 import com.zsoe.businesssharing.business.login.QQLoginManager;
 import com.zsoe.businesssharing.commonview.update.UpdateInfo;
 import com.zsoe.businesssharing.commonview.update.UpdateManager;
-import com.zsoe.businesssharing.easechat.DemoHelper;
 import com.zsoe.businesssharing.utils.DialogManager;
 
 import org.json.JSONObject;
@@ -137,32 +135,32 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
         DApplication.getInstance().exit();
         DApplication.getInstance().startLogin();
 
-        DemoHelper.getInstance().logout(true, new EMCallBack() {
-
-            @Override
-            public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        Toast.makeText(mContext, "退出错误", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+//        DemoHelper.getInstance().logout(true, new EMCallBack() {
+//
+//            @Override
+//            public void onSuccess() {
+//                runOnUiThread(new Runnable() {
+//                    public void run() {
+//
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onProgress(int progress, String status) {
+//
+//            }
+//
+//            @Override
+//            public void onError(int code, String message) {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        Toast.makeText(mContext, "退出错误", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
     }
 
     public void setDate(VersionBean versionBean) {

@@ -3,7 +3,6 @@ package com.zsoe.businesssharing.business.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -53,7 +52,6 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
 
     private RelativeLayout rl_xitonggonggao, rl_hangyezixun, rl_lingdaohuixin, rl_liaotianliebiao;
     private TextView tv_lingdao_count, tv_huanxin_count;
-    private LinearLayout the_one_layout;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -64,7 +62,7 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
 
         setTitleLeftIcon(false, 0);
 
-        setTitleRigthIcon(true, R.mipmap.tianjia, new View.OnClickListener() {
+        setTitleRigthIcon(false, R.mipmap.tianjia, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(mContext, AddFriendActivity.class));
@@ -72,7 +70,6 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         });
 
         rl_xitonggonggao = view.findViewById(R.id.rl_xitonggonggao);
-        the_one_layout = view.findViewById(R.id.the_one_layout);
         rl_hangyezixun = view.findViewById(R.id.rl_hangyezixun);
         rl_lingdaohuixin = view.findViewById(R.id.rl_lingdaohuixin);
         rl_liaotianliebiao = view.findViewById(R.id.rl_liaotianliebiao);
@@ -98,11 +95,6 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        if (null == DApplication.getInstance().getLoginUser()) {
-            the_one_layout.setVisibility(View.GONE);
-        } else {
-            the_one_layout.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
