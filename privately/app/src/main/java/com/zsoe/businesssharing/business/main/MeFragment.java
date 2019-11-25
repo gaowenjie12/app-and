@@ -189,6 +189,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
         if (null != DApplication.getInstance().getLoginUser()) {
             initUser();
+        } else {
+            user_name.setText("请登录");
+            user_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DApplication.getInstance().startLogin();
+                }
+            });
         }
 
     }

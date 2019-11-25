@@ -142,60 +142,69 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+        <LinearLayout
+            android:id="@+id/the_one_layout"
+            android:orientation="vertical"
             android:layout_marginTop="40dp"
-            android:text="通知"
-            android:textColor="@color/text_b6"
-            android:textSize="@dimen/text_one_five" />
-
-        <RelativeLayout
-            android:id="@+id/rl_liaotianliebiao"
-            style="@style/me_layout_style">
-
-            <TextView
-                android:id="@+id/left_tv3"
-                style="@style/me_text_style"
-                android:drawableLeft="@mipmap/hudong_liaotianliebiao"
-                android:drawablePadding="5dp"
-                android:text="聊天列表" />
-
-
-            <TextView
-                android:id="@+id/tv_huanxin_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/left_tv3"
-                android:background="@drawable/btn_redpoint_storke"
-                android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="6dp"
-                android:paddingBottom="1dp"
-                tools:text="122"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_one_two" />
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/btn_white_blue_storke"
-                android:paddingLeft="13dp"
-                android:paddingTop="3dp"
-                android:paddingRight="13dp"
-                android:paddingBottom="3dp"
-                android:text="查看"
-                android:textColor="@color/AC9472"
-                android:textSize="13dp" />
+                android:layout_marginLeft="10dp"
 
-        </RelativeLayout>
+                android:text="通知"
+                android:textColor="@color/text_b6"
+                android:textSize="@dimen/text_one_five" />
+
+            <RelativeLayout
+                android:id="@+id/rl_liaotianliebiao"
+                style="@style/me_layout_style">
+
+                <TextView
+                    android:id="@+id/left_tv3"
+                    style="@style/me_text_style"
+                    android:drawableLeft="@mipmap/hudong_liaotianliebiao"
+                    android:drawablePadding="5dp"
+                    android:text="聊天列表" />
+
+
+                <TextView
+                    android:id="@+id/tv_huanxin_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/left_tv3"
+                    android:background="@drawable/btn_redpoint_storke"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="6dp"
+                    android:paddingBottom="1dp"
+                    tools:text="122"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_one_two" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_white_blue_storke"
+                    android:paddingLeft="13dp"
+                    android:paddingTop="3dp"
+                    android:paddingRight="13dp"
+                    android:paddingBottom="3dp"
+                    android:text="查看"
+                    android:textColor="@color/AC9472"
+                    android:textSize="13dp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
 
         <View style="@style/line_style" />
     </androidx.appcompat.widget.LinearLayoutCompat>

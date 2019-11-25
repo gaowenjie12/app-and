@@ -1,5 +1,6 @@
 package com.zsoe.businesssharing.business;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.hyphenate.chat.EMClient;
 import com.zsoe.businesssharing.R;
@@ -54,8 +56,30 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         }, true, OpenPermission2.INIT_PERMISSION);
 
         UpdateUtil.clean(this);
-        Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.guide_1);
-        mCustomVideo.playVideo(uri);
+
+
+        boolean shuoming = SPUtils.getInstance().getBoolean("shuoming");
+        if (!shuoming) {
+            DialogManager.getInstance().showSMDialog(mContext, "服务协议和隐私政策", "同意", "暂不使用", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SPUtils.getInstance().put("shuoming", true);
+
+                    Uri uri = Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.guide_1);
+                    mCustomVideo.playVideo(uri);
+                    dialogInterface.dismiss();
+                }
+            }, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                    System.exit(0);
+                }
+            });
+        } else {
+            Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.guide_1);
+            mCustomVideo.playVideo(uri);
+        }
     }
 
 

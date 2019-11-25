@@ -11,8 +11,11 @@ import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.zsoe.businesssharing.BuildConfig;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.BrowserActivity;
+import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.VersionBean;
@@ -38,6 +41,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
      * 退出登录
      */
     private Button mBtnLogin;
+    private RelativeLayout mRlShuoming;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,8 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
         mRlJianchagengxin.setOnClickListener(this);
         mBtnLogin = (Button) findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(this);
+        mRlShuoming = (RelativeLayout) findViewById(R.id.rl_shuoming);
+        mRlShuoming.setOnClickListener(this);
     }
 
     @Override
@@ -81,6 +87,11 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
                 // 确认
                 DialogManager.getInstance().showNetLoadingView(mContext);
                 getPresenter().logout();
+                break;
+            case R.id.rl_shuoming:
+                Intent intent = new Intent(mContext, BrowserActivity.class);
+                intent.putExtra(Config.INTENT_PARAMS1, BuildConfig.ENDPOINT + "article/agreement");
+                startActivity(intent);
                 break;
         }
     }
@@ -113,7 +124,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
 
     public void loginOut() {
 
-        if(null!=DApplication.getInstance().getLoginUser().getPlatform()){
+        if (null != DApplication.getInstance().getLoginUser().getPlatform()) {
             if (DApplication.getInstance().getLoginUser().getPlatform().equals("weibo")) {
                 UMShareAPI.get(mContext).deleteOauth(SetUpActivity.this, SHARE_MEDIA.SINA, authListener);
             } else if (DApplication.getInstance().getLoginUser().getPlatform().equals("wechat")) {
@@ -203,7 +214,7 @@ public class SetUpActivity extends BaseActivity<LoginOutPresenter> implements Vi
         if (serviceVersionCode > clientVersionCode) {
             //如果服务器code大于客户端code，代表有新版本。客户端要更新
             is_upd = 1;
-        }else{
+        } else {
             //否则，不需要更新
             is_upd = 0;
         }

@@ -3,6 +3,7 @@ package com.zsoe.businesssharing.business.login;
 
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zsoe.businesssharing.base.DApplication;
 import com.zsoe.businesssharing.base.RootResponse;
 import com.zsoe.businesssharing.base.presenter.BasePresenter;
@@ -41,7 +42,13 @@ public class LoginPresenter extends BasePresenter<LoginActivity> {
                         v.loginSuccess(o);
                     }
                 },
-                new BaseToastNetError<LoginActivity>());
+                new BaseToastNetError<LoginActivity>(){
+                    @Override
+                    public void call(LoginActivity v, Throwable throwable) {
+                        super.call(v, throwable);
+                        ToastUtils.showShort(throwable.getMessage());
+                    }
+                });
 
     }
 

@@ -4,12 +4,18 @@ import android.graphics.Bitmap;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+
+import com.zsoe.businesssharing.R;
+import com.zsoe.businesssharing.base.DApplication;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -216,6 +222,14 @@ public class SpannableHelper extends SpannableString {
         @Override
         public void onClick(View widget) {
             onClickListener.onClick(widget);
+        }
+
+        @Override
+        public void updateDrawState(@NonNull TextPaint ds) {
+            super.updateDrawState(ds);
+            ds.setColor(DApplication.getInstance().getResources().getColor(R.color.text_expand_color));
+            ds.setUnderlineText(false);
+            ds.clearShadowLayer();
         }
     }
 }
