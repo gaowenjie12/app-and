@@ -79,38 +79,11 @@
 
                 </com.zsoe.businesssharing.commonview.MyRecycleView>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+              <WebView
+                  android:id="@+id/webView1"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="分会介绍"
-                        android:textColor="@color/text_3"
-                        android:textSize="@dimen/text_one_six" />
-
-                    <View
-                        style="@style/line_style"
-                        android:layout_marginTop="10dp" />
-
-                    <com.zsoe.businesssharing.commonview.ExpandableTextView
-                        android:id="@+id/tv_chenguo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:DrawableAndTextGravity="right"
-                        app:contentTextColor="@color/text_3"
-                        app:contentTextSize="7dp"
-                        app:expandCollapseTextColor="@color/AC9472"
-                        app:expandText="更多"
-                        app:maxCollapsedLines="4" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </LinearLayout>
         </com.zsoe.businesssharing.commonview.VerticalScrollView>

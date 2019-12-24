@@ -65,21 +65,27 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 public void onClick(DialogInterface dialogInterface, int i) {
                     SPUtils.getInstance().put("shuoming", true);
 
-                    Uri uri = Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.guide_1);
-                    mCustomVideo.playVideo(uri);
+//                    Uri uri = Uri.parse("android.resource://" + mContext.getPackageName() + "/" + R.raw.guide_1);
+//                    mCustomVideo.playVideo(uri);
                     dialogInterface.dismiss();
                 }
             }, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    finish();
-                    System.exit(0);
+//                    finish();
+//                    System.exit(0);
                 }
             });
-        } else {
-            Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.guide_1);
-            mCustomVideo.playVideo(uri);
         }
+
+//        else {
+//            Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.guide_1);
+//            mCustomVideo.playVideo(uri);
+//        }
+
+
+        Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.guide_1);
+        mCustomVideo.playVideo(uri);
     }
 
 

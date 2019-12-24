@@ -13,6 +13,15 @@ public class FenHuiBean {
     private List<SlideBean> slide;
     private List<String> photos;
     private String des;
+    private String contenturl;
+
+    public String getContenturl() {
+        return contenturl;
+    }
+
+    public void setContenturl(String contenturl) {
+        this.contenturl = contenturl;
+    }
 
     public List<SlideBean> getSlide() {
         return slide;

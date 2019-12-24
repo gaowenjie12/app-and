@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseActivity;
+import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.baseadapter.OnionRecycleAdapter;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
@@ -80,8 +81,12 @@ public class MasterListActivity extends BaseActivity<MasterListPresenter> {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, item.getId() + "");
+//                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
+//                        intent.putExtra(Config.INTENT_PARAMS1, item.getId() + "");
+//                        startActivity(intent);
+
+                        Intent intent = new Intent(mContext, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, item.getLinkurl());
                         startActivity(intent);
                     }
                 });

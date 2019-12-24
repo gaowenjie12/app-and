@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zsoe.businesssharing.R;
 import com.zsoe.businesssharing.base.BaseFragment;
+import com.zsoe.businesssharing.base.BrowserActivity;
 import com.zsoe.businesssharing.base.Config;
 import com.zsoe.businesssharing.base.presenter.RequiresPresenter;
 import com.zsoe.businesssharing.bean.Communicationthumbs;
@@ -31,7 +32,6 @@ import com.zsoe.businesssharing.business.exhibitionhall.GalleryRoomPresenter;
 import com.zsoe.businesssharing.business.exhibitionhall.IndustryActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.IndustryClassificationActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.LatestNewsActivity;
-import com.zsoe.businesssharing.business.exhibitionhall.MasterDetailActivity;
 import com.zsoe.businesssharing.business.exhibitionhall.MasterListActivity;
 import com.zsoe.businesssharing.business.home.SearchActivity;
 import com.zsoe.businesssharing.commonview.ClearEditText;
@@ -275,8 +275,12 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
                 @Override
                 public void onClick(View view) {
                     if (isLoginIntent()) {
-                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+//                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
+//                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+//                        startActivity(intent);
+
+                        Intent intent = new Intent(mContext, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getLinkurl());
                         startActivity(intent);
                     }
 
@@ -299,8 +303,12 @@ public class GalleryRoomFragment extends BaseFragment<GalleryRoomPresenter> impl
                 @Override
                 public void onClick(View view) {
                     if (isLoginIntent()) {
-                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
-                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+//                        Intent intent = new Intent(mContext, MasterDetailActivity.class);
+//                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getId() + "");
+//                        startActivity(intent);
+
+                        Intent intent = new Intent(mContext, BrowserActivity.class);
+                        intent.putExtra(Config.INTENT_PARAMS1, itemInsdustry.getLinkurl());
                         startActivity(intent);
                     }
                 }

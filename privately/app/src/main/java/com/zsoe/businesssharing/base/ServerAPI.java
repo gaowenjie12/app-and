@@ -79,11 +79,6 @@ public interface ServerAPI {
     @POST("index/index")
     Observable<RootResponse<HomeBean>> index(@Body FormBody body);
 
-    /**
-     * 展厅
-     */
-    @POST("hall/index")
-    Observable<RootResponse<HomeBean>> hall(@Body FormBody body);
 
     /**
      * 产品列表

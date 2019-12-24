@@ -14,6 +14,16 @@ public class MasterBean {
     private String thumb;
     private String company;
     private String des;
+    private String linkurl;
+
+
+    public String getLinkurl() {
+        return linkurl;
+    }
+
+    public void setLinkurl(String linkurl) {
+        this.linkurl = linkurl;
+    }
 
     public String getDes() {
         return des;
